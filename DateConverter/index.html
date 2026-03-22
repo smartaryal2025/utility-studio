@@ -19,8 +19,8 @@
 
         <main class="card-container">
             <div class="tabs">
-                <button class="tab-btn active" data-tab="ad-to-bs">Convert A.D. to B.S.</button>
-                <button class="tab-btn" data-tab="bs-to-ad">Convert B.S. to A.D.</button>
+                <button class="tab-btn main-tab active" data-tab="ad-to-bs">Convert A.D. to B.S.</button>
+                <button class="tab-btn main-tab" data-tab="bs-to-ad">Convert B.S. to A.D.</button>
             </div>
 
             <section id="ad-to-bs" class="tab-content active">
@@ -28,7 +28,7 @@
                     <div class="input-grid">
                         <div class="input-group">
                             <label for="ad-year">Year (A.D.)</label>
-                            <input type="number" id="ad-year" min="1944" max="2033" value="2026" required>
+                            <select id="ad-year" required></select>
                         </div>
                         <div class="input-group">
                             <label for="ad-month">Month</label>
@@ -51,7 +51,7 @@
                     <div class="input-grid">
                         <div class="input-group">
                             <label for="bs-year">साल (वि.सं.)</label>
-                            <input type="text" inputmode="numeric" id="bs-year" value="२०८२" required>
+                            <select id="bs-year" required></select>
                         </div>
                         <div class="input-group">
                             <label for="bs-month">महिना</label>
@@ -79,6 +79,45 @@
                 </div>
                 <div id="error-message" class="error-message hidden"></div>
             </div>
+        </main>
+
+        <main class="card-container" style="margin-top: 20px;">
+            <div class="tabs">
+                <button class="tab-btn cal-tab active" data-tab="cal-bs-view">Nepali Calendar (B.S.)</button>
+                <button class="tab-btn cal-tab" data-tab="cal-ad-view">English Calendar (A.D.)</button>
+            </div>
+
+            <section id="cal-bs-view" class="tab-content active">
+                <div class="calendar-header">
+                    <button id="bs-cal-prev" class="btn-icon cal-nav-btn">&lt;</button>
+                    <div class="cal-controls">
+                        <select id="cal-bs-month-select" class="cal-header-select"></select>
+                        <select id="cal-bs-year-select" class="cal-header-select"></select>
+                    </div>
+                    <button id="bs-cal-next" class="btn-icon cal-nav-btn">&gt;</button>
+                </div>
+                <div class="calendar-grid" id="bs-cal-grid">
+                    <div class="weekday">आइत</div><div class="weekday">सोम</div><div class="weekday">मंगल</div>
+                    <div class="weekday">बुध</div><div class="weekday">बिही</div><div class="weekday">शुक्र</div><div class="weekday">शनि</div>
+                    <div id="bs-cal-days" class="cal-days-wrapper"></div>
+                </div>
+            </section>
+
+            <section id="cal-ad-view" class="tab-content">
+                <div class="calendar-header">
+                    <button id="ad-cal-prev" class="btn-icon cal-nav-btn">&lt;</button>
+                    <div class="cal-controls">
+                        <select id="cal-ad-month-select" class="cal-header-select"></select>
+                        <select id="cal-ad-year-select" class="cal-header-select"></select>
+                    </div>
+                    <button id="ad-cal-next" class="btn-icon cal-nav-btn">&gt;</button>
+                </div>
+                <div class="calendar-grid" id="ad-cal-grid">
+                    <div class="weekday">Sun</div><div class="weekday">Mon</div><div class="weekday">Tue</div>
+                    <div class="weekday">Wed</div><div class="weekday">Thu</div><div class="weekday">Fri</div><div class="weekday">Sat</div>
+                    <div id="ad-cal-days" class="cal-days-wrapper"></div>
+                </div>
+            </section>
         </main>
     </div>
     <script src="libs/script.js"></script>

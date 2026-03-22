@@ -37,13 +37,12 @@ body {
     overflow-x: hidden;
 }
 
-/* Base style matching your provided CSS layout exactly */
 .app-header {
     text-align: center;
     color: #38bdf8;
     font-size: 28px;
     margin-top: 0;
-    margin-bottom: 10px; /* Reduced to fit the date below */
+    margin-bottom: 10px;
     font-weight: bold;
 }
 
@@ -79,7 +78,6 @@ body {
     100% { opacity: 1; }
 }
 
-/* Content Container matching your 'section' layout */
 .card-container {
     padding: 20px;
     background: #0f172a;
@@ -148,7 +146,6 @@ body {
     margin-bottom: 6px;
 }
 
-/* Input styles exactly matching your CSS */
 input[type="text"], input[type="number"], select {
     padding: 8px;
     margin: 4px 0;
@@ -172,7 +169,6 @@ input:focus, select:focus {
     gap: 12px;
 }
 
-/* Buttons matching your CSS */
 .btn-primary, .btn-secondary, .btn-icon {
     padding: 8px 12px;
     border-radius: 5px;
@@ -182,12 +178,12 @@ input:focus, select:focus {
     transition: background 0.3s;
     font-size: 13.3333px;
     font-family: inherit;
-    flex: 1;
 }
 
 .btn-primary {
     background: #38bdf8;
     color: black;
+    flex: 1;
 }
 
 .btn-primary:hover {
@@ -198,6 +194,7 @@ input:focus, select:focus {
     background: #1e293b;
     color: #38bdf8;
     border: 1px solid #38bdf8;
+    flex: 1;
 }
 
 .btn-secondary:hover {
@@ -239,11 +236,13 @@ input:focus, select:focus {
 }
 
 .btn-icon {
-    flex: 0 0 auto;
     background: transparent;
     border: 1px solid transparent;
     color: var(--text-secondary);
     padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-icon:hover {
@@ -262,6 +261,96 @@ input:focus, select:focus {
     display: none;
 }
 
+/* --- Calendar Specific Styles --- */
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 0 5px;
+}
+
+.cal-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.cal-header-select {
+    padding: 6px 8px;
+    margin: 0;
+    font-weight: bold;
+    font-size: 14px;
+    color: var(--accent-primary);
+    background: var(--surface-dark);
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+}
+
+.cal-header-select:focus {
+    border-color: var(--accent-primary);
+}
+
+.cal-nav-btn {
+    background: var(--surface-light);
+    border: 1px solid var(--border-color);
+    width: 32px;
+    height: 32px;
+    border-radius: 5px;
+}
+
+.cal-nav-btn:hover {
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    background: var(--surface-dark);
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    text-align: center;
+}
+
+.cal-days-wrapper {
+    display: contents;
+}
+
+.weekday {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: bold;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+    margin-bottom: 6px;
+}
+
+.cal-day {
+    padding: 10px 4px;
+    background: var(--surface-light);
+    border-radius: 4px;
+    border: 1px solid transparent;
+    font-size: 14px;
+    color: var(--text-primary);
+    cursor: default;
+    transition: var(--transition-smooth);
+}
+
+.cal-day:not(.empty):hover {
+    border-color: var(--border-color);
+    background: var(--surface-dark);
+}
+
+.cal-day.empty {
+    background: transparent;
+}
+
+.cal-day.today {
+    background: rgba(16, 185, 129, 0.15);
+    border-color: var(--color-success);
+    color: var(--color-success);
+    font-weight: bold;
+}
+
 @media (max-width: 600px) {
     .app-container {
         padding: 15px 10px;
@@ -271,5 +360,12 @@ input:focus, select:focus {
     }
     .button-group {
         flex-direction: column;
+    }
+    .cal-day {
+        font-size: 13px;
+        padding: 8px 2px;
+    }
+    .cal-controls {
+        flex-direction: row;
     }
 }
