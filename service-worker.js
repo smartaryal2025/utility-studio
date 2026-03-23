@@ -1,5 +1,5 @@
 // Change this version number whenever you update your code to force a cache refresh
-const CACHE_NAME = 'utility-studio-v1.0';
+const CACHE_NAME = 'utility-studio-v1.1';
 
 // Every file in your directory tree that needs to be cached for offline use
 const ASSETS_TO_CACHE = [
