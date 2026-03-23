@@ -21,7 +21,7 @@ const toast = document.getElementById('toast');
 
 const preetiToUnicodeMap = {
     "–": "-", "÷": "/", "F": "ँ", "+": "ं", "M": "ः", "c": "अ", "cf": "आ", "cFf": "आँ", "c+f": "आं", "O": "इ", "O{": "ई", "p": "उ", "pm": "ऊ", "C": "ऋ", "P": "ए", "P]": "ऐ", "c‘f": "ऑ", "cf‘": "ऑ", "c]f": "ओ", "cf]": "ओ", "c}f": "औ", "cf}": "औ",
-    "s": "क", "s‘": "कॅ", "S": "क्", "Qm": "क्त", "qm": "क्र", "I": "क्ष्", "v": "ख", "V": "ख्", "u": "ग", "U": "ग्", "3": "घ", "£": "घ्",
+    "s": "क", "s‘": "कॅ", "S": "क्", "Qm": "क्त", "qm": "क्र", "If": "क्ष", "I": "क्ष्", "v": "ख", "V": "ख्", "u": "ग", "U": "ग्", "3": "घ", "£": "घ्",
     "ª": "ङ", "Í": "ङ्क", "Î": "ङ्ख", "Ë": "ङ्ग", "‹": "ङ्घ", "r": "च", "R": "च्", "5": "छ", "5«": "छ्र", "h": "ज", "H": "ज्", "1": "ज्ञ", "¡": "ज्ञ्",
     "´": "झ", "em": "झ", "eFm": "झाँ", "e+m": "झां", "e'm": "झु", "e\"m": "झू", "e[m": "झृ", "e‘m": "झॅ", "e]m": "झे", "e}m": "झै", "‰": "झ्", "e\\m": "झ्",
     "`": "ञ", "~": "ञ्", "6": "ट", "§": "ट्ट", "Ý": "टठ", "6«": "ट्र", "7": "ठ", "¶": "ठ्ठ", "7«": "ठ्र", "8": "ड", "•": "ड्ड", "°": "ड्ढ", "8«": "ड्र", "9": "ढ", "9«": "ढ्र",
@@ -68,7 +68,7 @@ const unicodeToPreetiMap = {
     "ॡ": "nö", "ᳮ": "è", "ᳩ": "é", "ᳯ": "ù", "ॺ": "ë", "त्त्": "¤", "त्र्": "¦", "ह्न": "Â", "ह्व": "Ã", "ह्ण": "Ä", "ऽ": "ü", "ॠ": "C[",
     
     // Strict Punctuation overrides
-    "–": "-", "-": "–", "(": "-", ")": "_", "‘": "…", "’": "Ú", "“": "æ", "”": "Æ", "!": "Û", "%": "Ü", "=": "Ö", ";": "Ù", "?": "<", "ॐ": "ç", "/": "÷", "+": "±"
+    "–": "-", "-": "–", "(": "-", ")": "_", "‘": "…", "’": "Ú", "“": "æ", "”": "Æ", "!": "Û", "%": "Ü", "=": "Ö", ";": "Ù", "?": "<", "ॐ": "ç", "/": "÷", "+": "±", ":": "M"
 };
 
 // ==========================================
@@ -80,15 +80,25 @@ function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
 
-// Generate single-pass, length-sorted regex matchers to prevent cascading replacements
+// Generate single-pass, length-sorted regex matchers
 const p2uRegex = new RegExp(Object.keys(preetiToUnicodeMap).sort((a, b) => b.length - a.length).map(escapeRegExp).join('|'), 'g');
 const u2pRegex = new RegExp(Object.keys(unicodeToPreetiMap).sort((a, b) => b.length - a.length).map(escapeRegExp).join('|'), 'g');
 
 function preetiToUnicode(text) {
     let result = text;
 
+    // 0. Pre-Pass Fixes for Punctuation and Misplaced 'm' modifiers
+    // Fix split modifiers for फ (km) and झ (em)
+    result = result.replace(/k(['"\]\}\[\{\\\F+‘Lf]+)m/g, "km$1");
+    result = result.replace(/e(['"\]\}\[\{\\\F+‘Lf]+)m/g, "em$1");
+
     // 1. One-Pass Exact Dictionary Match
     result = result.replace(p2uRegex, match => preetiToUnicodeMap[match]);
+
+    // 1.5 POST-DICTIONARY COLON FIX
+    // Changes the Visarga (ः) back to a standard colon (:) ONLY if it stands alone or follows a space.
+    // This safely avoids the 'स्' trap!
+    result = result.replace(/(^|\s)ः/g, "$1:");
 
     // 2. Fix Positional: Short 'i' (Move 'l' to right and convert to 'ि')
     let positionOfI = result.indexOf('l');
@@ -174,8 +184,6 @@ convertBtn.addEventListener('click', () => {
     outputText.value = isPreetiToUnicode ? preetiToUnicode(text) : unicodeToPreeti(text);
 });
 
-// --- Replace everything below the convertBtn listener in your script.js ---
-
 const downloadTxtBtn = document.getElementById('download-txt-btn');
 const downloadDocBtn = document.getElementById('download-doc-btn');
 
@@ -186,13 +194,11 @@ fileUpload.addEventListener('change', (e) => {
 
     fileNameDisplay.textContent = file.name;
 
-    // Legacy .doc Check
     if (file.name.endsWith('.doc')) {
         inputText.value = "System Note: Legacy .doc binary files cannot be read in the browser. Please resave your file as .docx or .txt, or paste the text directly.";
         return;
     }
 
-    // Modern .docx Handling using Mammoth
     if (file.name.endsWith('.docx')) {
         const reader = new FileReader();
         reader.onload = function(event) {
@@ -211,7 +217,6 @@ fileUpload.addEventListener('change', (e) => {
         return;
     }
 
-    // Standard .txt Handling
     const reader = new FileReader();
     reader.onload = function(event) {
         inputText.value = event.target.result;
@@ -244,14 +249,11 @@ downloadTxtBtn.addEventListener('click', () => {
     showToast("Text file downloaded!");
 });
 
-// Download as .doc (Microsoft Word HTML Blob Hack)
+// Download as .doc
 downloadDocBtn.addEventListener('click', () => {
     if (!outputText.value) return;
     
-    // Convert line breaks to HTML breaks so Word preserves paragraphs
     const textContent = outputText.value.replace(/\n/g, '<br>');
-    
-    // Wrap in Office XML namespaces
     const wordHTML = `
         <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
         <head>
