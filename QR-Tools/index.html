@@ -11,17 +11,15 @@
     <meta name="theme-color" content="#111827">
     <link rel="manifest" href='data:application/manifest+json,{"name":"Universal QR Tool","short_name":"QR Tool","display":"standalone","background_color":"#111827","theme_color":"#111827"}'>
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+    <link href="libs/cropper.min.css" rel="stylesheet">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.4.4/qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.12.1/JsBarcode.all.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
-
+    <script src="libs/qrcode.min.js"></script>
+    <script src="libs/JsBarcode.all.min.js"></script>
+    <script src="libs/html5-qrcode.min.js"></script>
+    <script src="libs/FileSaver.min.js"></script>
+    <script src="libs/cropper.min.js"></script>
 
     <style>
-        /* Base Styles */
         body {
             font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1f2937, #111827);
@@ -44,8 +42,6 @@
             margin-top: 0;
             margin-bottom: 20px;
         }
-
-        /* Sections */
         section {
             margin-top: 20px;
             padding: 20px;
@@ -65,8 +61,6 @@
             margin: 0;
             font-size: 20px;
         }
-
-        /* Form Elements */
         input, select, textarea {
             padding: 10px;
             margin: 6px 0;
@@ -78,8 +72,6 @@
             background: #1e293b;
             color: #e2e8f0;
         }
-
-        /* Fix radio buttons */
         input[type="radio"], input[type="checkbox"] {
             width: auto;
             margin: 0;
@@ -90,7 +82,6 @@
             background: transparent;
             padding: 0;
         }
-
         button {
             padding: 10px 15px;
             margin: 6px 4px 6px 0;
@@ -112,8 +103,6 @@
         .btn-danger:hover {
             background: #dc2626;
         }
-
-        /* Generator Toggles */
         .toggle-container {
             display: flex;
             gap: 25px; 
@@ -132,12 +121,8 @@
             gap: 8px; 
             white-space: nowrap; 
         }
-        #qrFields div {
-            margin-top: 5px;
-        }
-        #qrcode {
-            margin-top: 20px;
-        }
+        #qrFields div { margin-top: 5px; }
+        #qrcode { margin-top: 20px; }
         canvas, svg {
             background: white;
             padding: 10px;
@@ -149,11 +134,7 @@
             grid-template-columns: 1fr 1fr;
             gap: 10px;
         }
-        .full-width {
-            grid-column: span 2;
-        }
-
-        /* Generator - Export Button Row on Mobile */
+        .full-width { grid-column: span 2; }
         .generator-controls {
             display: flex;
             gap: 5px;
@@ -166,8 +147,6 @@
                 font-size: 13px;
             }
         }
-
-        /* Scanner Styles */
         .scan-controls {
             display: flex;
             flex-wrap: wrap;
@@ -201,14 +180,11 @@
             overflow-x: auto;
             min-height: 20px;
         }
-
         #reader {
             width: 100%; 
             max-width: 500px; 
             margin: auto;
         }
-
-        /* Smart Action Container */
         #scanActionContainer {
             display: none;
             margin-top: 15px;
@@ -243,11 +219,7 @@
             margin: 0;
             padding: 8px 16px;
         }
-        #performActionBtn:hover {
-            background: #22c55e;
-        }
-
-        /* History Styles */
+        #performActionBtn:hover { background: #22c55e; }
         .history-item {
             background: #1e293b;
             padding: 12px 15px;
@@ -273,18 +245,13 @@
             text-overflow: ellipsis;
             max-width: 600px;
         }
-        .history-actions {
-            display: flex;
-            gap: 5px;
-        }
+        .history-actions { display: flex; gap: 5px; }
         .history-actions button {
             padding: 6px 10px;
             font-size: 12px;
             margin: 0;
             white-space: nowrap;
         }
-
-        /* Cropper Modal */
         #cropModal {
             display: none; 
             position: fixed; 
@@ -306,15 +273,8 @@
             max-height: 60vh; 
             background: #000;
         }
-        #cropContainer img {
-            max-width: 100%;
-            display: block;
-        }
-        .crop-controls {
-            margin-top: 15px; 
-            display: flex; 
-            gap: 10px;
-        }
+        #cropContainer img { max-width: 100%; display: block; }
+        .crop-controls { margin-top: 15px; display: flex; gap: 10px; }
 
         @media (max-width: 600px) {
             .app-container { padding: 15px; }
@@ -575,7 +535,33 @@ function updatePaymentFields() {
     if (pType === "esewa") { container.innerHTML = `<input id="esewaId" placeholder="e-Sewa ID"><input id="esewaName" placeholder="Account Name">`; } 
     else if (pType === "khalti") { container.innerHTML = `<input id="khaltiId" placeholder="Khalti ID (Mobile Number)"><input id="khaltiName" placeholder="Account Name">`; } 
     else if (pType === "bank") {
-        container.innerHTML = `<div class="form-grid"><select id="bankNameSelect" class="full-width"><option value="ADBLNPKA|0301">Agriculture Development Bank Ltd.</option><option value="BOALNPKA|2301">NIC Asia Bank Ltd.</option></select><input id="bankAccNo" placeholder="Account Number"><input id="bankAccName" placeholder="Account Name"><input id="bankAccType" placeholder="Account Type" class="full-width"></div>`;
+        container.innerHTML = `<div class="form-grid">
+            <select id="bankNameSelect" class="full-width">
+                <option value="ADBLNPKA|0301">Agriculture Development Bank Ltd.</option>
+                <option value="CTZNNPKA|2001">Citizens Bank International Ltd.</option>
+                <option value="EVBLNPKA|1001">Everest Bank Ltd.</option>
+                <option value="GLBBNPKA|1901">Global IME Bank Ltd.</option>
+                <option value="HIMANPKA|0701">Himalayan Bank Ltd.</option>
+                <option value="KMBLNPKA|1601">Kumari Bank Ltd.</option>
+                <option value="LXBLNPKA|1701">Laxmi Sunrise Bank Ltd.</option>
+                <option value="MBLNNPKA|1501">Machhapuchchhre Bank Ltd.</option>
+                <option value="NARBNPKA|0401">Nabil Bank Ltd.</option>
+                <option value="NEBLNPKA|0101">Nepal Bank Ltd.</option>
+                <option value="NIBLNPKT|0501">Nepal Investment Mega Bank Ltd.</option>
+                <option value="NSBINPKA|0801">Nepal SBI Bank Ltd.</option>
+                <option value="BOALNPKA|2301">NIC Asia Bank Ltd.</option>
+                <option value="NMBBNPKA|2501">NMB Bank Ltd.</option>
+                <option value="PRVUNPKA|2601">Prabhu Bank Ltd.</option>
+                <option value="PCBLNPKA|2101">Prime Commercial Bank Ltd.</option>
+                <option value="RBBANPKA|0201">Rastriya Banijya Bank Ltd.</option>
+                <option value="SNMANPKA|4501">Sanima Bank Ltd.</option>
+                <option value="SIDDNPKA|1801">Siddhartha Bank Ltd.</option>
+                <option value="SCBLNPKA|0601">Standard Chartered Bank Nepal Ltd.</option>
+            </select>
+            <input id="bankAccNo" placeholder="Account Number">
+            <input id="bankAccName" placeholder="Account Name">
+            <input id="bankAccType" placeholder="Account Type" class="full-width">
+        </div>`;
     }
     generateQR();
 }
@@ -687,6 +673,8 @@ function detectActionType(decodedText) {
     if (lowerText.startsWith('tel:')) return { type: 'PHONE', text: 'Phone Number Found', btn: 'Call Number', payload: trimmedText };
     if (trimmedText.startsWith('BEGIN:VCARD')) return { type: 'CONTACT', text: 'Contact Card Found', btn: 'Save to Contacts', payload: trimmedText };
     if (trimmedText.startsWith('BEGIN:VEVENT')) return { type: 'CALENDAR', text: 'Calendar Event Found', btn: 'Add to Calendar', payload: trimmedText };
+    
+    // UPDATED GEO LINK FIX
     if (lowerText.startsWith('geo:')) return { type: 'GEO', text: 'Location Coordinates', btn: 'Open in Maps', payload: 'https://maps.google.com/?q=' + trimmedText.substring(4) };
     
     return null; 
