@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Point crawlers directly to your map of tools
+Sitemap: https://kishoraryal.com.np/sitemap.xml

@@ -1,0 +1,156 @@
+/* ==========================================================================
+   Utility Studio - Unified Master Stylesheet
+   ========================================================================== */
+
+:root {
+    /* Core Theme Colors */
+    --bg-start: #1f2937;
+    --bg-end: #111827;
+    --surface-dark: #0f172a;
+    --surface-light: #1e293b;
+    --border-color: #334155;
+    
+    /* Accents & States */
+    --accent-primary: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    
+    /* Semantic Colors */
+    --color-success: #10b981;
+    --color-success-hover: #059669;
+    --color-error: #ef4444;
+    --color-error-hover: #dc2626;
+    
+    /* Structural */
+    --radius-md: 5px;
+    --radius-lg: 8px;
+    --shadow-soft: 0 4px 6px rgba(0,0,0,0.2);
+    --transition-smooth: all 0.3s ease;
+}
+
+/* --- Global Layout & Mobile Fix --- */
+body {
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+    color: var(--text-primary);
+    margin: 0; padding: 0;
+    min-height: 100vh; min-height: 100dvh; 
+    display: flex; flex-direction: column; overflow-x: hidden;
+}
+
+.app-container {
+    max-width: 1400px; margin: auto; padding: 25px; box-sizing: border-box;
+    flex-grow: 1; display: flex; flex-direction: column; width: 100%;
+}
+
+.app-container.small { max-width: 600px; } /* For Date Converter */
+.app-container.medium { max-width: 1000px; } /* For QR Tools */
+
+.app-header {
+    text-align: center; color: var(--accent-primary); font-size: 28px;
+    margin-top: 0; margin-bottom: 30px; font-weight: bold;
+}
+
+/* --- Grids & Sections --- */
+/* Standardized .dashboard (Media Studio) to act like .tools-grid */
+.tools-grid, .dashboard {
+    display: grid; grid-template-columns: 1fr; gap: 20px; align-items: start; flex-grow: 1;
+}
+
+@media (min-width: 950px) {
+    .tools-grid, .dashboard { grid-template-columns: 350px 1fr; }
+}
+
+.right-column { display: flex; flex-direction: column; gap: 20px; }
+
+/* Standardized .card (Media Studio) to act like section */
+section, .card {
+    padding: 20px; background: var(--surface-dark); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft); border: 1px solid var(--surface-light);
+    transition: var(--transition-smooth); position: relative; box-sizing: border-box;
+}
+
+.section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px;
+}
+.section-header h2 { margin: 0; font-size: 18px; color: var(--text-primary); }
+
+/* --- Form Controls --- */
+input[type="text"], input[type="number"], input[type="color"], select, input[type="range"], textarea {
+    padding: 8px 10px; margin: 4px 0; border-radius: var(--radius-md);
+    border: 1px solid var(--border-color); box-sizing: border-box;
+    background: var(--surface-light); color: var(--text-primary);
+    font-family: inherit; width: 100%; font-size: 14px;
+}
+input:focus, select:focus, textarea:focus { outline: none; border-color: var(--accent-primary); }
+input[type="file"] { width: auto; background: transparent; padding: 0; margin-bottom: 10px; }
+input[type="radio"], input[type="checkbox"] { width: auto; margin: 0; cursor: pointer; }
+
+/* --- Buttons --- */
+button, .btn-upload-label {
+    padding: 8px 12px; border-radius: var(--radius-md); border: none;
+    background: var(--accent-primary); color: black; font-weight: bold;
+    cursor: pointer; transition: background 0.3s; display: inline-flex;
+    align-items: center; justify-content: center; gap: 5px; font-family: inherit; font-size: 14px;
+}
+button:hover, .btn-upload-label:hover { background: var(--accent-hover); }
+button:disabled, .btn-upload-label.disabled { background: var(--border-color); color: var(--text-secondary); cursor: not-allowed; pointer-events: none; }
+
+.btn-secondary { background: var(--surface-light); color: var(--accent-primary); border: 1px solid var(--accent-primary); }
+.btn-secondary:hover { background: var(--border-color); }
+.btn-success { background: var(--color-success); color: white; border: 1px solid var(--color-success); }
+.btn-success:hover { background: var(--color-success-hover); }
+.btn-danger { background: var(--color-error); color: white; border: 1px solid var(--color-error); }
+.btn-danger:hover { background: var(--color-error-hover); }
+.btn-icon { background: transparent; color: var(--text-secondary); padding: 6px; }
+.btn-icon:hover { color: var(--color-success); background: transparent; }
+
+/* ==========================================================================
+   Tool-Specific Components
+   ========================================================================== */
+
+/* --- UI Controls (Image & Unicode) --- */
+.control-panel { background: var(--surface-light); padding: 12px 15px; border-radius: 6px; border: 1px solid var(--border-color); display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-bottom: 15px; }
+.control-group { display: flex; align-items: center; gap: 8px; }
+.control-label { font-size: 13px; color: var(--text-secondary); font-weight: bold; text-transform: uppercase; }
+.slider-container { display: flex; align-items: center; gap: 10px; background: var(--surface-dark); padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); }
+
+/* --- Thumbnails & Galleries --- */
+.thumb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); gap: 10px; background: var(--surface-light); padding: 10px; border-radius: 6px; max-height: 600px; overflow-y: auto; }
+.thumbnail-item { background: var(--surface-dark); padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; transition: 0.2s; }
+.thumbnail-item:hover { border-color: var(--accent-primary); }
+.thumbnail-item.active { border-color: var(--color-success); background: var(--surface-light); }
+.thumbnail-item img, .thumbnail-item canvas { max-width: 100%; border-radius: 4px; background: white; }
+
+/* --- Canvas Editor (Image & PDF) --- */
+#editor-canvas-container { position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-color); background: var(--surface-light); padding: 10px; border-radius: 6px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); width: 100%; min-height: 300px; touch-action: none; }
+.live-overlay { position: absolute; z-index: 10; cursor: move; user-select: none; border: 1px dashed transparent; padding: 2px; box-sizing: border-box; touch-action: none; }
+.live-overlay.selected { border-color: var(--accent-primary); outline: 2px solid var(--accent-hover); z-index: 100; }
+.resize-handle, .del-overlay-btn { display: none; position: absolute; box-shadow: 0 2px 4px rgba(0,0,0,0.4); z-index: 12; }
+.live-overlay.selected .resize-handle, .live-overlay.selected .del-overlay-btn { display: flex; }
+
+/* --- Media Studio Specifics --- */
+.drop-zone { border: 2px dashed var(--border-color); border-radius: var(--radius-lg); padding: 2rem 1rem; text-align: center; background-color: var(--surface-dark); cursor: pointer; transition: 0.2s; margin-bottom: 1rem; }
+.drop-zone.dragover { border-color: var(--accent-primary); background-color: rgba(56, 189, 248, 0.05); }
+.terminal { background-color: var(--surface-dark); border-radius: 6px; padding: 1rem; height: 300px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; border: 1px solid var(--border-color); }
+
+/* --- Date Converter Specifics --- */
+.tabs { display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; }
+.tab-btn { flex: 1; background: transparent; color: var(--text-secondary); padding: 10px; border-radius: var(--radius-md); font-weight: bold; transition: var(--transition-smooth); }
+.tab-btn.active { background: var(--surface-light); color: var(--accent-primary); border: 1px solid var(--border-color); }
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; text-align: center; }
+.cal-day { padding: 10px 4px; background: var(--surface-light); border-radius: 4px; font-size: 14px; border: 1px solid transparent; }
+.cal-day.today { background: rgba(16, 185, 129, 0.15); border-color: var(--color-success); color: var(--color-success); font-weight: bold; }
+
+/* --- QR Tools Specifics --- */
+.toggle-container { display: flex; gap: 25px; margin-bottom: 20px; background: var(--surface-light); padding: 12px 15px; border-radius: 6px; }
+.history-item { background: var(--surface-light); padding: 12px 15px; border-radius: 6px; margin-bottom: 10px; border-left: 4px solid var(--accent-primary); display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+
+/* --- Mobile Breakpoints --- */
+@media (max-width: 600px) {
+    .app-container { padding: 15px 10px; }
+    .control-panel, .toggle-container { flex-direction: column; align-items: stretch; }
+    .history-item { flex-direction: column; align-items: flex-start; }
+}
