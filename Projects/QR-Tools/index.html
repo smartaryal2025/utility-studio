@@ -15,7 +15,7 @@
     <meta property="og:image" content="https://kishoraryal.com.np/Assets/logo.png">
     <meta property="og:url" content="https://kishoraryal.com.np/Projects/QR-Tools/">
     <meta property="og:type" content="website">
-    
+
     <link rel="icon" type="image/png" href="../../Assets/logo.png">
     
     <meta name="mobile-web-app-capable" content="yes">
@@ -120,7 +120,8 @@
             <button onclick="startScanner()">Start Camera</button>
             <button onclick="stopScanner()">Stop Camera</button>
             <span style="margin: 0 5px;">OR</span>
-            <input type="file" id="fileScan" accept="image/*" style="width: auto;">
+            <button class="btn-secondary" onclick="document.getElementById('fileScan').click()" style="margin: 0 !important;">📁 Choose File</button>
+            <input type="file" id="fileScan" accept="image/*" style="display: none;">
         </div>
         
         <div class="scan-controls" style="margin-top: 5px;">
@@ -207,7 +208,7 @@ function renderHistory() {
     let container = document.getElementById("historyContainer");
     if (appHistory.length === 0) { container.innerHTML = '<span style="color: #64748b;">No history recorded yet.</span>'; return; }
     container.innerHTML = appHistory.map((item, index) => {
-        let safeData = item.data.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        let safeData = item.data.replace(/[&<>'"]/g, tag => ({ '&': '&', '<': '<', '>': '>', "'": '&#39;', '"': '&quot;' }[tag] || tag));
         return `
         <div class="history-item">
             <div style="flex-grow: 1; overflow: hidden;">
@@ -421,7 +422,6 @@ function detectActionType(decodedText) {
     if (trimmedText.startsWith('BEGIN:VCARD')) return { type: 'CONTACT', text: 'Contact Card Found', btn: 'Save to Contacts', payload: trimmedText };
     if (trimmedText.startsWith('BEGIN:VEVENT')) return { type: 'CALENDAR', text: 'Calendar Event Found', btn: 'Add to Calendar', payload: trimmedText };
     
-    // UPDATED GEO LINK FIX
     if (lowerText.startsWith('geo:')) return { type: 'GEO', text: 'Location Coordinates', btn: 'Open in Maps', payload: 'https://maps.google.com/?q=' + trimmedText.substring(4) };
     
     return null; 
