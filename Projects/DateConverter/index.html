@@ -6,7 +6,6 @@
     <title>Nepali Date Converter</title>
     <link rel="icon" type="image/png" href="../../Assets/logo.png">
     <link rel="stylesheet" href="../../Assets/master.css">
-    <link rel="stylesheet" href="libs/style.css">
 </head>
 <body>
     <div class="app-container">
@@ -72,12 +71,12 @@
             </section>
 
             <div id="output-section" class="output-card hidden">
-                <h3>Converted Date</h3>
-                <div class="result-display">
-                    <p id="result-text" class="result-text"></p>
-                    <button id="copy-btn" class="btn-icon" title="Copy to clipboard">
-                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    </button>
+                <div style="font-size: 13px; color: var(--text-secondary); font-weight: bold; text-transform: uppercase; margin-bottom: 12px;">Converted Date</div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px;">
+                    <p id="result-text" class="result-text" style="margin: 0; word-break: break-word;"></p>
+                    
+                    <button id="copy-btn" class="btn-secondary" style="margin: 0; height: 40px; min-width: 90px;">Copy</button>
                 </div>
                 <div id="error-message" class="error-message hidden"></div>
             </div>
@@ -123,5 +122,22 @@
         </main>
     </div>
     <script src="libs/script.js"></script>
+    <script>
+        function copyWithDoubleTick(button, textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                
+                // Matches the exact Unicode animation with text
+                button.innerHTML = `<span style="color: var(--color-success); display: flex; align-items: center; justify-content: center; gap: 4px; font-weight: bold; font-size: 13px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11L12 16L22 6M2 11L7 16L17 6"/></svg> Copied</span>`;
+                
+                setTimeout(() => { button.innerHTML = originalHTML; }, 2000);
+            });
+        }
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const dateText = document.getElementById('result-text').innerText;
+            if(dateText) copyWithDoubleTick(this, dateText);
+        });
+    </script>
 </body>
 </html>
