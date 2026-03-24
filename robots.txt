@@ -1,5 +1,11 @@
 User-agent: *
 Allow: /
 
-# Point crawlers directly to your map of tools
+# Prevent bots from indexing raw library files and assets directly
+Disallow: /Assets/
+Disallow: /*/libs/
+Disallow: /Projects/UnitConverterWeb/assets/
+Disallow: /Projects/UnitConverterWeb/canvaskit/
+
+# Point bots to the sitemap
 Sitemap: https://kishoraryal.com.np/sitemap.xml
