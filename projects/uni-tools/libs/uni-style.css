@@ -1,0 +1,18 @@
+.mode-btn { 
+    width: 100%; 
+    justify-content: center; 
+    margin-top: 8px; 
+}
+
+.mode-btn.active { 
+    background: var(--accent-primary); 
+    color: black; 
+    border-color: var(--accent-primary); 
+    font-weight: bold; 
+}
+
+.app-container:has(.mode-btn) textarea { 
+    min-height: 250px !important; 
+    font-size: 16px; 
+    line-height: 1.5; 
+}
