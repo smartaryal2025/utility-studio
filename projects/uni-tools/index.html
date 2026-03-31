@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unicode Tools</title>
+    <meta name="description" content="Convert Nepali Preeti font to Unicode and Unicode to Preeti easily and accurately. Works completely offline.">
+    <meta name="keywords" content="preeti to unicode, unicode to preeti, nepali font converter, traditional nepali typing, offline converter">
+    <meta name="author" content="Kishor Aryal">
+    
+    <link rel="canonical" href="https://kishoraryal.com.np/Projects/Uni-Tools/">
+
+    <meta property="og:title" content="Unicode Tools (Preeti Converter) | Utility Studio">
+    <meta property="og:description" content="Convert Nepali Preeti font to Unicode and Unicode to Preeti effortlessly.">
+    <meta property="og:image" content="https://kishoraryal.com.np/assets/logo.png">
+    <meta property="og:url" content="https://kishoraryal.com.np/Projects/Uni-Tools/">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" href="../../assets/logo.png">
+    <link rel="stylesheet" href="../../assets/master.css">
+    <script src="libs/mammoth.browser.min.js"></script>
+</head>
+<body>
+    <a href="../../index.html" title="Back to Dashboard" style="position: fixed; top: 15px; left: 15px; z-index: 1000; background: var(--surface-light); border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.3); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-primary); text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.background='var(--surface-dark)'; this.style.color='var(--accent-primary)';" onmouseout="this.style.background='var(--surface-light)'; this.style.color='var(--text-primary)';">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+    </a>
+    <div class="app-container">
+        <h1 class="app-header">Unicode Tools</h1>
+
+        <div class="tools-grid">
+            <div class="right-column" style="grid-column: 1;"> 
+                <section>
+                    <div class="section-header">
+                        <h2>Settings</h2>
+                    </div>
+
+                    <div class="control-panel" style="flex-direction: column; align-items: stretch;">
+                        <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                            <span class="control-label">Conversion Mode</span>
+                            <button id="mode-p2u" class="btn-secondary mode-btn active" style="margin-top: 0; width: auto !important; min-width: 220px; align-self: center;">Preeti ➔ Unicode</button>
+                            <button id="mode-u2p" class="btn-secondary mode-btn" style="width: auto !important; min-width: 220px; align-self: center;">Unicode ➔ Preeti</button>
+                        </div>
+                    </div>
+
+                    <div class="control-panel" style="flex-direction: column; align-items: stretch;">
+                        <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                            <span class="control-label">File Input</span>
+                            
+                            <button class="btn-secondary" onclick="document.getElementById('file-upload').click()" style="width: auto !important; min-width: 220px; margin-top: 5px; align-self: center;">📁 Choose File</button>
+                            <input type="file" id="file-upload" accept=".txt,.doc,.docx" style="display: none;">
+                            
+                            <div id="file-name-display" style="font-size: 12px; color: #94a3b8; margin-top: 8px; text-align: center; width: 100%;">
+                                No file selected
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="right-column">
+                <section>
+                    <div class="section-header">
+                        <h2>Input</h2>
+                        <span class="badge" id="input-badge">Preeti</span>
+                    </div>
+                    <textarea id="input-text" placeholder="Type or paste your text here..."></textarea>
+                    
+                    <div style="border-top: 1px solid #334155; padding-top: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                        <button id="convert-btn">Convert Text</button>
+                        <span id="error-msg" class="hidden" style="color: #ef4444; font-size: 13px;">Input cannot be empty.</span>
+                    </div>
+                </section>
+
+                <section>
+                    <div class="section-header">
+                        <h2>Output</h2>
+                        <span class="badge" id="output-badge">Unicode</span>
+                    </div>
+                    <textarea id="output-text" readonly placeholder="Converted text will appear here..."></textarea>
+                    
+                    <div style="border-top: 1px solid #334155; padding-top: 15px; margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
+                        <button id="copy-btn" class="btn-secondary">Copy</button>
+                        <button id="download-txt-btn" class="btn-secondary">Download .txt</button>
+                        <button id="download-doc-btn" class="btn-secondary">Download .doc</button>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <script>
+        function copyWithDoubleTick(button, textToCopy) {
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML;
+                button.innerHTML = `<span style="color: var(--color-success); display: flex; align-items: center; gap: 4px; font-weight: bold; font-size: 13px;"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 11L12 16L22 6M2 11L7 16L17 6"/></svg> Copied</span>`;
+                setTimeout(() => { button.innerHTML = originalHTML; }, 2000);
+            });
+        }
+
+        document.getElementById('copy-btn').addEventListener('click', function() {
+            const unicodeText = document.getElementById('output-text').value;
+            if(unicodeText) copyWithDoubleTick(this, unicodeText);
+        });
+    </script>
+    <script src="libs/script.js"></script>
+</body>
+</html>
