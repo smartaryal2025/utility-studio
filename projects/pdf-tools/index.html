@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Toolkit | Utility Studio</title>
+    <title>PDF Toolkit Pro | Utility Studio</title>
     <meta name="description" content="Free, secure, and offline-capable PDF Toolkit. Merge, compress, split, organize, and edit PDFs directly in your browser.">
-    <meta name="keywords" content="PDF tools, merge PDF, compress PDF, split PDF, offline PDF editor, Utility Studio, Kishor Aryal">
+    <meta name="keywords" content="PDF tools, merge PDF, compress PDF, split PDF, offline PDF editor, Kishor Aryal">
     <meta name="author" content="Kishor Aryal">
     
     <link rel="canonical" href="https://kishoraryal.com.np/projects/pdf-tools/">
-
     <meta property="og:title" content="PDF Toolkit Pro | Utility Studio">
     <meta property="og:description" content="Free, secure, and offline-capable PDF Toolkit. Merge, compress, and edit PDFs.">
     <meta property="og:image" content="https://kishoraryal.com.np/assets/logo.png">
@@ -17,15 +16,40 @@
     <meta property="og:type" content="website">
 
     <link rel="icon" type="image/png" href="../../assets/logo.png">
-    <script src="libs/pdf.min.js"></script>
-    <script src="libs/pdf-lib.min.js"></script>
-    <script src="libs/Sortable.min.js"></script>
     <link rel="stylesheet" href="../../assets/master.css">
+    <link rel="stylesheet" href="libs/pdf-style.css">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PDF Toolkit",
+        "url": "https://kishoraryal.com.np/projects/pdf-tools/",
+        "description": "Merge, split, and edit PDF documents entirely in your browser without uploading files.",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0" }
+    }
+    </script>
 </head>
 <body data-active-tool="select">
-    <a href="../../index.html" title="Back to Dashboard" style="position: fixed; top: 15px; left: 15px; z-index: 1000; background: var(--surface-light); border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.3); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-primary); text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.background='var(--surface-dark)'; this.style.color='var(--accent-primary)';" onmouseout="this.style.background='var(--surface-light)'; this.style.color='var(--text-primary)';">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-    </a>
+    <div class="us-global-menu top-left">
+        <a href="../../index.html" class="us-home-btn" title="Dashboard">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        </a>
+        <div class="us-dropdown">
+            <button class="us-dropbtn">Tools ▾</button>
+            <div class="us-dropdown-content">
+                <a href="../date-converter/index.html">📅 Date Converter</a>
+                <a href="../uni-tools/index.html">🔤 Unicode Tools</a>
+                <a href="../qr-tools/index.html">🔳 QR & Barcode</a>
+                <a href="../pdf-tools/index.html">📄 PDF Toolkit</a>
+                <a href="../image-tools/index.html">🖼️ Image Studio</a>
+                <a href="../video-tools/index.html">🎬 Media Studio</a>
+                <a href="../unit-converter/index.html">⚖️ Unit Converter</a>
+            </div>
+        </div>
+    </div>
 
     <div class="app-container">
         <div class="app-header">PDF Toolkit Pro</div>
