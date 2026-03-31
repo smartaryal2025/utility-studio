@@ -1,0 +1,439 @@
+/* ==========================================================================
+   UTILITY STUDIO - UNIFIED UI FRAMEWORK
+   ========================================================================== */
+
+:root {
+    --bg-start: #020617;
+    --bg-end: #000000;
+    --surface-dark: #010a1a;
+    --surface-light: #0a1f44;
+    
+    /* Darkened to fix text visibility on the Merge/Compress buttons */
+    --border-color: #334155; 
+    
+    /* Restored to your bright neon cyan for the file browser buttons */
+    --accent-primary: #00d9ff; 
+    --accent-hover: #0099ff;
+    
+    --text-primary: #e6faff;
+    --text-secondary: #475569c;
+    --color-success: #00ffcc;
+    --color-success-hover: #00e6b8;
+    --color-error: #ff0033;
+    --color-error-hover: #ff1a4d;
+    --radius-md: 5px;
+    --radius-lg: 8px;
+    --shadow-soft:
+        0 0 5px rgba(0, 217, 255, 0.7),
+        0 0 10px rgba(0, 217, 255, 0.5),
+        0 0 20px rgba(0, 217, 255, 0.3);
+    --transition-smooth: all 0.3s ease;
+}
+
+/* ==========================================================================
+   1. GLOBAL LAYOUT
+   ========================================================================== */
+html { height: -webkit-fill-available; min-height: 100%; background: var(--bg-end); }
+
+body {
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+    background-attachment: fixed; /* FIX: Prevents the ugly two-color horizontal cut-off */
+    color: var(--text-primary);
+    margin: 0; 
+    padding: 0;
+    min-height: 100vh; 
+    min-height: -webkit-fill-available;
+    display: flex; 
+    flex-direction: column; 
+    overflow-x: hidden;
+}
+
+.app-container {
+    max-width: 1400px; 
+    margin: auto; 
+    padding: 25px; 
+    box-sizing: border-box;
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+}
+
+.app-container:has(.live-date-container) { max-width: 600px; } 
+
+.app-header {
+    text-align: center; color: var(--accent-primary); font-size: 28px;
+    margin-top: 0; margin-bottom: 30px; font-weight: bold;
+}
+
+h2, h3, h4 { color: var(--text-primary); margin-top: 0; }
+
+.tools-grid, .dashboard {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 20px; 
+    align-items: stretch; 
+    flex-grow: 1;
+}
+
+@media (min-width: 950px) {
+    .tools-grid, .dashboard { grid-template-columns: 350px 1fr; }
+}
+
+.right-column { display: flex; flex-direction: column; gap: 20px; height: 100%; }
+
+.tools-grid:has(.word-toolbar), .tools-grid:has(.split-bucket) { grid-template-columns: 1fr !important; }
+@media (min-width: 768px) { .tools-grid:has(.word-toolbar), .tools-grid:has(.split-bucket) { grid-template-columns: repeat(2, 1fr) !important; } }
+@media (min-width: 1100px) { .tools-grid:has(.word-toolbar), .tools-grid:has(.split-bucket) { grid-template-columns: repeat(3, 1fr) !important; } }
+
+section, .card, .card-container {
+    padding: 20px; background: var(--surface-dark); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft); border: 1px solid var(--border-color);
+    transition: var(--transition-smooth); position: relative; box-sizing: border-box;
+    display: flex; flex-direction: column; height: 100%; margin-bottom: 0;
+}
+
+.section-header {
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 1px solid var(--border-color); padding-bottom: 10px; margin-bottom: 15px; width: 100%;
+}
+.section-header h2 { font-size: 18px; margin: 0; }
+
+.hidden, [hidden] { display: none !important; }
+
+/* ==========================================================================
+   2. MASTER HUB LAYOUT
+   ========================================================================== */
+body.hub-layout { font-family: system-ui, -apple-system, sans-serif; height: 100vh; overflow: hidden; }
+.top-header { background-color: var(--surface-dark); border-bottom: 1px solid var(--border-color); padding: 0.75rem 1.5rem; display: flex; align-items: center; z-index: 20; }
+.menu-toggle { background: transparent; border: none; color: var(--text-primary); font-size: 1.5rem; cursor: pointer; padding: 0; margin-right: 1rem; display: flex; transition: color 0.2s; }
+.menu-toggle:hover { color: var(--accent-primary); }
+.brand { font-size: 1.25rem; font-weight: bold; letter-spacing: 0.5px; }
+.main-container { display: flex; flex-grow: 1; position: relative; overflow: hidden; }
+.sidebar { width: 260px; background-color: var(--surface-dark); border-right: 1px solid var(--border-color); display: flex; flex-direction: column; box-sizing: border-box; transition: transform 0.3s ease, margin-left 0.3s ease; z-index: 10; }
+.sidebar.hidden { margin-left: -260px; }
+.nav-section { padding: 1rem; flex-grow: 1; overflow-y: auto; }
+.nav-item { display: block; padding: 0.75rem 1rem; color: var(--text-secondary); text-decoration: none; border-radius: 6px; margin-bottom: 0.5rem; transition: all 0.2s; border-left: 3px solid transparent; cursor: pointer; font-weight: 500; }
+.nav-item:hover { background-color: rgba(255, 255, 255, 0.05); color: var(--text-primary); }
+.nav-item.active { background-color: rgba(56, 189, 248, 0.1); color: var(--accent-primary); border-left-color: var(--accent-primary); }
+.workspace { flex-grow: 1; position: relative; background-color: transparent; }
+iframe { width: 100%; height: 100%; border: none; background-color: transparent; display: block; }
+.mobile-overlay { display: none; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 5; opacity: 0; transition: opacity 0.3s ease; }
+@media (max-width: 768px) {
+    .sidebar { position: absolute; height: 100%; transform: translateX(-100%); margin-left: 0 !important; }
+    .sidebar.mobile-open { transform: translateX(0); }
+    .mobile-overlay.active { display: block; opacity: 1; }
+}
+
+/* ==========================================================================
+   3. UNIVERSAL FORM CONTROLS & BUTTONS
+   ========================================================================== */
+.app-container input:not([type="radio"]):not([type="checkbox"]):not([type="file"]):not([type="color"]),
+.app-container select, .dashboard input:not([type="radio"]):not([type="checkbox"]):not([type="file"]):not([type="color"]), .dashboard select {
+    width: 100%; padding: 0 10px; margin: 5px 0; border-radius: var(--radius-md);
+    border: 1px solid var(--border-color) !important; box-sizing: border-box;
+    background-color: var(--surface-light) !important; color: var(--text-primary) !important;
+    font-family: inherit; outline: none; transition: border-color 0.2s; font-size: 14px;
+    height: 40px !important; 
+}
+.app-container input:focus, .app-container select:focus, .dashboard input:focus, .dashboard select:focus { border-color: var(--accent-primary) !important; }
+.app-container input::placeholder { color: var(--text-secondary) !important; }
+
+.app-container textarea { 
+    width: 100%; padding: 10px; margin: 5px 0; border-radius: var(--radius-md);
+    border: 1px solid var(--border-color) !important; box-sizing: border-box;
+    background-color: var(--surface-light) !important; color: var(--text-primary) !important;
+    font-family: inherit; outline: none; transition: border-color 0.2s; font-size: 14px;
+    min-height: 120px; resize: vertical; height: auto;
+}
+.app-container textarea:focus { border-color: var(--accent-primary) !important; }
+.app-container textarea::placeholder { color: var(--text-secondary) !important; }
+.app-container:has(.mode-btn) textarea { min-height: 250px !important; font-size: 16px; line-height: 1.5; }
+
+input[type="file"] { width: auto; background: transparent; padding: 0; margin-bottom: 10px; color: var(--text-secondary); }
+input[type="radio"], input[type="checkbox"] { width: auto; margin: 0; cursor: pointer; }
+input[type="color"] { padding: 4px; border-radius: var(--radius-md); border: 1px solid var(--border-color); background: var(--surface-light); cursor: pointer; }
+
+.action-row { display: flex; gap: 10px; align-items: flex-end; margin-top: auto; padding-top: 15px; width: 100%; }
+.action-row > * { margin: 0 !important; }
+.action-row .control-group { flex: 1; }
+.action-row input:not([type="file"]), .action-row button, .action-row select { height: 40px !important; }
+
+.input-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin-bottom: 20px; width: 100%; }
+.input-group { display: flex; flex-direction: column; width: 100%; }
+.input-group label, .form-group label { font-size: 13px; color: var(--text-secondary); font-weight: bold; text-transform: uppercase; margin-bottom: 6px; }
+.form-group { margin-bottom: 1.25rem; width: 100%; }
+.crop-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+
+/* FIX: Smart rule to perfectly center and size PDF Upload Buttons automatically */
+section > button[onclick*="upload"] {
+    width: auto !important;
+    min-width: 200px;
+    padding: 10px 30px !important;
+    display: inline-flex !important;
+    margin: 0 auto 15px 0 !important;
+}
+
+button, .btn-upload-label {
+    padding: 0 15px; height: 40px; border-radius: var(--radius-md); border: none;
+    background: var(--accent-primary); color: black; font-weight: bold;
+    cursor: pointer; transition: background 0.3s; display: inline-flex;
+    align-items: center; justify-content: center; gap: 5px; font-family: inherit; font-size: 14px;
+    text-decoration: none; box-sizing: border-box; white-space: nowrap;
+}
+button:hover, .btn-upload-label:hover { background: var(--accent-hover); }
+button:disabled, .btn-upload-label.disabled { background: var(--border-color); color: var(--text-secondary); cursor: not-allowed; pointer-events: none; }
+
+.btn-primary { background: var(--accent-primary); color: black; }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { background: var(--surface-light); color: var(--accent-primary); border: 1px solid var(--accent-primary); }
+.btn-secondary:hover { background: var(--border-color); }
+.btn-success { background: var(--color-success); color: white; border: 1px solid var(--color-success); }
+.btn-success:hover { background: var(--color-success-hover); }
+.btn-danger { background: var(--color-error); color: white; border: 1px solid var(--color-error); }
+.btn-danger:hover { background: var(--color-error-hover); }
+
+.button-group { display: flex; gap: 12px; }
+.button-group button { flex: 1; }
+
+.btn-icon, .tool-btn { background: transparent; color: var(--text-secondary); padding: 6px; border: 1px solid transparent; border-radius: 4px; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 12px; cursor: pointer; height: auto;}
+.btn-icon:hover, .tool-btn:hover { color: var(--text-primary); background: var(--border-color); }
+.tool-btn.active { background: var(--accent-hover); color: black; border-color: var(--accent-primary); font-weight: bold; }
+
+/* ==========================================================================
+   4. SHARED UI COMPONENTS
+   ========================================================================== */
+.control-panel, .toggle-container { background: var(--surface-light); padding: 12px 15px; border-radius: 6px; border: 1px solid var(--border-color); display: flex; gap: 15px; align-items: center; flex-wrap: wrap; margin-bottom: 15px; width: 100%; box-sizing: border-box; }
+.control-group { display: flex; align-items: center; gap: 8px; }
+.control-label { font-size: 13px; color: var(--text-secondary); font-weight: bold; text-transform: uppercase; }
+
+.slider-container { display: flex; align-items: center; gap: 10px; background: var(--surface-dark); padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); }
+.slider-label { font-size: 11px; color: var(--text-secondary); font-weight: bold; }
+
+.badge { background-color: var(--surface-dark); border: 1px solid var(--surface-light); padding: 4px 12px; border-radius: 999px; font-size: 13px; color: var(--accent-primary); }
+
+.thumb-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; background: var(--surface-light); padding: 10px; border-radius: 6px; min-height: 100px; max-height: 600px; overflow-y: auto; width: 100%; box-sizing: border-box; }
+.thumbnail-item { background: var(--surface-dark); padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; position: relative; }
+.thumbnail-item:hover { border-color: var(--accent-primary); }
+.thumbnail-item.active { border-color: var(--color-success); background: var(--surface-light); }
+
+.thumbnail-item img { width: 100%; height: 70px; object-fit: cover; border-radius: 4px; background: white; } 
+.thumbnail-item canvas { max-width: 100%; height: auto; border-radius: 4px; background: white; display: block; margin: 0 auto; } 
+
+.page-label { font-size: 11px; color: var(--text-secondary); margin-top: 6px; word-break: break-all; }
+
+/* ==========================================================================
+   5. TOOL-SPECIFIC SECTIONS
+   ========================================================================== */
+
+/* --- A. PDF & Image Canvas Editor --- */
+#editor-canvas-container { position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-color); background: var(--surface-light); padding: 10px; border-radius: 6px; overflow: hidden; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); width: 100%; min-height: 300px; touch-action: none; box-sizing: border-box; }
+#main-image { display: none; max-width: 100%; max-height: 50vh; border-radius: 4px; background: white; touch-action: none; }
+#editor-canvas { display: block; max-width: 100%; max-height: 50vh; border-radius: 4px; background: white; touch-action: none; }
+
+body:has(.word-toolbar) #editor-canvas-container { padding: 0; display: block; line-height: 0; }
+body:has(.word-toolbar) #editor-canvas { width: 100%; max-height: none; height: auto; border-radius: 0; }
+
+.live-overlay { position: absolute; z-index: 10; cursor: move; user-select: none; border: 1px dashed transparent; padding: 2px; box-sizing: border-box; touch-action: none; line-height: 1; }
+.live-overlay.selected { border-color: var(--accent-primary); outline: 2px solid var(--accent-hover); z-index: 100 !important; background: rgba(56, 189, 248, 0.1); }
+.resize-handle { display: none; position: absolute; bottom: -8px; right: -8px; width: 16px; height: 16px; background: var(--accent-primary); border: 2px solid var(--surface-light); border-radius: 50%; cursor: nwse-resize; z-index: 12; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+
+.del-overlay-btn { 
+    display: none; 
+    position: absolute; 
+    top: -12px; left: -12px; 
+    background: var(--color-error); color: white; 
+    border: none; 
+    border-radius: 50% !important; 
+    
+    /* Strict dimensions to prevent oval stretching */
+    width: 24px !important; height: 24px !important; 
+    min-width: 24px !important; min-height: 24px !important;
+    padding: 0 !important; box-sizing: border-box !important;
+    
+    font-size: 12px; cursor: pointer; z-index: 11; 
+    justify-content: center; align-items: center; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+}
+
+/* FIX: Ensure the red cross on PDF Thumbnails is on the top right, not top left */
+.thumbnail-item .del-overlay-btn {
+    top: -10px !important;
+    right: -10px !important;
+    left: auto !important;
+}
+
+.live-overlay.selected .resize-handle, .live-overlay.selected .del-overlay-btn { display: flex; }
+.thumbnail-item:hover .del-overlay-btn { display: flex; } /* Ensure it shows on hover */
+
+.overlay-text { font-family: Helvetica, sans-serif; min-width: 30px; min-height: 20px; white-space: pre-wrap; outline: none; border: 1px dashed transparent; line-height: 1.2; word-break: break-word; }
+.overlay-text:focus { border-color: var(--accent-primary); cursor: text; }
+.overlay-rect { border: 2px solid var(--color-error); background: rgba(239, 68, 68, 0.2); }
+.overlay-ellipse { border: 2px solid var(--accent-primary); border-radius: 50%; background: rgba(56, 189, 248, 0.2); }
+.overlay-line { border-top: 3px solid var(--color-success); height: 0; min-height: 5px; } 
+.overlay-highlight { background: rgba(250, 204, 21, 0.4); mix-blend-mode: multiply; }
+.overlay-checkbox { width: 16px; height: 16px; border: 2px solid var(--surface-dark); background: white; }
+.overlay-formtext { border: 1px dashed var(--accent-primary); font-size: 10px; display: flex; align-items: center; padding-left: 4px; overflow: hidden; background: transparent; }
+
+section.fullscreen-mode { position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: 100%; z-index: 9999; border-radius: 0; overflow-y: auto; background: var(--surface-dark); padding: 30px; margin: 0; display: flex; flex-direction: column; }
+.word-toolbar { display: flex; flex-wrap: wrap; gap: 8px; background: var(--surface-light); padding: 12px; border-radius: 6px; margin-bottom: 15px; border: 1px solid var(--border-color); align-items: center; width: 100%; box-sizing: border-box;}
+.format-bar { display: flex; gap: 8px; align-items: center; background: var(--surface-dark); padding: 6px 10px; border-radius: 4px; border: 1px dashed var(--border-color); margin-left: auto; flex-wrap: wrap; }
+.split-bucket { border: 2px dashed var(--border-color); padding: 10px; border-radius: 8px; margin-bottom: 15px; background: var(--surface-dark); width: 100%; box-sizing: border-box; }
+.bucket-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; }
+
+body[data-active-tool="select"] #overlay-layer { cursor: default; }
+body[data-active-tool="text"] #overlay-layer { cursor: text; }
+body[data-active-tool="highlight"], body[data-active-tool="shape"], body[data-active-tool="form"], body[data-active-tool="image"] { cursor: crosshair; }
+
+/* --- B. Video Media Studio UI Elements --- */
+.drop-zone { border: 2px dashed var(--border-color); border-radius: var(--radius-lg); padding: 2rem 1rem; text-align: center; background-color: var(--surface-light); cursor: pointer; transition: 0.2s; margin-bottom: 1rem; width: 100%; box-sizing: border-box;}
+.file-queue { display: flex; flex-direction: column; gap: 0.5rem; margin-bottom: 1.25rem; width: 100%; }
+.file-item { display: flex; justify-content: space-between; background: var(--surface-light); padding: 0.5rem 0.75rem; border-radius: 4px; font-size: 0.8rem; border: 1px solid var(--border-color); }
+.terminal { background-color: var(--surface-light); border-radius: 6px; padding: 1rem; height: 300px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 0.875rem; border: 1px solid var(--border-color); word-break: break-all; white-space: pre-wrap; width: 100%; box-sizing: border-box;}
+.log-info { color: var(--text-primary); }
+.log-success { color: var(--color-success); }
+.log-error { color: var(--color-error); }
+.log-warning { color: var(--color-warning); }
+
+/* --- C. QR & Barcode Tools --- */
+.toggle-container { display: flex; gap: 25px; margin-bottom: 20px; background: var(--surface-light); padding: 12px 15px; border-radius: 6px; flex-wrap: nowrap !important; overflow-x: auto; width: 100%; box-sizing: border-box; }
+.toggle-container label { white-space: nowrap; }
+
+.generator-controls { display: flex; gap: 5px; margin-top: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+#qrcode, canvas, svg { margin-top: 15px !important; margin-bottom: 25px !important; display: block; max-width: 100%; height: auto; }
+
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+.full-width { grid-column: span 2; }
+
+.scan-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-bottom: 15px; width: 100%; }
+.scan-controls input { width: auto !important; flex-grow: 1; margin: 0 !important; }
+.scan-controls button { margin: 0 !important; }
+
+.scan-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 10px; width: 100%; }
+.scan-header > div:last-child, .scan-actions { margin-left: auto; display: flex; gap: 8px; } 
+
+#scanActionContainer { display: none; margin-top: 15px; padding: 15px; background: var(--surface-dark); border-radius: 6px; border-left: 4px solid var(--color-success); align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; width: 100%; box-sizing: border-box;}
+#scanActionText strong { color: var(--color-success); font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; display: block; }
+#suggestedActionMessage { color: var(--text-primary); font-size: 15px; margin-top: 2px; }
+
+#scanResultContainer { display: block; margin-top: 15px; background: var(--surface-light); padding: 15px; border-radius: 8px; width: 100%; box-sizing: border-box;}
+#scanResult { background: var(--surface-dark); padding: 15px; border-radius: 5px; border: 1px solid var(--border-color); font-family: monospace; font-size: 14px; color: #a5b4fc; overflow-x: auto; min-height: 20px; width: 100%; box-sizing: border-box;}
+.history-item { background: var(--surface-light); padding: 12px 15px; border-radius: 6px; margin-bottom: 10px; border-left: 4px solid var(--accent-primary); display: flex; justify-content: space-between; align-items: center; gap: 15px; width: 100%; box-sizing: border-box;}
+.history-data { font-family: monospace; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 600px; }
+
+#cropModal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.95); z-index: 1000; padding: 20px; box-sizing: border-box; flex-direction: column; align-items: center; justify-content: center; }
+#cropContainer { width: 100%; max-width: 600px; max-height: 60vh; background: #000; }
+
+/* --- D. Date Converter --- */
+.live-date-container { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 30px; }
+.live-date { display: inline-flex; align-items: center; gap: 8px; background: var(--surface-dark); padding: 6px 14px; border-radius: 20px; font-size: 13px; color: var(--text-secondary); border: 1px dashed var(--accent-primary); }
+.indicator { width: 8px; height: 8px; background-color: var(--color-success); border-radius: 50%; box-shadow: 0 0 8px var(--color-success); animation: pulse 2s infinite; }
+@keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.tabs { display: flex; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 20px; width: 100%; }
+.tab-btn { flex: 1; background: transparent; color: var(--text-secondary); padding: 10px; border-radius: var(--radius-md); font-weight: bold; transition: var(--transition-smooth); height: auto;}
+.tab-btn.active { background: var(--surface-light); color: var(--accent-primary); border: 1px solid var(--border-color); }
+
+.calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px; width: 100%; }
+.cal-controls { display: flex; gap: 8px; }
+.cal-header-select { padding: 6px 8px; margin: 0; font-weight: bold; font-size: 14px; color: var(--accent-primary); background: var(--surface-dark); border: 1px solid var(--border-color); cursor: pointer; height: 40px;}
+.cal-nav-btn { background: var(--surface-light); border: 1px solid var(--border-color); width: 40px; height: 40px; border-radius: var(--radius-md); cursor: pointer; color: var(--text-primary); display: flex; align-items: center; justify-content: center;}
+.cal-nav-btn:hover { color: var(--accent-primary); background: var(--surface-dark); }
+
+.calendar-grid { display: grid !important; grid-template-columns: repeat(7, 1fr) !important; gap: 4px; text-align: center; width: 100%; }
+.cal-days-wrapper { display: contents !important; }
+.weekday { font-size: 12px; color: var(--text-secondary); font-weight: bold; padding-bottom: 8px; border-bottom: 1px solid var(--border-color); margin-bottom: 6px; }
+
+.cal-day { padding: 10px 4px; background: var(--surface-light); border-radius: 4px; font-size: 14px; border: 1px solid transparent; }
+.cal-day.today { background: rgba(16, 185, 129, 0.15); border-color: var(--color-success); color: var(--color-success); font-weight: bold; }
+.output-card { margin-top: 20px; background: var(--surface-light); padding: 15px; border-radius: 6px; border: 1px solid var(--border-color); border-left: 4px solid var(--color-success); width: 100%; box-sizing: border-box;}
+.result-text { margin: 0; font-size: 1.2rem; font-weight: bold; color: var(--accent-primary); }
+
+/* --- E. Unicode Tools --- */
+.mode-btn { width: 100%; justify-content: center; margin-top: 8px; }
+.mode-btn.active { background: var(--accent-primary); color: black; border-color: var(--accent-primary); font-weight: bold; }
+
+/* ==========================================================================
+   6. MOBILE RESPONSIVE BREAKPOINTS (Android Chrome Fixes)
+   ========================================================================== */
+@media (max-width: 600px) {
+    .app-container { padding: 15px 10px 80px 10px; } /* Bottom padding prevents cutoff */
+    
+    .control-panel, .slider-container { flex-direction: column; align-items: stretch; gap: 12px; }
+    .control-group { border-right: none !important; padding-right: 0 !important; flex-wrap: wrap; justify-content: flex-start; width: 100%; }
+    .history-item { flex-direction: column; align-items: flex-start; }
+    .history-data { max-width: 250px; }
+    .cal-day { font-size: 13px; padding: 8px 2px; }
+    
+    .form-grid { grid-template-columns: 1fr; }
+    .full-width { grid-column: span 1; }
+    .input-grid { grid-template-columns: 1fr; }
+    .button-group { flex-direction: column; }
+    .scan-header > div:last-child, .scan-actions { margin-left: 0; }
+
+    /* FIX: Force buttons to be thick and touch-friendly on Android */
+    button, .btn-secondary, .btn-primary, .btn-success, .btn-danger, .tab-btn {
+        min-height: 48px !important;
+        height: auto !important;
+        padding: 10px 15px !important;
+    }
+
+    /* FIX: Force QR/Barcode Toggle to stay on one line */
+    .toggle-container { 
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important; 
+        gap: 12px !important; /* Shrunk gap to fit mobile screens */
+        padding: 12px 10px !important; 
+        justify-content: center !important;
+        width: 100%; 
+        box-sizing: border-box;
+    }
+    .toggle-container label { 
+        white-space: nowrap !important; 
+        font-size: 14px !important;
+    }
+}
+/* ==========================================================================
+   FINAL POLISH OVERRIDES (QR History & Date Converter)
+   ========================================================================== */
+
+/* 1. Aggressively hide any date/time elements inside the QR History */
+.history-meta, 
+.history-date, 
+.history-time,
+.history-item small,
+.history-item span[style*="font-size: 12px"],
+.history-item span[style*="color: #94a3b8"],
+.history-item span[style*="color:#94a3b8"] { 
+    display: none !important; 
+}
+
+/* 2. Stop the Date Output card from stretching too tall */
+.output-card {
+    height: auto !important;
+    flex: 0 0 auto !important;
+}
+
+/* 3. Force the Date text and Copy button to sit perfectly inline */
+.output-card .result-text {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 15px 0 0 !important;
+}
+
+/* 4. Fix the stretched shape of the Copy Button */
+.output-card button, 
+.output-card .btn-icon {
+    display: inline-flex !important;
+    vertical-align: middle !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+}
