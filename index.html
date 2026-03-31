@@ -5,90 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utility Studio | All-in-One Web Tools</title>
     <meta name="description" content="Utility Studio by Kishor Aryal: A free, secure, and offline-capable suite of web tools.">
+    <meta name="keywords" content="offline web tools, Utility Studio, Kishor Aryal, free online tools, PDF tools, image editor, video converter, nepal tools">
+    <meta name="author" content="Kishor Aryal">
     
+    <link rel="canonical" href="https://kishoraryal.com.np/">
+    <meta property="og:title" content="Utility Studio | All-in-One Web Tools">
+    <meta property="og:description" content="Free, secure, and offline-capable suite of powerful web tools.">
+    <meta property="og:image" content="https://kishoraryal.com.np/assets/logo.png">
+    <meta property="og:url" content="https://kishoraryal.com.np/">
+    <meta property="og:type" content="website">
+
     <link rel="icon" type="image/png" href="assets/logo.png">
     <link rel="stylesheet" href="assets/master.css">
     <link rel="manifest" href="/manifest.json">
     
-    <style>
-        /* Slightly lighter, premium radial background just for the dashboard */
-        body {
-            background: radial-gradient(circle at top center, #1e293b 0%, #0f172a 100%) !important;
-            /* If you want it even lighter, change the above line to: */
-            /* background: radial-gradient(circle at top center, #334155 0%, #1e293b 100%) !important; */
-        }
-        .dashboard-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 20px; 
-            padding-bottom: 40px; 
-        }
-        
-        .tool-card {
-            background: var(--surface-light); 
-            /* Default visible neon border and glow */
-            border: 1px solid rgba(56, 189, 248, 0.4); 
-            box-shadow: 0 0 12px rgba(56, 189, 248, 0.15), inset 0 0 8px rgba(56, 189, 248, 0.05);
-            border-radius: var(--radius-md, 8px); 
-            padding: 20px;
-            text-decoration: none; 
-            color: var(--text-primary); 
-            transition: all 0.3s ease; 
-            display: flex; 
-            flex-direction: column; 
-            position: relative;
-        }
-        
-        .tool-card:hover { 
-            border-color: var(--accent-primary, #38bdf8); 
-            transform: translateY(-3px); 
-            background: var(--surface-dark, #0f172a); 
-            /* Thicker, brighter glow on hover */
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 0 12px rgba(56, 189, 248, 0.2); 
-        }
-        
-        .tool-icon { 
-            width: 45px; 
-            height: 45px; 
-            background: rgba(0,0,0,0.2); 
-            border-radius: var(--radius-md, 8px); 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            font-size: 22px; 
-            margin-bottom: 15px; 
-            /* Default icon glow */
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            box-shadow: 0 0 8px rgba(56, 189, 248, 0.1);
-            transition: all 0.3s ease;
-        }
-        
-        .tool-card:hover .tool-icon {
-            border-color: var(--accent-primary, #38bdf8);
-            color: var(--accent-primary, #38bdf8);
-            background: rgba(56, 189, 248, 0.1);
-            /* Intense icon glow on hover */
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); 
-        }
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Utility Studio",
+      "url": "https://kishoraryal.com.np/",
+      "author": {
+          "@type": "Person",
+          "name": "Kishor Aryal"
+      }
+    }
+    </script>
 
+    <style>
+        body {
+            background: linear-gradient(135deg, #020617, #000000) !important;
+            background-attachment: fixed !important;
+            color: #e6faff;
+            font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0; min-height: 100vh;
+        }
+        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding-bottom: 40px; }
+        .tool-card { background: #0a1f44; border: 1px solid rgba(56, 189, 248, 0.4); box-shadow: 0 0 12px rgba(56, 189, 248, 0.15), inset 0 0 8px rgba(56, 189, 248, 0.05); border-radius: 8px; padding: 20px; text-decoration: none; color: #e6faff; transition: all 0.3s ease; display: flex; flex-direction: column; position: relative; }
+        .tool-card:hover { border-color: #00d9ff; transform: translateY(-3px); background: #010a1a; box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 0 12px rgba(56, 189, 248, 0.2); }
+        .tool-icon { width: 45px; height: 45px; background: rgba(0,0,0,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 15px; border: 1px solid rgba(56, 189, 248, 0.3); transition: all 0.3s ease; }
+        .tool-card:hover .tool-icon { border-color: #00d9ff; color: #00d9ff; background: rgba(56, 189, 248, 0.1); box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
         .tool-title { font-size: 1.15rem; font-weight: bold; margin: 0 0 8px 0; transition: color 0.3s ease; }
-        .tool-card:hover .tool-title { color: var(--accent-primary, #38bdf8); }
-        .tool-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0; }
-        
-        /* Tiny status tags */
+        .tool-card:hover .tool-title { color: #00d9ff; }
+        .tool-desc { font-size: 0.9rem; color: #94a3b8; line-height: 1.5; margin: 0; }
         .status-tag { position: absolute; top: 20px; right: 20px; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 12px; }
         .tag-pro { color: #facc15; background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); }
         .tag-hot { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); }
-        .tag-epic { color: #a855f7; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); } /* Purple badge for Unicode */
     </style>
 </head>
 <body>
-    <div class="app-container" style="max-width: 1100px; padding-top: 20px;">
+    <div class="app-container" style="max-width: 1100px; padding-top: 20px; margin: auto;">
 
         <div style="position: relative; text-align: center; margin-bottom: 35px;">
             <img src="assets/logo.png" alt="Logo" style="width: 50px; height: 50px; margin-bottom: 10px;">
-            <h1 class="app-header" style="margin-bottom: 5px; justify-content: center; border-bottom: none; padding-bottom: 0;">Utility Studio</h1>
-            <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Secure, offline-capable web tools.</p>
+            <h1 class="app-header" style="color: #00d9ff; font-size: 28px; margin-bottom: 5px; border-bottom: none; padding-bottom: 0;">Utility Studio</h1>
+            <p style="color: #94a3b8; font-size: 14px; margin: 0;">Secure, offline-capable web tools.</p>
         </div>
 
         <div class="dashboard-grid">
@@ -136,14 +107,13 @@
                 <h2 class="tool-title">Unit Converter</h2>
                 <p class="tool-desc">Lightning-fast conversions for length, weight, area, volume, and more.</p>
             </a>
-
         </div>
     </div>
 
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/service-worker.js')
+                navigator.serviceWorker.register('service-worker.js')
                     .then(reg => console.log('ServiceWorker registered:', reg.scope))
                     .catch(err => console.log('ServiceWorker failed:', err));
             });

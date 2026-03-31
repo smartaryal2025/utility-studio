@@ -5,7 +5,7 @@ Allow: /
 Disallow: /assets/
 Disallow: /*/libs/
 Disallow: /projects/unit-converter/assets/
-Disallow: /Projects/unit-converter/canvaskit/
+Disallow: /projects/unit-converter/canvaskit/
 
 # Point bots to the sitemap
 Sitemap: https://kishoraryal.com.np/sitemap.xml
