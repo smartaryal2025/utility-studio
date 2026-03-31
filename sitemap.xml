@@ -7,43 +7,43 @@
     </url>
 
     <url>
-        <loc>https://kishoraryal.com.np/Projects/PDF-Tools/</loc>
+        <loc>https://kishoraryal.com.np/projects/date-converter/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://kishoraryal.com.np/projects/qr-tools/</loc>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+
+    <url>
+        <loc>https://kishoraryal.com.np/projects/image-tools/</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://kishoraryal.com.np/Projects/Image-Tools/</loc>
+        <loc>https://kishoraryal.com.np/projects/pdf-tools/</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://kishoraryal.com.np/Projects/Video-Tools/</loc>
+        <loc>https://kishoraryal.com.np/projects/uni-tools/</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://kishoraryal.com.np/Projects/QR-Tools/</loc>
+        <loc>https://kishoraryal.com.np/projects/video-tools/</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
     <url>
-        <loc>https://kishoraryal.com.np/Projects/DateConverter/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://kishoraryal.com.np/Projects/Uni-Tools/</loc>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-
-    <url>
-        <loc>https://kishoraryal.com.np/Projects/UnitConverterWeb/</loc>
+        <loc>https://kishoraryal.com.np/projects/unit-converter/</loc>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>

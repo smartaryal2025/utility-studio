@@ -4,83 +4,150 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Utility Studio | All-in-One Web Tools</title>
-    <meta name="description" content="Utility Studio by Kishor Aryal: A free, secure, and offline-capable suite of web tools including PDF, Image, Video, QR, Date, and Unicode converters.">
-    <meta name="keywords" content="utility studio, web tools, offline tools, pdf toolkit, image editor, video converter, Kishor Aryal, nepal">
-    <meta name="author" content="Kishor Aryal">
+    <meta name="description" content="Utility Studio by Kishor Aryal: A free, secure, and offline-capable suite of web tools.">
     
-    <link rel="canonical" href="https://kishoraryal.com.np/">
-
-    <meta property="og:title" content="Utility Studio | All-in-One Web Tools">
-    <meta property="og:description" content="Free, secure, and offline-capable suite of powerful web tools.">
-    <meta property="og:image" content="https://kishoraryal.com.np/Assets/logo.png">
-    <meta property="og:url" content="https://kishoraryal.com.np/">
-    <meta property="og:type" content="website">
-
-    <link rel="icon" type="image/png" href="Assets/logo.png">
-    <link rel="stylesheet" href="Assets/master.css">
+    <link rel="icon" type="image/png" href="assets/logo.png">
+    <link rel="stylesheet" href="assets/master.css">
     <link rel="manifest" href="/manifest.json">
+    
+    <style>
+        /* Slightly lighter, premium radial background just for the dashboard */
+        body {
+            background: radial-gradient(circle at top center, #1e293b 0%, #0f172a 100%) !important;
+            /* If you want it even lighter, change the above line to: */
+            /* background: radial-gradient(circle at top center, #334155 0%, #1e293b 100%) !important; */
+        }
+        .dashboard-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+            padding-bottom: 40px; 
+        }
+        
+        .tool-card {
+            background: var(--surface-light); 
+            /* Default visible neon border and glow */
+            border: 1px solid rgba(56, 189, 248, 0.4); 
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.15), inset 0 0 8px rgba(56, 189, 248, 0.05);
+            border-radius: var(--radius-md, 8px); 
+            padding: 20px;
+            text-decoration: none; 
+            color: var(--text-primary); 
+            transition: all 0.3s ease; 
+            display: flex; 
+            flex-direction: column; 
+            position: relative;
+        }
+        
+        .tool-card:hover { 
+            border-color: var(--accent-primary, #38bdf8); 
+            transform: translateY(-3px); 
+            background: var(--surface-dark, #0f172a); 
+            /* Thicker, brighter glow on hover */
+            box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 0 12px rgba(56, 189, 248, 0.2); 
+        }
+        
+        .tool-icon { 
+            width: 45px; 
+            height: 45px; 
+            background: rgba(0,0,0,0.2); 
+            border-radius: var(--radius-md, 8px); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 22px; 
+            margin-bottom: 15px; 
+            /* Default icon glow */
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            box-shadow: 0 0 8px rgba(56, 189, 248, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .tool-card:hover .tool-icon {
+            border-color: var(--accent-primary, #38bdf8);
+            color: var(--accent-primary, #38bdf8);
+            background: rgba(56, 189, 248, 0.1);
+            /* Intense icon glow on hover */
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); 
+        }
+
+        .tool-title { font-size: 1.15rem; font-weight: bold; margin: 0 0 8px 0; transition: color 0.3s ease; }
+        .tool-card:hover .tool-title { color: var(--accent-primary, #38bdf8); }
+        .tool-desc { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; margin: 0; }
+        
+        /* Tiny status tags */
+        .status-tag { position: absolute; top: 20px; right: 20px; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 12px; }
+        .tag-pro { color: #facc15; background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); }
+        .tag-hot { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); }
+        .tag-epic { color: #a855f7; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); } /* Purple badge for Unicode */
+    </style>
 </head>
-<body class="hub-layout">
-    <button onclick="window.location.href='layout2.html'" class="btn-secondary" style="position: fixed; top: 15px; right: 15px; z-index: 9999; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">✨ Try New Dashboard</button>
-    <div class="top-header">
-        <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Menu">☰</button>
-        <div class="brand">Utility Studio</div>
-    </div>
+<body>
+    <div class="app-container" style="max-width: 1100px; padding-top: 20px;">
 
-    <div class="main-container">
-        <div class="mobile-overlay" id="mobileOverlay" onclick="toggleSidebar()"></div>
-
-        <div class="sidebar" id="sidebar">
-            <div class="nav-section">
-                <a class="nav-item active" onclick="loadTool('Projects/QR-Tools/index.html', this)">🔳 QR & Barcode Lab</a>
-                <a class="nav-item" onclick="loadTool('Projects/PDF-Tools/index.html', this)">📄 PDF Toolkit</a>
-                <a class="nav-item" onclick="loadTool('Projects/Image-Tools/index.html', this)">🖼️ Image Studio</a>
-                <a class="nav-item" onclick="loadTool('Projects/Video-Tools/index.html', this)">🎥 Media Studio</a>
-                
-                <div style="margin: 1.5rem 0 0.5rem 1rem; font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Utilities</div>
-                
-                <a class="nav-item" onclick="loadTool('Projects/UnitConverterWeb/index.html', this)">📏 Unit Converter</a>
-                <a class="nav-item" onclick="loadTool('Projects/DateConverter/index.html', this)">📅 Date Converter</a>
-                <a class="nav-item" onclick="loadTool('Projects/Uni-Tools/index.html', this)">🔣 Unicode Tools</a>
-            </div>
+        <div style="position: relative; text-align: center; margin-bottom: 35px;">
+            <img src="assets/logo.png" alt="Logo" style="width: 50px; height: 50px; margin-bottom: 10px;">
+            <h1 class="app-header" style="margin-bottom: 5px; justify-content: center; border-bottom: none; padding-bottom: 0;">Utility Studio</h1>
+            <p style="color: var(--text-secondary); font-size: 14px; margin: 0;">Secure, offline-capable web tools.</p>
         </div>
 
-        <div class="workspace">
-            <iframe name="toolFrame" id="toolFrame" src="Projects/QR-Tools/index.html"></iframe>
+        <div class="dashboard-grid">
+            <a href="projects/date-converter/index.html" class="tool-card">
+                <span class="status-tag tag-pro">PRO</span>
+                <div class="tool-icon">📅</div>
+                <h2 class="tool-title">Nepali Date Converter</h2>
+                <p class="tool-desc">Convert dates between B.S. and A.D. with an interactive dual-date calendar.</p>
+            </a>
+
+            <a href="projects/uni-tools/index.html" class="tool-card">
+                <span class="status-tag tag-hot">HOT</span>
+                <div class="tool-icon">🔤</div>
+                <h2 class="tool-title">Unicode Tools</h2>
+                <p class="tool-desc">Seamlessly convert text between traditional Nepali Preeti and Unicode.</p>
+            </a>
+
+            <a href="projects/qr-tools/index.html" class="tool-card">
+                <span class="status-tag tag-pro">PRO</span>
+                <div class="tool-icon">🔳</div>
+                <h2 class="tool-title">QR & Barcode Lab</h2>
+                <p class="tool-desc">Generate advanced payloads and scan codes instantly with your camera.</p>
+            </a>
+
+            <a href="projects/pdf-tools/index.html" class="tool-card">
+                <div class="tool-icon"><img src="assets/pdf.png" alt="PDF" style="width: 22px; height: 22px; object-fit: contain;"></div>
+                <h2 class="tool-title">PDF Toolkit</h2>
+                <p class="tool-desc">Merge multiple documents, split pages, and convert PDFs entirely offline.</p>
+            </a>
+
+            <a href="projects/image-tools/index.html" class="tool-card">
+                <div class="tool-icon">🖼️</div>
+                <h2 class="tool-title">Image Studio</h2>
+                <p class="tool-desc">Batch edit, crop, watermark, and compress images to exact file sizes.</p>
+            </a>
+
+            <a href="projects/video-tools/index.html" class="tool-card">
+                <div class="tool-icon">🎬</div>
+                <h2 class="tool-title">Media Studio</h2>
+                <p class="tool-desc">Compress and convert video or audio locally without server uploads.</p>
+            </a>
+
+            <a href="projects/unit-converter/index.html" class="tool-card">
+                <div class="tool-icon">⚖️</div>
+                <h2 class="tool-title">Unit Converter</h2>
+                <p class="tool-desc">Lightning-fast conversions for length, weight, area, volume, and more.</p>
+            </a>
+
         </div>
     </div>
 
-<script>
-        const sidebar = document.getElementById('sidebar');
-        const overlay = document.getElementById('mobileOverlay');
-
-        function toggleSidebar() {
-            if (window.innerWidth <= 768) {
-                sidebar.classList.toggle('mobile-open');
-                overlay.classList.toggle('active');
-            } else {
-                sidebar.classList.toggle('hidden');
-            }
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('ServiceWorker registered:', reg.scope))
+                    .catch(err => console.log('ServiceWorker failed:', err));
+            });
         }
-
-        function loadTool(path, element) {
-            // Reverted back to simple path so it works perfectly on local computer files
-            document.getElementById('toolFrame').src = path;
-            
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
-            element.classList.add('active');
-
-            if (window.innerWidth <= 768 && sidebar.classList.contains('mobile-open')) {
-                toggleSidebar();
-            }
-        }
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                sidebar.classList.remove('mobile-open');
-                overlay.classList.remove('active');
-            }
-        });
     </script>
 </body>
 </html>

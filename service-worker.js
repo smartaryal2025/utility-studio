@@ -1,53 +1,55 @@
-const CACHE_NAME = 'utility-studio-v2.0';
+// BUMPED TO v2.2 FOR PATH UPDATE
+const CACHE_NAME = 'utility-studio-v2.2';
 
 // 1. Core assets to pre-cache immediately upon installation
 const CORE_ASSETS = [
     '/',
     '/index.html',
     '/manifest.json',
-    '/Assets/master.css',
-    '/Assets/logo.png',
-    '/Assets/pdf.png',
+    '/assets/master.css',
+    '/assets/logo.png',
+    '/assets/pdf.png',
     
-    // Nepali Date Converter
-    '/Projects/DateConverter/index.html',
-    '/Projects/DateConverter/libs/script.js',
+    // Nepali Date Converter (Widget moved here)
+    '/projects/date-converter/index.html',
+    '/projects/date-converter/libs/script.js',
+    '/projects/date-converter/libs/date-widget.js',
 
     // Image Tools
-    '/Projects/Image-Tools/index.html',
-    '/Projects/Image-Tools/libs/cropper.min.css',
-    '/Projects/Image-Tools/libs/cropper.min.js',
-    '/Projects/Image-Tools/libs/jszip.min.js',
+    '/projects/image-tools/index.html',
+    '/projects/image-tools/libs/cropper.min.css',
+    '/projects/image-tools/libs/cropper.min.js',
+    '/projects/image-tools/libs/jszip.min.js',
 
     // PDF Tools
-    '/Projects/PDF-Tools/index.html',
-    '/Projects/PDF-Tools/libs/pdf-lib.min.js',
-    '/Projects/PDF-Tools/libs/pdf.min.js',
-    '/Projects/PDF-Tools/libs/Sortable.min.js',
+    '/projects/pdf-tools/index.html',
+    '/projects/pdf-tools/libs/pdf-lib.min.js',
+    '/projects/pdf-tools/libs/pdf.min.js',
+    '/projects/pdf-tools/libs/Sortable.min.js',
 
     // QR & Barcode Tools
-    '/Projects/QR-Tools/index.html',
-    '/Projects/QR-Tools/libs/cropper.min.css',
-    '/Projects/QR-Tools/libs/cropper.min.js',
-    '/Projects/QR-Tools/libs/FileSaver.min.js',
-    '/Projects/QR-Tools/libs/html5-qrcode.min.js',
-    '/Projects/QR-Tools/libs/JsBarcode.all.min.js',
-    '/Projects/QR-Tools/libs/qrcode.min.js',
+    '/projects/qr-tools/index.html',
+    '/projects/qr-tools/libs/cropper.min.css',
+    '/projects/qr-tools/libs/cropper.min.js',
+    '/projects/qr-tools/libs/FileSaver.min.js',
+    '/projects/qr-tools/libs/html5-qrcode.min.js',
+    '/projects/qr-tools/libs/JsBarcode.all.min.js',
+    '/projects/qr-tools/libs/qrcode.min.js',
 
     // Unicode Tools
-    '/Projects/Uni-Tools/index.html',
-    '/Projects/Uni-Tools/libs/mammoth.browser.min.js',
-    '/Projects/Uni-Tools/libs/script.js',
+    '/projects/uni-tools/index.html',
+    '/projects/uni-tools/libs/mammoth.browser.min.js',
+    '/projects/uni-tools/libs/script.js',
 
     // Media Studio (Video)
-    '/Projects/Video-Tools/index.html',
-    '/Projects/Video-Tools/libs/814.ffmpeg.js',
-    '/Projects/Video-Tools/libs/ffmpeg-core.js',
-    '/Projects/Video-Tools/libs/ffmpeg-core.wasm',
-    '/Projects/Video-Tools/libs/ffmpeg.js',
-    '/Projects/Video-Tools/libs/index.js',
-    '/Projects/Video-Tools/libs/download.js',
-    '/Projects/Video-Tools/libs/util.js'
+    '/projects/video-tools/index.html',
+    '/projects/video-tools/libs/814.ffmpeg.js',
+    '/projects/video-tools/libs/ffmpeg-core.js',
+    '/projects/video-tools/libs/ffmpeg-core.wasm',
+    '/projects/video-tools/libs/ffmpeg.js',
+    '/projects/video-tools/libs/index.js',
+    '/projects/video-tools/libs/download.js',
+    '/projects/video-tools/libs/util.js'
 ];
 
 // INSTALL: Cache all core assets
@@ -81,26 +83,22 @@ self.addEventListener('activate', (event) => {
 
 // FETCH: "Cache First, fallback to Network" Strategy
 self.addEventListener('fetch', (event) => {
-    // Ignore external APIs, browser extensions, and the UnitConverterWeb (Flutter has its own service worker)
-    if (!event.request.url.startsWith(self.location.origin) || event.request.url.includes('/UnitConverterWeb/')) {
+    // Ignore external APIs, browser extensions, and the Unit Converter (Flutter has its own service worker)
+    if (!event.request.url.startsWith(self.location.origin) || event.request.url.includes('/projects/unit-converter/')) {
         return;
     }
 
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
-            // 1. Return the cached file if we have it (instant offline load)
             if (cachedResponse) {
                 return cachedResponse;
             }
 
-            // 2. Otherwise, fetch from the network
             return fetch(event.request).then((networkResponse) => {
-                // Ensure the response is valid before caching it
                 if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
                     return networkResponse;
                 }
 
-                // Dynamically cache new files so they work offline next time
                 const responseToCache = networkResponse.clone();
                 caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, responseToCache);
@@ -108,7 +106,6 @@ self.addEventListener('fetch', (event) => {
 
                 return networkResponse;
             }).catch(() => {
-                // Optional: Return a custom offline HTML page here if network fails and it's not in cache
                 console.warn('[Service Worker] Network request failed and no cache available for:', event.request.url);
             });
         })

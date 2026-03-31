@@ -2,10 +2,10 @@ User-agent: *
 Allow: /
 
 # Prevent bots from indexing raw library files and assets directly
-Disallow: /Assets/
+Disallow: /assets/
 Disallow: /*/libs/
-Disallow: /Projects/UnitConverterWeb/assets/
-Disallow: /Projects/UnitConverterWeb/canvaskit/
+Disallow: /projects/unit-converter/assets/
+Disallow: /Projects/unit-converter/canvaskit/
 
 # Point bots to the sitemap
 Sitemap: https://kishoraryal.com.np/sitemap.xml
