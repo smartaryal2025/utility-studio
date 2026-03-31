@@ -25,20 +25,48 @@
     <link rel="manifest" href='data:application/manifest+json,{"name":"Universal QR Tool","short_name":"QR Tool","display":"standalone","background_color":"#111827","theme_color":"#111827"}'>
 
     <link rel="stylesheet" href="../../assets/master.css">
+    <link rel="stylesheet" href="libs/qr-style.css">
     <link rel="stylesheet" href="libs/cropper.min.css">
+    
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "QR and Barcode Lab",
+        "url": "https://kishoraryal.com.np/projects/qr-tools/",
+        "description": "Generate and decode QR codes and barcodes securely and offline.",
+        "applicationCategory": "UtilitiesApplication",
+        "operatingSystem": "All",
+        "offers": { "@type": "Offer", "price": "0" }
+    }
+    </script>
+    
     <script src="libs/qrcode.min.js"></script>
     <script src="libs/JsBarcode.all.min.js"></script>
     <script src="libs/html5-qrcode.min.js"></script>
     <script src="libs/FileSaver.min.js"></script>
     <script src="libs/cropper.min.js"></script>
-    
     <link rel="stylesheet" href="libs/style.css">
 </head>
 
 <body>
-    <a href="../../index.html" title="Back to Dashboard" style="position: fixed; top: 15px; left: 15px; z-index: 1000; background: var(--surface-light); border: 1px solid var(--border-color); box-shadow: 0 4px 6px rgba(0,0,0,0.3); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--text-primary); text-decoration: none; transition: all 0.2s ease;" onmouseover="this.style.background='var(--surface-dark)'; this.style.color='var(--accent-primary)';" onmouseout="this.style.background='var(--surface-light)'; this.style.color='var(--text-primary)';">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-    </a>
+    <div class="us-global-menu top-left">
+        <a href="../../index.html" class="us-home-btn" title="Dashboard">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        </a>
+        <div class="us-dropdown">
+            <button class="us-dropbtn">Tools ▾</button>
+            <div class="us-dropdown-content">
+                <a href="../date-converter/index.html">📅 Date Converter</a>
+                <a href="../uni-tools/index.html">🔤 Unicode Tools</a>
+                <a href="../qr-tools/index.html">🔳 QR & Barcode</a>
+                <a href="../pdf-tools/index.html">📄 PDF Toolkit</a>
+                <a href="../image-tools/index.html">🖼️ Image Studio</a>
+                <a href="../video-tools/index.html">🎬 Media Studio</a>
+                <a href="../unit-converter/index.html">⚖️ Unit Converter</a>
+            </div>
+        </div>
+    </div>
 <div id="cropModal">
     <h3 style="color: white; margin-top: 0;">Crop to scan</h3>
     <div id="cropContainer"><img id="cropImage" src=""></div>
