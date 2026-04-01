@@ -32,35 +32,14 @@
       }
     }
     </script>
-
-    <style>
-        body {
-            background: linear-gradient(135deg, #020617, #000000) !important;
-            background-attachment: fixed !important;
-            color: #e6faff;
-            font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0; min-height: 100vh;
-        }
-        .dashboard-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; padding-bottom: 40px; }
-        .tool-card { background: #0a1f44; border: 1px solid rgba(56, 189, 248, 0.4); box-shadow: 0 0 12px rgba(56, 189, 248, 0.15), inset 0 0 8px rgba(56, 189, 248, 0.05); border-radius: 8px; padding: 20px; text-decoration: none; color: #e6faff; transition: all 0.3s ease; display: flex; flex-direction: column; position: relative; }
-        .tool-card:hover { border-color: #00d9ff; transform: translateY(-3px); background: #010a1a; box-shadow: 0 0 25px rgba(56, 189, 248, 0.6), inset 0 0 12px rgba(56, 189, 248, 0.2); }
-        .tool-icon { width: 45px; height: 45px; background: rgba(0,0,0,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 15px; border: 1px solid rgba(56, 189, 248, 0.3); transition: all 0.3s ease; }
-        .tool-card:hover .tool-icon { border-color: #00d9ff; color: #00d9ff; background: rgba(56, 189, 248, 0.1); box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
-        .tool-title { font-size: 1.15rem; font-weight: bold; margin: 0 0 8px 0; transition: color 0.3s ease; }
-        .tool-card:hover .tool-title { color: #00d9ff; }
-        .tool-desc { font-size: 0.9rem; color: #94a3b8; line-height: 1.5; margin: 0; }
-        .status-tag { position: absolute; top: 20px; right: 20px; font-size: 10px; font-weight: bold; padding: 3px 8px; border-radius: 12px; }
-        .tag-pro { color: #facc15; background: rgba(250, 204, 21, 0.1); border: 1px solid rgba(250, 204, 21, 0.3); }
-        .tag-hot { color: #ef4444; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); }
-    </style>
 </head>
 <body>
-    <div class="app-container" style="max-width: 1100px; padding-top: 20px; margin: auto;">
+<div class="app-container hub-app-container">
 
-        <div style="position: relative; text-align: center; margin-bottom: 35px;">
-            <img src="assets/logo.png" alt="Logo" style="width: 50px; height: 50px; margin-bottom: 10px;">
-            <h1 class="app-header" style="color: #00d9ff; font-size: 28px; margin-bottom: 5px; border-bottom: none; padding-bottom: 0;">Utility Studio</h1>
-            <p style="color: #94a3b8; font-size: 14px; margin: 0;">Secure, offline-capable web tools.</p>
+        <div class="hub-hero-section">
+            <img src="assets/logo.png" alt="Logo" class="hub-logo">
+            <h1 class="app-header">Utility Studio</h1>
+            <p class="hub-subtitle">Secure, offline-capable web tools.</p>
         </div>
 
         <div class="dashboard-grid">
@@ -86,7 +65,7 @@
             </a>
 
             <a href="projects/pdf-tools/index.html" class="tool-card">
-                <div class="tool-icon"><img src="assets/pdf.png" alt="PDF" style="width: 22px; height: 22px; object-fit: contain;"></div>
+                <div class="tool-icon"><img src="assets/pdf.png" alt="PDF"></div>
                 <h2 class="tool-title">PDF Toolkit</h2>
                 <p class="tool-desc">Merge multiple documents, split pages, and convert PDFs entirely offline.</p>
             </a>
