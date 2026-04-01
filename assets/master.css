@@ -688,6 +688,9 @@ button:disabled, .btn-upload-label.disabled {
     border-radius: 8px; 
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     font-family: system-ui, -apple-system, sans-serif;
+    /* FIX: Force height to fight Flutter */
+    height: 47px !important; 
+    box-sizing: border-box !important;
 }
 
 /* Default Placement (Top Left) */
@@ -707,8 +710,13 @@ button:disabled, .btn-upload-label.disabled {
     display: flex; 
     align-items: center; 
     justify-content: center;
-    width: 45px; 
-    height: 45px; 
+    width: 45px !important; 
+    /* FIX: Strict Heights & Margins */
+    height: 45px !important; 
+    min-height: 45px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
     color: var(--text-primary, #e2e8f0); 
     text-decoration: none; 
     border-right: 1px solid var(--border-color, #334155); 
@@ -729,7 +737,11 @@ button:disabled, .btn-upload-label.disabled {
     background: transparent; 
     color: var(--text-primary, #e2e8f0); 
     border: none;
-    height: 45px; 
+    /* FIX: Strict Heights & Margins */
+    height: 45px !important; 
+    min-height: 45px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
     padding: 0 15px; 
     font-size: 14px; 
     font-weight: 600;
