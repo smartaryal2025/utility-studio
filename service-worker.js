@@ -7,6 +7,7 @@ const CORE_ASSETS = [
     '/404.html',
     '/manifest.json',
     '/assets/master.css',
+    '/assets/hub.css',
     '/assets/logo.png',
     '/assets/pdf.png',
     
