@@ -151,3 +151,44 @@ iframe {
         opacity: 1; 
     }
 }
+/* ==========================================================================
+   HUB HERO & HEADER STYLES
+   ========================================================================== */
+.hub-app-container {
+    max-width: 1100px;
+    padding-top: 20px;
+    margin: auto;
+}
+
+.hub-hero-section {
+    position: relative;
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.hub-logo {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.hub-hero-section h1.app-header {
+    color: #00d9ff;
+    font-size: 28px;
+    margin-bottom: 5px;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.hub-subtitle {
+    color: #94a3b8;
+    font-size: 14px;
+    margin: 0;
+}
+
+/* Fixes the PDF icon image perfectly inside the tool card */
+.tool-icon img {
+    width: 22px;
+    height: 22px;
+    object-fit: contain;
+}
