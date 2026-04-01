@@ -465,56 +465,55 @@ button:disabled, .btn-upload-label.disabled {
    ========================================================================== */
 @media (max-width: 600px) {
     
-    /* --- NEW FIXES: Layout & Date Converter Width --- */
-    
+    /* 1. App Container Fixes */
     .app-container { 
         padding: 75px 10px 80px 10px !important; /* Clears the floating menu */
+        width: 100% !important;
         max-width: 100vw !important;
-        overflow-x: hidden !important; /* Prevents horizontal page scrolling */
-        box-sizing: border-box;
+        box-sizing: border-box !important;
+        overflow-x: hidden !important; /* Prevents the whole page from swiping */
     } 
 
+    /* 2. Heading Size */
     .app-header {
-        font-size: 22px !important;
+        font-size: 20px !important; /* Slightly smaller to fit better */
         line-height: 1.3;
-        padding: 0 10px;
+        padding: 0;
         word-wrap: break-word;
     }
 
-    /* Force Date Converter (and all cards) to stack top-to-bottom instead of side-by-side */
+    /* 3. STRICT CARD BOUNDARIES: Locks the glowing borders to the screen size */
     section, .card, .card-container {
         display: flex !important;
-        flex-direction: column !important; 
+        flex-direction: column !important; /* Forces top-to-bottom layout */
+        width: 100% !important;
         max-width: 100% !important;
-        width: 100% !important;
         box-sizing: border-box !important;
+        overflow-x: hidden !important; /* NEVER let content push the glow off-screen */
+        margin-left: 0 !important;
+        margin-right: 0 !important;
     }
 
-    /* Catch any inline flex rows and force them to stack vertically on mobile */
-    .row, .flex-row, .grid-container, div[style*="display: flex"] {
-        flex-direction: column !important;
-        display: flex !important;
-        width: 100% !important;
-        box-sizing: border-box !important;
-    }
-
-    /* Make the Calendar Table horizontally scrollable INSIDE its own box */
-    table, .calendar-table, .cal-grid, .calendar-grid, .wide-date-wrapper {
+    /* 4. CALENDAR SWIPE FIX: Lets the user swipe the calendar *inside* the card */
+    table, .calendar-table, .cal-grid, .calendar-grid, .calendar-container {
         display: block !important;
         width: 100% !important;
         max-width: 100% !important;
-        overflow-x: auto !important;
-        white-space: nowrap !important; /* Stops calendar text from squishing */
+        overflow-x: auto !important; /* Creates the internal scrollbar */
+        white-space: nowrap !important; /* Stops calendar numbers from squishing */
         -webkit-overflow-scrolling: touch !important;
+        padding-bottom: 10px !important; /* Space for the scrollbar */
     }
 
-    /* Stop dropdown selects from pushing the width outward */
-    select, input[type="number"], input[type="text"] {
+    /* Catch any side-by-side flex rows and stack them */
+    .row, .flex-row, div[style*="display: flex"] {
+        flex-direction: column !important;
+        width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
     }
 
-    /* --- YOUR EXACT ORIGINAL RULES BELOW --- */
+    /* --- YOUR ORIGINAL MOBILE RULES BELOW --- */
 
     .control-panel, .slider-container { 
         flex-direction: column; 
@@ -564,14 +563,12 @@ button:disabled, .btn-upload-label.disabled {
         margin-left: 0; 
     }
 
-    /* FIX: Force buttons to be thick and touch-friendly on Android */
     button, .btn-secondary, .btn-primary, .btn-success, .btn-danger, .tab-btn {
         min-height: 48px !important;
         height: auto !important;
         padding: 10px 15px !important;
     }
 
-    /* FIX: Force QR/Barcode Toggle to stay on one line */
     .toggle-container { 
         display: flex !important;
         flex-direction: row !important;
