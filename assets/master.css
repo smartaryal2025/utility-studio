@@ -465,18 +465,21 @@ button:disabled, .btn-upload-label.disabled {
    ========================================================================== */
 @media (max-width: 600px) {
     
-    /* --- NEW OVERFLOW & LAYOUT FIXES --- */
+    /* 1. THE NUCLEAR WIDTH FIX: Lock the entire website to the phone screen */
+    html, body {
+        max-width: 100vw !important;
+        overflow-x: hidden !important;
+        width: 100% !important;
+    }
 
-    /* 1. App Container Fixes (Menu padding & page width limit) */
+    /* 2. Push the container down so the menu doesn't hide titles */
     .app-container { 
         padding: 75px 10px 80px 10px !important; 
         max-width: 100vw !important;
-        min-width: 0 !important;
         box-sizing: border-box !important;
-        overflow-x: hidden; 
     } 
 
-    /* 2. Shrink long titles to prevent pushing the screen */
+    /* 3. Shrink long titles to prevent pushing the screen */
     .app-header {
         font-size: 22px !important;
         line-height: 1.3;
@@ -484,31 +487,16 @@ button:disabled, .btn-upload-label.disabled {
         word-wrap: break-word;
     }
 
-    /* 3. Grid Minimum Content Stretch Fixes (Keeps cards strictly inside the screen) */
-    .tools-grid, .dashboard, section, .card, .card-container {
-        min-width: 0 !important; 
-        max-width: 100% !important;
-        width: 100%;
-        box-sizing: border-box !important;
-        overflow-wrap: break-word;
-        margin-left: 0;
-        margin-right: 0;
-    }
-
-    /* 4. Force inputs and control panels to wrap correctly */
-    .action-row, .input-grid, .control-panel {
-        flex-wrap: wrap !important;
-        min-width: 0 !important;
-    }
-
-    /* 5. Date Converter Calendar Swipe Fix (Allows horizontal swiping inside the calendar) */
-    .wide-date-wrapper, .calendar-container, .cal-grid, .calendar-grid, table {
-        display: block !important;
+    /* 4. THE GLOWING BORDER SAVER: 
+       Forces the card to stay on screen and allows swiping inside it */
+    section, .card, .card-container {
+        max-width: calc(100vw - 20px) !important; /* 100% minus the 10px margins */
         width: 100% !important;
-        max-width: 100%;
-        overflow-x: auto !important; 
-        -webkit-overflow-scrolling: touch;
-        box-sizing: border-box;
+        box-sizing: border-box !important;
+        overflow-x: auto !important; /* The magic line that saves the border */
+        -webkit-overflow-scrolling: touch !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
     }
 
     /* --- YOUR ORIGINAL MOBILE RULES --- */
@@ -561,14 +549,12 @@ button:disabled, .btn-upload-label.disabled {
         margin-left: 0; 
     }
 
-    /* FIX: Force buttons to be thick and touch-friendly on Android */
     button, .btn-secondary, .btn-primary, .btn-success, .btn-danger, .tab-btn {
         min-height: 48px !important;
         height: auto !important;
         padding: 10px 15px !important;
     }
 
-    /* FIX: Force QR/Barcode Toggle to stay on one line */
     .toggle-container { 
         display: flex !important;
         flex-direction: row !important;
