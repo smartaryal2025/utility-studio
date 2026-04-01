@@ -474,39 +474,35 @@ button:disabled, .btn-upload-label.disabled {
         overflow-x: hidden !important; 
     } 
 
-    /* 2. THE SUSPECT #1 FIX: Force all long titles to wrap */
+    /* 2. Force all long titles to wrap */
     .app-header, h2, h3, .section-header h2 {
         font-size: 20px !important; 
         line-height: 1.3 !important;
         padding: 0 !important;
-        /* The ultimate text-wrapping combo */
         word-wrap: break-word !important;
         overflow-wrap: anywhere !important;
-        word-break: break-word !important;
         white-space: normal !important;
-        min-width: 0 !important;
     }
 
-    /* 3. THE SUSPECT #2 FIX: Force dropdowns and inputs to shrink */
+    /* 3. Force dropdowns and inputs to shrink */
     select, input {
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
-        min-width: 0 !important; /* Forces stubborn flex items to shrink */
+        min-width: 0 !important; 
         overflow: hidden !important;
-        text-overflow: ellipsis !important; /* Adds '...' if text is too long */
+        text-overflow: ellipsis !important; 
     }
 
-    /* 4. Strict Card Boundaries */
+    /* 4. THE GLOW PRESERVER: Locks card to screen minus 20px for the shadow */
     section, .card, .card-container {
         display: flex !important;
         flex-direction: column !important; 
         width: 100% !important;
-        max-width: 100% !important;
+        max-width: calc(100vw - 20px) !important; /* Magic line that saves the glow */
         box-sizing: border-box !important;
         overflow-x: hidden !important; 
-        margin-left: 0 !important;
-        margin-right: 0 !important;
+        margin: 0 auto !important; /* Keeps it perfectly centered */
         min-width: 0 !important;
     }
 
@@ -521,14 +517,23 @@ button:disabled, .btn-upload-label.disabled {
         padding-bottom: 10px !important; 
     }
 
-    /* 6. Stack side-by-side controls */
-    .row, .flex-row, .control-panel, .input-grid {
+    /* 6. Force Tab Contents & side-by-side controls to stack vertically */
+    .row, .flex-row, .control-panel, .input-grid, .tab-content {
+        display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
         max-width: 100% !important;
         box-sizing: border-box !important;
         min-width: 0 !important;
-        align-items: stretch !important;
+    }
+
+    /* 7. TAB VISIBILITY KILL SWITCH: Keeps inactive tabs hidden */
+    .hidden, 
+    [hidden], 
+    [style*="display: none"], 
+    [style*="display:none"],
+    .tab-content:not(.active) {
+        display: none !important;
     }
 
     /* --- YOUR ORIGINAL MOBILE RULES BELOW --- */
@@ -575,12 +580,12 @@ button:disabled, .btn-upload-label.disabled {
         min-height: 48px !important;
         height: auto !important;
         padding: 10px 15px !important;
-        white-space: normal !important; /* Lets button text wrap if needed */
+        white-space: normal !important;
     }
 
     .toggle-container { 
         display: flex !important;
-        flex-direction: column !important; /* Stacked for absolute safety */
+        flex-direction: column !important; 
         gap: 12px !important; 
         padding: 12px 10px !important; 
         width: 100%; 
@@ -590,16 +595,6 @@ button:disabled, .btn-upload-label.disabled {
     .toggle-container label { 
         font-size: 14px !important;
         white-space: normal !important;
-    }
-   /* ==========================================================================
-       TAB VISIBILITY FIX: Prevent flex layout from un-hiding inactive tabs
-       ========================================================================== */
-    .hidden, 
-    [hidden], 
-    [style*="display: none"], 
-    [style*="display:none"],
-    .tab-content:not(.active) {
-        display: none !important;
     }
 }
 
