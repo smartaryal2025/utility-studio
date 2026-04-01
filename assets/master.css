@@ -591,6 +591,16 @@ button:disabled, .btn-upload-label.disabled {
         font-size: 14px !important;
         white-space: normal !important;
     }
+   /* ==========================================================================
+       TAB VISIBILITY FIX: Prevent flex layout from un-hiding inactive tabs
+       ========================================================================== */
+    .hidden, 
+    [hidden], 
+    [style*="display: none"], 
+    [style*="display:none"],
+    .tab-content:not(.active) {
+        display: none !important;
+    }
 }
 
 /* =========================================================
