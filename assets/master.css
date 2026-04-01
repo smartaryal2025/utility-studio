@@ -464,14 +464,19 @@ button:disabled, .btn-upload-label.disabled {
    4. MOBILE RESPONSIVE BREAKPOINTS (Android Chrome Fixes)
    ========================================================================== */
 @media (max-width: 600px) {
+    
+    /* --- NEW OVERFLOW & LAYOUT FIXES --- */
+
+    /* 1. App Container Fixes (Menu padding & page width limit) */
     .app-container { 
-        padding: 75px 10px 80px 10px; /* Kept your fix to stop menu from hiding titles */
-        max-width: 100vw;
-        box-sizing: border-box;
-        overflow-x: hidden; /* Stops the whole page from swiping side-to-side */
+        padding: 75px 10px 80px 10px !important; 
+        max-width: 100vw !important;
+        min-width: 0 !important;
+        box-sizing: border-box !important;
+        overflow-x: hidden; 
     } 
 
-    /* NEW: Shrink long bilingual titles so they don't push the screen wide */
+    /* 2. Shrink long titles to prevent pushing the screen */
     .app-header {
         font-size: 22px !important;
         line-height: 1.3;
@@ -479,26 +484,34 @@ button:disabled, .btn-upload-label.disabled {
         word-wrap: break-word;
     }
 
-    /* NEW: Keep Date Converter calendar contained and allow swiping INSIDE the calendar */
-    .wide-date-wrapper, 
-    .calendar-container, 
-    .cal-grid, 
-    .calendar-grid {
+    /* 3. Grid Minimum Content Stretch Fixes (Keeps cards strictly inside the screen) */
+    .tools-grid, .dashboard, section, .card, .card-container {
+        min-width: 0 !important; 
+        max-width: 100% !important;
         width: 100%;
+        box-sizing: border-box !important;
+        overflow-wrap: break-word;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    /* 4. Force inputs and control panels to wrap correctly */
+    .action-row, .input-grid, .control-panel {
+        flex-wrap: wrap !important;
+        min-width: 0 !important;
+    }
+
+    /* 5. Date Converter Calendar Swipe Fix (Allows horizontal swiping inside the calendar) */
+    .wide-date-wrapper, .calendar-container, .cal-grid, .calendar-grid, table {
+        display: block !important;
+        width: 100% !important;
         max-width: 100%;
-        overflow-x: auto; 
+        overflow-x: auto !important; 
+        -webkit-overflow-scrolling: touch;
         box-sizing: border-box;
     }
 
-    /* NEW: Force all cards to stay strictly inside the screen to preserve neon glow */
-    section, .card, .card-container {
-        max-width: 100%;
-        width: 100%;
-        box-sizing: border-box;
-        overflow-wrap: break-word;
-    }
-    
-    /* --- Your exact original rules below --- */
+    /* --- YOUR ORIGINAL MOBILE RULES --- */
 
     .control-panel, .slider-container { 
         flex-direction: column; 
