@@ -624,7 +624,7 @@ button:disabled, .btn-upload-label.disabled {
 /* Dropdown Animation & Direction Logic */
 .us-global-menu.top-left .us-dropdown-content { 
     left: 0; 
-    top: 100%; 
+    top: 45px; 
     box-shadow: 0 10px 25px rgba(0,0,0,0.6); 
 }
 
@@ -635,7 +635,7 @@ button:disabled, .btn-upload-label.disabled {
 
 .us-global-menu.bottom-right .us-dropdown-content { 
     right: 0; 
-    bottom: 100%; 
+    bottom: 45px; 
     box-shadow: 0 -10px 25px rgba(0,0,0,0.6); 
 }
 
