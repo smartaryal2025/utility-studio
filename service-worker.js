@@ -1,67 +1,71 @@
-// BUMPED TO v3.5-clean TO FORCE WIPE ALL PREVIOUS BROKEN CACHES
-const CACHE_NAME = 'utility-studio-v3.5-clean';
+const CACHE_NAME = 'utility-studio-v3.6';
 
+// Core assets to pre-cache (Using root-relative paths for Clean URLs)
 const CORE_ASSETS = [
-    './',
-    './index.html',
-    './404.html',
-    './manifest.json',
-    './assets/master.css',
-    './assets/logo.png',
-    './assets/pdf.png',
+    '/',
+    '/index.html',
+    '/404.html',
+    '/manifest.json',
+    '/assets/master.css',
+    '/assets/logo.png',
+    '/assets/pdf.png',
     
-    './projects/date-converter/index.html',
-    './projects/date-converter/libs/date-style.css',
-    './projects/date-converter/libs/script.js',
-    './projects/date-converter/libs/date-widget.js',
+    '/projects/date-converter/',
+    '/projects/date-converter/index.html',
+    '/projects/date-converter/libs/date-style.css',
+    '/projects/date-converter/libs/script.js',
+    '/projects/date-converter/libs/date-widget.js',
 
-    './projects/image-tools/index.html',
-    './projects/image-tools/libs/image-style.css',
-    './projects/image-tools/libs/cropper.min.css',
-    './projects/image-tools/libs/cropper.min.js',
-    './projects/image-tools/libs/jszip.min.js',
+    '/projects/image-tools/',
+    '/projects/image-tools/index.html',
+    '/projects/image-tools/libs/image-style.css',
+    '/projects/image-tools/libs/cropper.min.css',
+    '/projects/image-tools/libs/cropper.min.js',
+    '/projects/image-tools/libs/jszip.min.js',
 
-    './projects/pdf-tools/index.html',
-    './projects/pdf-tools/libs/pdf-style.css',
-    './projects/pdf-tools/libs/pdf-lib.min.js',
-    './projects/pdf-tools/libs/pdf.min.js',
-    './projects/pdf-tools/libs/Sortable.min.js',
+    '/projects/pdf-tools/',
+    '/projects/pdf-tools/index.html',
+    '/projects/pdf-tools/libs/pdf-style.css',
+    '/projects/pdf-tools/libs/pdf-lib.min.js',
+    '/projects/pdf-tools/libs/pdf.min.js',
+    '/projects/pdf-tools/libs/Sortable.min.js',
 
-    './projects/qr-tools/index.html',
-    './projects/qr-tools/libs/qr-style.css',
-    './projects/qr-tools/libs/cropper.min.css',
-    './projects/qr-tools/libs/cropper.min.js',
-    './projects/qr-tools/libs/FileSaver.min.js',
-    './projects/qr-tools/libs/html5-qrcode.min.js',
-    './projects/qr-tools/libs/JsBarcode.all.min.js',
-    './projects/qr-tools/libs/qrcode.min.js',
+    '/projects/qr-tools/',
+    '/projects/qr-tools/index.html',
+    '/projects/qr-tools/libs/qr-style.css',
+    '/projects/qr-tools/libs/cropper.min.css',
+    '/projects/qr-tools/libs/cropper.min.js',
+    '/projects/qr-tools/libs/FileSaver.min.js',
+    '/projects/qr-tools/libs/html5-qrcode.min.js',
+    '/projects/qr-tools/libs/JsBarcode.all.min.js',
+    '/projects/qr-tools/libs/qrcode.min.js',
 
-    './projects/uni-tools/index.html',
-    './projects/uni-tools/libs/uni-style.css',
-    './projects/uni-tools/libs/mammoth.browser.min.js',
-    './projects/uni-tools/libs/script.js',
+    '/projects/uni-tools/',
+    '/projects/uni-tools/index.html',
+    '/projects/uni-tools/libs/uni-style.css',
+    '/projects/uni-tools/libs/mammoth.browser.min.js',
+    '/projects/uni-tools/libs/script.js',
 
-    './projects/video-tools/index.html',
-    './projects/video-tools/libs/video-style.css',
-    './projects/video-tools/libs/814.ffmpeg.js',
-    './projects/video-tools/libs/ffmpeg.js',
-    './projects/video-tools/libs/index.js',
-    './projects/video-tools/libs/download.js',
-    './projects/video-tools/libs/util.js'
+    '/projects/video-tools/',
+    '/projects/video-tools/index.html',
+    '/projects/video-tools/libs/video-style.css',
+    '/projects/video-tools/libs/814.ffmpeg.js',
+    '/projects/video-tools/libs/ffmpeg.js',
+    '/projects/video-tools/libs/index.js',
+    '/projects/video-tools/libs/download.js',
+    '/projects/video-tools/libs/util.js'
 ];
 
 self.addEventListener('install', (event) => {
-    // Force the waiting service worker to become the active service worker.
+    // Force the new service worker to activate immediately
     self.skipWaiting();
     
     event.waitUntil(
         caches.open(CACHE_NAME).then((cache) => {
-            // FAULT TOLERANT CACHING: 
-            // If one file fails (e.g. because of a relative path mismatch), 
-            // it logs the error but continues installing the rest of the app.
+            // Fault-tolerant caching: Continues installing even if one file 404s
             return Promise.allSettled(
                 CORE_ASSETS.map(asset => 
-                    cache.add(asset).catch(err => console.warn(`[SW] Non-fatal cache skip for ${asset}`, err))
+                    cache.add(asset).catch(err => console.warn(`[SW] Minor cache skip for ${asset}`, err))
                 )
             );
         })
@@ -73,29 +77,26 @@ self.addEventListener('activate', (event) => {
         caches.keys().then((cacheNames) => {
             return Promise.all(
                 cacheNames.map((cacheName) => {
-                    // Forcefully delete ALL old caches
-                    if (cacheName !== CACHE_NAME) {
-                        console.log('[SW] Deleting old corrupted cache:', cacheName);
+                    // Delete any old versions of the cache to prevent trapped CSS/HTML
+                    if (cacheName !== CACHE_NAME && cacheName.startsWith('utility-studio')) {
+                        console.log('[SW] Clearing old cache version:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
             );
-        }).then(() => {
-            // Take control of all open pages immediately
-            return self.clients.claim();
-        })
+        }).then(() => self.clients.claim())
     );
 });
 
 self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
 
-    // Ignore external API requests or the Flutter unit converter
+    // 1. BYPASS RULE: Ignore external APIs and the Flutter Unit Converter entirely
     if (!event.request.url.startsWith(self.location.origin) || url.pathname.includes('/projects/unit-converter/')) {
         return;
     }
 
-    // Special logic for FFmpeg Core Engine (Local to CDN Fallback)
+    // 2. FFMPEG FALLBACK RULE: Try local first, fallback to CDN if missing (live deployment)
     if (url.pathname.endsWith('ffmpeg-core.js') || url.pathname.endsWith('ffmpeg-core.wasm')) {
         event.respondWith(
             caches.match(event.request).then((cachedResponse) => {
@@ -107,7 +108,7 @@ self.addEventListener('fetch', (event) => {
                     caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseToCache));
                     return networkResponse;
                 }).catch(() => {
-                    // Fallback to Cloud CDN if local file is missing
+                    console.log('[SW] Local FFmpeg engine missing. Fetching from Cloud CDN...');
                     const fileName = url.pathname.split('/').pop();
                     const cdnUrl = `https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.4/dist/umd/${fileName}`;
                     return fetch(cdnUrl).then(cdnResponse => {
@@ -123,31 +124,22 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // Standard Cache-First Strategy
+    // 3. GLOBAL STRATEGY: Network-First (Always get freshest code if online, fallback to cache if offline)
     event.respondWith(
-        caches.match(event.request).then((cachedResponse) => {
-            // Return cached version if found
-            if (cachedResponse) {
-                return cachedResponse;
-            }
-
-            // Otherwise fetch from network
-            return fetch(event.request).then((networkResponse) => {
-                // Don't cache bad responses
-                if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
-                    return networkResponse;
+        fetch(event.request)
+            .then((networkResponse) => {
+                // Ensure we only cache valid responses
+                if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+                    const responseToCache = networkResponse.clone();
+                    caches.open(CACHE_NAME).then((cache) => {
+                        cache.put(event.request, responseToCache);
+                    });
                 }
-
-                // Clone and cache the successful network response
-                const responseToCache = networkResponse.clone();
-                caches.open(CACHE_NAME).then((cache) => {
-                    cache.put(event.request, responseToCache);
-                });
-
                 return networkResponse;
-            }).catch((error) => {
-                console.warn('[SW] Network request failed:', event.request.url, error);
-            });
-        })
+            })
+            .catch(() => {
+                // If network fails (user is offline), serve the cached version
+                return caches.match(event.request);
+            })
     );
 });
