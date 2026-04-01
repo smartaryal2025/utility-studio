@@ -465,8 +465,9 @@ button:disabled, .btn-upload-label.disabled {
    ========================================================================== */
 @media (max-width: 600px) {
     .app-container { 
-        padding: 15px 10px 80px 10px; 
-    } 
+        /* Increased top padding from 15px to 75px to clear the floating menu */
+        padding: 75px 10px 80px 10px; 
+    }
     
     .control-panel, .slider-container { 
         flex-direction: column; 
