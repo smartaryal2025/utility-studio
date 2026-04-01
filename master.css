@@ -1,0 +1,685 @@
+/* ==========================================================================
+   UTILITY STUDIO - UNIFIED UI FRAMEWORK
+   ========================================================================== */
+
+:root {
+    --bg-start: #020617;
+    --bg-end: #000000;
+    --surface-dark: #010a1a;
+    --surface-light: #0a1f44;
+    
+    /* Darkened to fix text visibility on the Merge/Compress buttons */
+    --border-color: #334155; 
+    
+    /* Restored to your bright neon cyan for the file browser buttons */
+    --accent-primary: #00d9ff; 
+    --accent-hover: #0099ff;
+    
+    --text-primary: #e6faff;
+    --text-secondary: #475569c; /* Note: original had typo 'c', preserved as is */
+    --color-success: #00ffcc;
+    --color-success-hover: #00e6b8;
+    --color-error: #ff0033;
+    --color-error-hover: #ff1a4d;
+    --radius-md: 5px;
+    --radius-lg: 8px;
+    --shadow-soft:
+        0 0 5px rgba(0, 217, 255, 0.7),
+        0 0 10px rgba(0, 217, 255, 0.5),
+        0 0 20px rgba(0, 217, 255, 0.3);
+    --transition-smooth: all 0.3s ease;
+}
+
+/* ==========================================================================
+   1. GLOBAL LAYOUT
+   ========================================================================== */
+html { 
+    height: -webkit-fill-available; 
+    min-height: 100%; 
+    background: var(--bg-end); 
+}
+
+body {
+    font-family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+    background-attachment: fixed; /* FIX: Prevents the ugly two-color horizontal cut-off */
+    color: var(--text-primary);
+    margin: 0; 
+    padding: 0;
+    min-height: 100vh; 
+    min-height: -webkit-fill-available;
+    display: flex; 
+    flex-direction: column; 
+    overflow-x: hidden;
+}
+
+.app-container {
+    max-width: 1400px; 
+    margin: auto; 
+    padding: 25px; 
+    box-sizing: border-box;
+    flex-grow: 1; 
+    display: flex; 
+    flex-direction: column;
+    width: 100%;
+}
+
+.app-container:has(.live-date-container) { 
+    max-width: 600px; 
+} 
+
+.app-header {
+    text-align: center; 
+    color: var(--accent-primary); 
+    font-size: 28px;
+    margin-top: 0; 
+    margin-bottom: 30px; 
+    font-weight: bold;
+}
+
+h2, h3, h4 { 
+    color: var(--text-primary); 
+    margin-top: 0; 
+}
+
+.tools-grid, .dashboard {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 20px; 
+    align-items: stretch; 
+    flex-grow: 1;
+}
+
+@media (min-width: 950px) {
+    .tools-grid, .dashboard { 
+        grid-template-columns: 350px 1fr; 
+    }
+}
+
+.right-column { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 20px; 
+    height: 100%; 
+}
+
+.tools-grid:has(.word-toolbar), .tools-grid:has(.split-bucket) { 
+    grid-template-columns: 1fr !important; 
+}
+
+@media (min-width: 768px) { 
+    .tools-grid:has(.word-toolbar), .tools-grid:has(.split-bucket) { 
+        grid-template-columns: repeat(2, 1fr) !important; 
+    } 
+}
+
+@media (min-width: 1100px) { 
+    .tools-grid:has(.word-toolbar), .tools-grid:has(.split-bucket) { 
+        grid-template-columns: repeat(3, 1fr) !important; 
+    } 
+}
+
+section, .card, .card-container {
+    padding: 20px; 
+    background: var(--surface-dark); 
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft); 
+    border: 1px solid var(--border-color);
+    transition: var(--transition-smooth); 
+    position: relative; 
+    box-sizing: border-box;
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    margin-bottom: 0;
+}
+
+.section-header {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    border-bottom: 1px solid var(--border-color); 
+    padding-bottom: 10px; 
+    margin-bottom: 15px; 
+    width: 100%;
+}
+
+.section-header h2 { 
+    font-size: 18px; 
+    margin: 0; 
+}
+
+.hidden, [hidden] { 
+    display: none !important; 
+}
+
+/* ==========================================================================
+   2. UNIVERSAL FORM CONTROLS & BUTTONS
+   ========================================================================== */
+.app-container input:not([type="radio"]):not([type="checkbox"]):not([type="file"]):not([type="color"]),
+.app-container select, .dashboard input:not([type="radio"]):not([type="checkbox"]):not([type="file"]):not([type="color"]), .dashboard select {
+    width: 100%; 
+    padding: 0 10px; 
+    margin: 5px 0; 
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color) !important; 
+    box-sizing: border-box;
+    background-color: var(--surface-light) !important; 
+    color: var(--text-primary) !important;
+    font-family: inherit; 
+    outline: none; 
+    transition: border-color 0.2s; 
+    font-size: 14px;
+    height: 40px !important; 
+}
+
+.app-container input:focus, .app-container select:focus, .dashboard input:focus, .dashboard select:focus { 
+    border-color: var(--accent-primary) !important; 
+}
+
+.app-container input::placeholder { 
+    color: var(--text-secondary) !important; 
+}
+
+.app-container textarea { 
+    width: 100%; 
+    padding: 10px; 
+    margin: 5px 0; 
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color) !important; 
+    box-sizing: border-box;
+    background-color: var(--surface-light) !important; 
+    color: var(--text-primary) !important;
+    font-family: inherit; 
+    outline: none; 
+    transition: border-color 0.2s; 
+    font-size: 14px;
+    min-height: 120px; 
+    resize: vertical; 
+    height: auto;
+}
+
+.app-container textarea:focus { 
+    border-color: var(--accent-primary) !important; 
+}
+
+.app-container textarea::placeholder { 
+    color: var(--text-secondary) !important; 
+}
+
+.app-container:has(.mode-btn) textarea { 
+    min-height: 250px !important; 
+    font-size: 16px; 
+    line-height: 1.5; 
+}
+
+input[type="file"] { 
+    width: auto; 
+    background: transparent; 
+    padding: 0; 
+    margin-bottom: 10px; 
+    color: var(--text-secondary); 
+}
+
+input[type="radio"], input[type="checkbox"] { 
+    width: auto; 
+    margin: 0; 
+    cursor: pointer; 
+}
+
+input[type="color"] { 
+    padding: 4px; 
+    border-radius: var(--radius-md); 
+    border: 1px solid var(--border-color); 
+    background: var(--surface-light); 
+    cursor: pointer; 
+}
+
+.action-row { 
+    display: flex; 
+    gap: 10px; 
+    align-items: flex-end; 
+    margin-top: auto; 
+    padding-top: 15px; 
+    width: 100%; 
+}
+
+.action-row > * { 
+    margin: 0 !important; 
+}
+
+.action-row .control-group { 
+    flex: 1; 
+}
+
+.action-row input:not([type="file"]), .action-row button, .action-row select { 
+    height: 40px !important; 
+}
+
+.input-grid { 
+    display: grid; 
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); 
+    gap: 15px; 
+    margin-bottom: 20px; 
+    width: 100%; 
+}
+
+.input-group { 
+    display: flex; 
+    flex-direction: column; 
+    width: 100%; 
+}
+
+.input-group label, .form-group label { 
+    font-size: 13px; 
+    color: var(--text-secondary); 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    margin-bottom: 6px; 
+}
+
+.form-group { 
+    margin-bottom: 1.25rem; 
+    width: 100%; 
+}
+
+.crop-grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 0.5rem; 
+}
+
+/* FIX: Smart rule to perfectly center and size PDF Upload Buttons automatically */
+section > button[onclick*="upload"] {
+    width: auto !important;
+    min-width: 200px;
+    padding: 10px 30px !important;
+    display: inline-flex !important;
+    margin: 0 auto 15px 0 !important;
+}
+
+button, .btn-upload-label {
+    padding: 0 15px; 
+    height: 40px; 
+    border-radius: var(--radius-md); 
+    border: none;
+    background: var(--accent-primary); 
+    color: black; 
+    font-weight: bold;
+    cursor: pointer; 
+    transition: background 0.3s; 
+    display: inline-flex;
+    align-items: center; 
+    justify-content: center; 
+    gap: 5px; 
+    font-family: inherit; 
+    font-size: 14px;
+    text-decoration: none; 
+    box-sizing: border-box; 
+    white-space: nowrap;
+}
+
+button:hover, .btn-upload-label:hover { 
+    background: var(--accent-hover); 
+}
+
+button:disabled, .btn-upload-label.disabled { 
+    background: var(--border-color); 
+    color: var(--text-secondary); 
+    cursor: not-allowed; 
+    pointer-events: none; 
+}
+
+.btn-primary { 
+    background: var(--accent-primary); 
+    color: black; 
+}
+
+.btn-primary:hover { 
+    background: var(--accent-hover); 
+}
+
+.btn-secondary { 
+    background: var(--surface-light); 
+    color: var(--accent-primary); 
+    border: 1px solid var(--accent-primary); 
+}
+
+.btn-secondary:hover { 
+    background: var(--border-color); 
+}
+
+.btn-success { 
+    background: var(--color-success); 
+    color: white; 
+    border: 1px solid var(--color-success); 
+}
+
+.btn-success:hover { 
+    background: var(--color-success-hover); 
+}
+
+.btn-danger { 
+    background: var(--color-error); 
+    color: white; 
+    border: 1px solid var(--color-error); 
+}
+
+.btn-danger:hover { 
+    background: var(--color-error-hover); 
+}
+
+.button-group { 
+    display: flex; 
+    gap: 12px; 
+}
+
+.button-group button { 
+    flex: 1; 
+}
+
+.btn-icon, .tool-btn { 
+    background: transparent; 
+    color: var(--text-secondary); 
+    padding: 6px; 
+    border: 1px solid transparent; 
+    border-radius: 4px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 4px; 
+    font-size: 12px; 
+    cursor: pointer; 
+    height: auto;
+}
+
+.btn-icon:hover, .tool-btn:hover { 
+    color: var(--text-primary); 
+    background: var(--border-color); 
+}
+
+.tool-btn.active { 
+    background: var(--accent-hover); 
+    color: black; 
+    border-color: var(--accent-primary); 
+    font-weight: bold; 
+}
+
+/* ==========================================================================
+   3. SHARED UI COMPONENTS
+   ========================================================================== */
+.control-panel, .toggle-container { 
+    background: var(--surface-light); 
+    padding: 12px 15px; 
+    border-radius: 6px; 
+    border: 1px solid var(--border-color); 
+    display: flex; 
+    gap: 15px; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    margin-bottom: 15px; 
+    width: 100%; 
+    box-sizing: border-box; 
+}
+
+.control-group { 
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
+}
+
+.control-label { 
+    font-size: 13px; 
+    color: var(--text-secondary); 
+    font-weight: bold; 
+    text-transform: uppercase; 
+}
+
+.slider-container { 
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    background: var(--surface-dark); 
+    padding: 6px 12px; 
+    border-radius: 6px; 
+    border: 1px solid var(--border-color); 
+}
+
+.slider-label { 
+    font-size: 11px; 
+    color: var(--text-secondary); 
+    font-weight: bold; 
+}
+
+.badge { 
+    background-color: var(--surface-dark); 
+    border: 1px solid var(--surface-light); 
+    padding: 4px 12px; 
+    border-radius: 999px; 
+    font-size: 13px; 
+    color: var(--accent-primary); 
+}
+
+/* ==========================================================================
+   4. MOBILE RESPONSIVE BREAKPOINTS (Android Chrome Fixes)
+   ========================================================================== */
+@media (max-width: 600px) {
+    .app-container { 
+        padding: 15px 10px 80px 10px; 
+    } 
+    
+    .control-panel, .slider-container { 
+        flex-direction: column; 
+        align-items: stretch; 
+        gap: 12px; 
+    }
+
+    .control-group { 
+        border-right: none !important; 
+        padding-right: 0 !important; 
+        flex-wrap: wrap; 
+        justify-content: flex-start; 
+        width: 100%; 
+    }
+
+    .history-item { 
+        flex-direction: column; 
+        align-items: flex-start; 
+    }
+
+    .history-data { 
+        max-width: 250px; 
+    }
+
+    .cal-day { 
+        font-size: 13px; 
+        padding: 8px 2px; 
+    }
+    
+    .form-grid { 
+        grid-template-columns: 1fr; 
+    }
+
+    .full-width { 
+        grid-column: span 1; 
+    }
+
+    .input-grid { 
+        grid-template-columns: 1fr; 
+    }
+
+    .button-group { 
+        flex-direction: column; 
+    }
+
+    .scan-header > div:last-child, .scan-actions { 
+        margin-left: 0; 
+    }
+
+    /* FIX: Force buttons to be thick and touch-friendly on Android */
+    button, .btn-secondary, .btn-primary, .btn-success, .btn-danger, .tab-btn {
+        min-height: 48px !important;
+        height: auto !important;
+        padding: 10px 15px !important;
+    }
+
+    /* FIX: Force QR/Barcode Toggle to stay on one line */
+    .toggle-container { 
+        display: flex !important;
+        flex-direction: row !important;
+        flex-wrap: nowrap !important; 
+        gap: 12px !important; 
+        padding: 12px 10px !important; 
+        justify-content: center !important;
+        width: 100%; 
+        box-sizing: border-box;
+    }
+
+    .toggle-container label { 
+        white-space: nowrap !important; 
+        font-size: 14px !important;
+    }
+}
+
+/* =========================================================
+   5. GLOBAL FLOATING NAVIGATION MENU
+========================================================= */
+.us-global-menu {
+    position: fixed; 
+    z-index: 999999; 
+    display: flex; 
+    background: var(--surface-dark, #1e293b); 
+    border: 1px solid var(--border-color, #334155);
+    border-radius: 8px; 
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Default Placement (Top Left) */
+.us-global-menu.top-left { 
+    top: 15px; 
+    left: 15px; 
+}
+
+/* Alternate Placement (Bottom Right for tools if needed) */
+.us-global-menu.bottom-right { 
+    bottom: 25px; 
+    right: 25px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6); 
+}
+
+.us-home-btn {
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    width: 45px; 
+    height: 45px; 
+    color: var(--text-primary, #e2e8f0); 
+    text-decoration: none; 
+    border-right: 1px solid var(--border-color, #334155); 
+    transition: all 0.2s ease; 
+    border-radius: 8px 0 0 8px;
+}
+
+.us-home-btn:hover { 
+    background: #0f172a; 
+    color: var(--accent-primary, #38bdf8); 
+}
+
+.us-dropdown { 
+    position: relative; 
+}
+
+.us-dropbtn {
+    background: transparent; 
+    color: var(--text-primary, #e2e8f0); 
+    border: none;
+    height: 45px; 
+    padding: 0 15px; 
+    font-size: 14px; 
+    font-weight: 600;
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
+    gap: 6px;
+    border-radius: 0 8px 8px 0; 
+    transition: all 0.2s ease;
+}
+
+.us-dropdown:hover .us-dropbtn { 
+    background: #0f172a; 
+    color: var(--accent-primary, #38bdf8); 
+}
+
+.us-dropdown-content {
+    display: none; 
+    position: absolute; 
+    background-color: #0f172a; 
+    min-width: 240px; 
+    border: 1px solid var(--accent-primary, #38bdf8); 
+    border-radius: 8px; 
+    overflow: hidden;
+}
+
+/* Dropdown Animation & Direction Logic */
+.us-global-menu.top-left .us-dropdown-content { 
+    left: 0; 
+    top: 35px; /* Overlaps the 45px button by 10px */
+    padding-top: 10px; /* Pushes the links down so they aren't hidden */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.6); 
+}
+
+.us-global-menu.top-left .us-dropdown:hover .us-dropdown-content { 
+    display: block; 
+    animation: dropDownFade 0.2s ease; 
+}
+
+.us-global-menu.bottom-right .us-dropdown-content { 
+    right: 0; 
+    bottom: 35px; /* Overlaps the 45px button by 10px */
+    padding-bottom: 10px; /* Pushes the links up so they aren't hidden */
+    box-shadow: 0 -10px 25px rgba(0,0,0,0.6); 
+}
+
+.us-global-menu.bottom-right .us-dropdown:hover .us-dropdown-content { 
+    display: block; 
+    animation: dropUpFade 0.2s ease; 
+}
+
+.us-dropdown-content a {
+    color: var(--text-primary, #e2e8f0); 
+    padding: 12px 16px; 
+    text-decoration: none;
+    display: flex; 
+    align-items: center; 
+    gap: 10px; 
+    font-size: 14px;
+    border-bottom: 1px solid var(--surface-light, #1e293b); 
+    transition: all 0.2s ease;
+}
+
+.us-dropdown-content a:last-child { 
+    border-bottom: none; 
+}
+
+.us-global-menu.top-left .us-dropdown-content a:hover { 
+    background-color: rgba(56, 189, 248, 0.1); 
+    color: var(--accent-primary, #38bdf8); 
+    padding-left: 22px; 
+}
+
+.us-global-menu.bottom-right .us-dropdown-content a:hover { 
+    background-color: rgba(56, 189, 248, 0.1); 
+    color: var(--accent-primary, #38bdf8); 
+    padding-right: 22px; 
+}
+
+@keyframes dropDownFade { 
+    from { opacity: 0; transform: translateY(-10px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
+
+@keyframes dropUpFade { 
+    from { opacity: 0; transform: translateY(10px); } 
+    to { opacity: 1; transform: translateY(0); } 
+}
