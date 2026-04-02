@@ -268,7 +268,7 @@
                     });
                     log('Engine initialized successfully.', 'log-success');
                 } catch (error) {
-                    log('Local files missing. Connecting to secure cloud node...', 'log-warning'); 
+                    log('Connecting to secure cloud engine...', 'log-warning'); 
                     await activeFfmpeg.load({
                         coreURL: await toBlobURL(`${cloudBase}/ffmpeg-core.js`, 'text/javascript'),
                         wasmURL: await toBlobURL(`${cloudBase}/ffmpeg-core.wasm`, 'application/wasm'),
