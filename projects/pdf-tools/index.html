@@ -15,8 +15,8 @@
     <meta property="og:url" content="https://kishoraryal.com.np/projects/pdf-tools/">
     <meta property="og:type" content="website">
 
-    <link rel="icon" type="image/png" sizes="512x512" href="../../assets/logo.png">
-    <link rel="apple-touch-icon" href="../../assets/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo.png">
     <link rel="manifest" href="../../manifest.json">
 
     <link rel="stylesheet" id="master-style" href="../../assets/master.css">
@@ -543,9 +543,13 @@
             imgToPdfList.innerHTML = ''; imgFiles = Array.from(e.target.files);
             imgFiles.forEach((f, i) => {
                 const li = document.createElement('li'); li.dataset.i = i;
+                
+                // FIX: Generate a real thumbnail URL from the uploaded image file
+                const imgThumbnailUrl = URL.createObjectURL(f);
+                
                 li.innerHTML = `
                     <span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);">
-                        <img src="../../assets/pdf.png" alt="PDF" style="width: 18px; height: 18px;">
+                        <img src="${imgThumbnailUrl}" alt="Img" style="width: 24px; height: 24px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);">
                         ${f.name}
                     </span>
                     <span style="color:#94a3b8">☰</span>`;
