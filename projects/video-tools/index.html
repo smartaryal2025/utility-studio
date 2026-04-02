@@ -16,8 +16,8 @@
     <meta property="og:url" content="https://kishoraryal.com.np/projects/video-tools/">
     <meta property="og:type" content="website">
 
-    <link rel="icon" type="image/png" sizes="512x512" href="../../assets/logo.png">
-    <link rel="apple-touch-icon" href="../../assets/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo.png">
     <link rel="manifest" href="../../manifest.json">
 
     <link rel="stylesheet" id="master-style" href="../../assets/master.css">
@@ -113,14 +113,31 @@
                 </div>
 
                 <button id="processBtn" class="btn-primary" style="width: 100%; padding: 12px; margin-top: 15px; font-size: 15px;">🚀 Execute Engine</button>
+
+                <button id="stopBtn" style="display: none; width: 100%; padding: 12px; margin-top: 15px; font-size: 15px; background: var(--color-error); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">🛑 Stop Execution</button>
             </section>
 
             <div class="right-column">
                 
                 <section>
                     <div class="section-header"><h2>System Terminal</h2></div>
-                    <div class="terminal" id="terminal">
-                        <p class="log-info">> System initialized. Awaiting files.</p>
+                    <div class="terminal-container">
+                        <div class="terminal-header">
+                            <div class="terminal-dots">
+                                <span class="dot close"></span>
+                                <span class="dot min"></span>
+                                <span class="dot max"></span>
+                            </div>
+                            <span class="terminal-title">Media Engine Console</span>
+                        </div>
+                        
+                        <div class="progress-wrapper" id="progressWrapper" style="display: none;">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+
+                        <div class="terminal-window" id="terminal">
+                            <p class="log-info"><span class="term-prompt">~</span> System initialized. Awaiting files.</p>
+                        </div>
                     </div>
                 </section>
 
@@ -138,14 +155,23 @@
     <script>
         const terminal = document.getElementById('terminal');
         const processBtn = document.getElementById('processBtn');
+        const stopBtn = document.getElementById('stopBtn'); // NEW
         const fileInput = document.getElementById('fileInput');
         const dropZone = document.getElementById('dropZone');
         const fileQueue = document.getElementById('fileQueue');
+        const progressWrapper = document.getElementById('progressWrapper');
+        const progressFill = document.getElementById('progressFill');
         let selectedFiles = [];
+        
+        // NEW: Keep track of the active FFmpeg engine so we can kill it
+        let activeFfmpeg = null; 
 
         function log(msg, type = 'log-info') {
-            const p = document.createElement('p'); p.className = type; p.textContent = `> ${msg}`;
-            terminal.appendChild(p); terminal.scrollTop = terminal.scrollHeight;
+            const p = document.createElement('p'); 
+            p.className = type; 
+            p.innerHTML = `<span class="term-prompt">~</span> ${msg}`;
+            terminal.appendChild(p); 
+            terminal.scrollTop = terminal.scrollHeight;
         }
 
         window.addEventListener('dragover', function(e) { e.preventDefault(); }, false);
@@ -178,40 +204,77 @@
             container.prepend(item);
         }
 
+        // NEW: Stop Button Logic
+        stopBtn.addEventListener('click', () => {
+            if (activeFfmpeg) {
+                try {
+                    activeFfmpeg.terminate(); // Instantly kills the web worker
+                    log('Execution halted by user.', 'log-warning');
+                } catch (err) {
+                    console.error("Termination error:", err);
+                }
+                
+                // Reset UI
+                progressWrapper.style.display = 'none';
+                stopBtn.style.display = 'none';
+                processBtn.style.display = 'block';
+                processBtn.disabled = false;
+            }
+        });
+
         processBtn.addEventListener('click', async () => {
             if (typeof crossOriginIsolated === 'undefined' || !crossOriginIsolated) {
                 log('FATAL: Browser headers missing. Ensure Cloudflare _headers file is deployed.', 'log-error'); return;
             }
             if (!selectedFiles.length) return log('Error: Queue empty.', 'log-error');
 
-            processBtn.disabled = true;
+            // Toggle UI states
+            processBtn.style.display = 'none';
+            stopBtn.style.display = 'block';
+            progressWrapper.style.display = 'block';
+            progressFill.style.width = '0%';
+            progressFill.textContent = '0%'; // NEW: Reset text
 
             try {
                 const { FFmpeg } = window.FFmpegWASM;
                 const { toBlobURL, fetchFile } = window.FFmpegUtil;
-                const ffmpeg = new FFmpeg();
+                
+                // Assign to our global variable
+                activeFfmpeg = new FFmpeg();
 
-                ffmpeg.on('progress', ({ progress }) => { log(`Processing... ${(progress * 100).toFixed(1)}%`); });
-                log('Fetching engine into memory...', 'log-info');
+                activeFfmpeg.on('log', ({ message }) => {
+                    if (message.includes('Aborted')) return;
+                    log(message, 'log-info');
+                });
+
+                activeFfmpeg.on('progress', ({ progress }) => { 
+                    const percent = Math.max(0, Math.min(100, progress * 100));
+                    const displayString = `${percent.toFixed(1)}%`; // Formats to e.g. "45.2%"
+                
+                    progressFill.style.width = displayString;
+                    progressFill.textContent = displayString; // NEW: Adds text inside the bar
+                });
+
+                log('Booting media engine components...', 'log-info');
                 
                 const localBase = 'libs';
                 const cloudBase = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.4/dist/umd';
 
                 try {
-                    await ffmpeg.load({
+                    await activeFfmpeg.load({
                         coreURL: await toBlobURL(`${localBase}/ffmpeg-core.js`, 'text/javascript'),
                         wasmURL: await toBlobURL(`${localBase}/ffmpeg-core.wasm`, 'application/wasm'),
                         classWorkerURL: await toBlobURL(`${localBase}/814.ffmpeg.js`, 'text/javascript')
                     });
-                    log('Local offline engine loaded successfully!', 'log-success');
+                    log('Engine initialized successfully.', 'log-success');
                 } catch (error) {
-                    log('Local file missing. Falling back to Cloud CDN...', 'log-warning'); 
-                    await ffmpeg.load({
+                    log('Local files missing. Connecting to secure cloud node...', 'log-warning'); 
+                    await activeFfmpeg.load({
                         coreURL: await toBlobURL(`${cloudBase}/ffmpeg-core.js`, 'text/javascript'),
                         wasmURL: await toBlobURL(`${cloudBase}/ffmpeg-core.wasm`, 'application/wasm'),
                         classWorkerURL: await toBlobURL(`${cloudBase}/814.ffmpeg.js`, 'text/javascript')
                     });
-                    log('Cloud engine loaded successfully!', 'log-success');
+                    log('Cloud engine initialized successfully.', 'log-success');
                 }
 
                 const format = document.getElementById('outputFormat').value;
@@ -221,13 +284,13 @@
 
                 for (let i = 0; i < selectedFiles.length; i++) {
                     const file = selectedFiles[i];
-                    log(`--- Executing file: ${file.name} ---`);
+                    log(`Executing build: ${file.name}`);
                     
                     const inName = `input_${i}.${file.name.split('.').pop()}`;
                     const outName = `output_${i}.${format}`;
                     const finalFilename = `${file.name.substring(0, file.name.lastIndexOf('.')) || file.name}_processed.${format}`;
 
-                    await ffmpeg.writeFile(inName, await fetchFile(file));
+                    await activeFfmpeg.writeFile(inName, await fetchFile(file));
 
                     let args = ['-i', inName];
                     if (cropW) args.push('-vf', `crop=${cropW}:${cropH || cropW}`);
@@ -237,10 +300,10 @@
                     else if (compress && ['mp4', 'mkv', 'mov', 'avi'].includes(format)) { args.push('-vcodec', 'libx264', '-crf', '28', '-preset', 'fast'); }
                     args.push(outName);
                     
-                    log(`Executing: ffmpeg ${args.join(' ')}`);
-                    await ffmpeg.exec(args);
+                    log(`Process Command Initiated.`);
+                    await activeFfmpeg.exec(args);
 
-                    const data = await ffmpeg.readFile(outName);
+                    const data = await activeFfmpeg.readFile(outName);
                     
                     let mimeType = `video/${format}`;
                     if (['mp3', 'aac'].includes(format)) mimeType = `audio/${format}`;
@@ -250,11 +313,22 @@
                     const url = URL.createObjectURL(blob);
                     
                     addLocalHistory(finalFilename, url);
-                    log(`Completed: ${file.name}`, 'log-success');
+                    log(`Build Completed: ${file.name}`, 'log-success');
                 }
+                
+                setTimeout(() => { progressWrapper.style.display = 'none'; }, 2000);
+
             } catch (err) {
-                log(`Engine Crash: ${err.message || err}`, 'log-error');
+                // Ignore the error if it was manually terminated by the user
+                if (err.message && err.message.includes('terminated')) {
+                    // Do nothing, handled by the stopBtn listener
+                } else {
+                    log(`System Exception: ${err.message || err}`, 'log-error');
+                }
             } finally {
+                // Revert UI back to Execute button when completely done or crashed
+                stopBtn.style.display = 'none';
+                processBtn.style.display = 'block';
                 processBtn.disabled = false;
             }
         });
