@@ -15,11 +15,15 @@
     <meta property="og:url" content="https://kishoraryal.com.np/">
     <meta property="og:type" content="website">
 
-    <link rel="icon" type="image/png" href="assets/logo.png">
-    <link rel="stylesheet" href="assets/master.css">
-    <link rel="stylesheet" href="assets/hub.css">
-    <link rel="manifest" href="/manifest.json">
-    
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/logo.png">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="stylesheet" id="master-style" href="assets/master.css">
+    <link rel="stylesheet" id="hub-style" href="assets/hub.css">
+
+    <script src="assets/theme.js"></script>
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -34,6 +38,7 @@
     </script>
 </head>
 <body>
+
 <div class="app-container hub-app-container">
 
         <div class="hub-hero-section">
@@ -89,6 +94,11 @@
             </a>
         </div>
     </div>
+    <button onclick="toggleTheme()" title="Toggle Light/Dark Mode" style="position: fixed; top: 20px; right: 20px; z-index: 999999; width: 45px; height: 45px; border-radius: 8px; border: 1px solid var(--border-color, #334155); background: var(--surface-dark, #1e293b); color: var(--accent-primary, #38bdf8); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: all 0.2s ease;">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path id="theme-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+        </svg>
+    </button>
 
     <script>
         if ('serviceWorker' in navigator) {
