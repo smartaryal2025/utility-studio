@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v4';
+const CACHE_NAME = 'utility-studio-v4.1';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
@@ -11,6 +11,8 @@ const CORE_ASSETS = [
     
     // Global Assets (Crucial for Theme & Layout)
     '/assets/logo.png',
+    '/assets/logo-192.png',
+    '/assets/logo-512.png',
     '/assets/theme.js',
     '/assets/master.css',
     '/assets/master-light.css',
