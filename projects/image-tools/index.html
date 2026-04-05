@@ -39,76 +39,107 @@
             margin-top: 4px;
         }
 
-        /* line-height 0 absolutely prevents the wrapper from stretching */
+        /* FIX: Use Grid to force the canvas and image into the exact same layout boundaries */
         #canvas-wrapper {
             margin: auto;
             position: relative;
-            display: none;
-            line-height: 0; 
-            transform-origin: top left;
+            display: none; 
+        }
+        
+        /* Intercept JS inline-block command and force our bulletproof Grid instead */
+        #canvas-wrapper[style*="inline-block"] {
+            display: grid !important;
+            place-items: center;
+            justify-content: center;
+            align-content: center;
+        }
+
+        /* Both elements share the EXACT same cell, identical bounds, zero stretch! */
+        #main-image, #draw-canvas {
+            grid-area: 1 / 1;
+            max-width: 100%;
+            max-height: 55vh;
+            width: auto !important;
+            height: auto !important;
+            margin: 0 !important;
+            object-fit: contain !important; /* Enforces strict aspect ratio matching */
         }
 
         #main-image {
             display: block;
-            max-width: 100%;
-            width: auto;
-            height: auto;
-            max-height: 55vh;
-            object-fit: contain;
             -webkit-user-drag: none;
             user-select: none;
         }
 
-        /* 2. FULLSCREEN WORKSPACE */
+        #draw-canvas {
+            z-index: 5;
+            opacity: 0;
+            pointer-events: none;
+            touch-action: none;
+        }
+
+        /* =========================================================
+           2. FULLSCREEN WORKSPACE (RESTORED HUGE 85vh GRID)
+           ========================================================= */
         #right-workspace.fullscreen-mode {
             position: fixed !important; top: 0; left: 0; right: 0; bottom: 0; 
             width: 100vw !important; height: 100vh !important; z-index: 9999; 
-            background: var(--surface-dark); 
-            padding: 15px 20px; /* Reduced vertical padding */
-            margin: 0; 
-            display: block !important; 
+            background: var(--surface-dark); padding: 15px 20px; margin: 0; 
+            
+            /* CSS GRID: Forces the massive layout without collapsing */
+            display: grid !important; 
+            grid-template-rows: minmax(85vh, 1fr) max-content max-content; 
+            gap: 12px;
+            
+            box-sizing: border-box;
             overflow-y: auto !important; 
             overflow-x: hidden;
         }
 
         #right-workspace.fullscreen-mode > section {
-            margin-bottom: 12px; /* Tighter gap between sections */
-            background: var(--surface-dark); 
+            margin: 0 !important; 
+            padding: 0;
+            background: transparent;
         }
 
-        /* FIX: Kills the extra dead space at the very bottom of the screen */
-        #right-workspace.fullscreen-mode > section:last-child {
-            margin-bottom: 0 !important;
+        #right-workspace.fullscreen-mode #editor-section {
+            display: flex !important; flex-direction: column; 
+            min-height: 0; 
         }
 
         #right-workspace.fullscreen-mode #editor-canvas-container {
-            min-height: 75vh !important; 
-            height: auto;
+            flex: 1 1 0 !important; 
+            min-height: 60vh !important; 
+            height: auto !important;
         }
 
-        #right-workspace.fullscreen-mode #main-image {
-            max-height: none !important; 
+        /* When fullscreen expands, BOTH image and canvas scale up synchronously */
+        #right-workspace.fullscreen-mode #main-image,
+        #right-workspace.fullscreen-mode #draw-canvas {
+            max-height: 80vh !important; 
         }
 
+        /* Watermark native drag prevention */
         .live-overlay {
             position: absolute; z-index: 1000; cursor: move;
             user-select: none; -webkit-user-drag: none; touch-action: none;
         }
         .live-overlay img { pointer-events: none; -webkit-user-drag: none; }
 
-        /* 3. MOBILE OPTIMIZATIONS */
+        /* 3. MOBILE OPTIMIZATIONS (FULL MENU VIEWABLE) */
         @media (max-width: 850px) {
-            #right-workspace.fullscreen-mode { padding: 10px; }
-            .control-panel {
-                flex-wrap: nowrap !important; 
-                overflow-x: auto !important;
-                -webkit-overflow-scrolling: touch; 
-                padding-bottom: 8px !important; 
-                justify-content: flex-start !important;
+            #right-workspace.fullscreen-mode { padding: 10px; gap: 10px; }
+            
+            #right-workspace.fullscreen-mode {
+                grid-template-rows: minmax(70vh, 1fr) max-content max-content; 
             }
-            .control-group, .control-panel > div { flex-shrink: 0; }
-            #editor-canvas-container { min-height: 300px; }
-            section { margin-bottom: 15px; }
+
+            .control-panel {
+                flex-wrap: wrap !important; 
+                overflow-x: visible !important;
+                padding-bottom: 6px !important; 
+                justify-content: center !important;
+            }
         }
     </style>
 </head>
@@ -137,12 +168,12 @@
             <section>
                 <div class="section-header"><h2>Import Files</h2></div>
                 
-                <button class="btn-secondary" onclick="document.getElementById('file-input').click()" style="width: auto !important; min-width: 200px; padding: 8px 20px !important; display: inline-flex !important; margin: 0 auto 10px 0 !important; align-self: flex-start;">📁 Choose Files</button>
+                <button class="btn-secondary" onclick="document.getElementById('file-input').click()" style="width: auto !important; min-width: 200px; padding: 10px 30px !important; display: inline-flex !important; margin: 0 auto 15px 0 !important; align-self: flex-start;">📁 Choose Files</button>
                 <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp, image/gif, image/svg+xml" multiple style="display: none;">
                 
-                <div style="font-size: 13px; margin-bottom: 8px; color: #94a3b8; font-weight: bold;">Gallery (Drag to Reorder)</div>
+                <div style="font-size: 13px; margin-bottom: 10px; color: #94a3b8; font-weight: bold;">Gallery (Drag to Reorder)</div>
                 
-                <div style="display: flex; gap: 5px; margin-bottom: 8px; align-items: center;">
+                <div style="display: flex; gap: 5px; margin-bottom: 10px; align-items: center;">
                     <button id="btn-merge-vert" class="btn-secondary" style="flex: 1; padding: 4px; font-size: 12px;" title="Select checkboxes below to merge">⬇ Merge Vert.</button>
                     <button id="btn-merge-horz" class="btn-secondary" style="flex: 1; padding: 4px; font-size: 12px;">➡ Merge Horiz.</button>
                     <label style="font-size: 11px; color: var(--text-primary); display: flex; align-items: center; gap: 4px; cursor: pointer;" title="Swap Image 1 and Image 2 positions">
@@ -159,17 +190,17 @@
                     <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
                         <h2>Edit, Filter & Backgrounds</h2>
                         <div style="display: flex; align-items: center; gap: 4px;">
-                            <button id="btn-zoom-out" class="btn-secondary" style="padding: 4px 8px;" title="Zoom Out">➖</button>
-                            <span id="zoom-val" style="font-size: 13px; width: 45px; text-align: center; color: var(--text-primary);">100%</span>
-                            <button id="btn-zoom-in" class="btn-secondary" style="padding: 4px 8px;" title="Zoom In">➕</button>
-                            <button id="btn-fullscreen" class="btn-secondary" style="padding: 4px 10px; font-size: 13px; margin-left: 6px;">⛶ Expand</button>
+                            <button id="btn-zoom-out" class="btn-secondary" style="padding: 2px 6px;" title="Zoom Out">➖</button>
+                            <span id="zoom-val" style="font-size: 12px; width: 40px; text-align: center; color: var(--text-primary);">100%</span>
+                            <button id="btn-zoom-in" class="btn-secondary" style="padding: 2px 6px;" title="Zoom In">➕</button>
+                            <button id="btn-fullscreen" class="btn-secondary" style="padding: 3px 8px; font-size: 12px; margin-left: 6px;">⛶ Expand</button>
                         </div>
                     </div>
                     
-                    <div class="control-panel" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
+                    <div class="control-panel" style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 8px 10px; margin-bottom: 4px;">
                         
                         <div style="display: flex; align-items: center; gap: 5px; border-right: 1px solid var(--border-color); padding-right: 8px;">
-                            <select id="filter-preset" class="filter-input" style="width: 70px; padding: 4px; font-size: 12px;">
+                            <select id="filter-preset" class="filter-input" style="width: 75px; padding: 3px; font-size: 12px;">
                                 <option value="none">None</option>
                                 <option value="grayscale(100%)">Gray</option>
                                 <option value="sepia(100%)">Sepia</option>
@@ -178,36 +209,36 @@
                             <span title="Brightness">☀</span><input type="range" id="filter-bright" class="filter-input" min="0" max="200" value="100" style="width: 60px;">
                             <span title="Contrast">◐</span><input type="range" id="filter-cont" class="filter-input" min="0" max="200" value="100" style="width: 60px;">
                             <span title="Saturation">🌈</span><input type="range" id="filter-sat" class="filter-input" min="0" max="200" value="100" style="width: 60px;">
-                            <button id="btn-reset-filters" class="btn-secondary" style="padding: 4px 8px; font-size: 12px;">Reset</button>
+                            <button id="btn-reset-filters" class="btn-secondary" style="padding: 3px 8px; font-size: 12px;">Reset</button>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 4px; border-right: 1px solid var(--border-color); padding-right: 8px;">
-                            <button id="btn-undo" class="btn-secondary" disabled title="Undo Action" style="padding: 4px 8px; font-size: 12px;">↩</button>
-                            <button id="btn-toggle-crop" class="btn-secondary" disabled style="padding: 4px 8px; font-size: 12px;">◩ Crop</button>
-                            <button id="btn-cancel-crop" class="btn-secondary" style="display: none; padding: 4px 8px; color: #ef4444; font-size: 12px;">✖</button>
+                            <button id="btn-undo" class="btn-secondary" disabled title="Undo Action" style="padding: 3px 8px; font-size: 12px;">↩</button>
+                            <button id="btn-toggle-crop" class="btn-secondary" disabled style="padding: 3px 8px; font-size: 12px;">◩ Crop</button>
+                            <button id="btn-cancel-crop" class="btn-secondary" style="display: none; padding: 3px 8px; color: #ef4444; font-size: 12px;">✖</button>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 4px; border-right: 1px solid var(--border-color); padding-right: 8px;">
-                            <input type="color" id="color-to-erase" value="#ffffff" title="Color to Erase" style="width: 26px; height: 26px; padding: 0;">
-                            <input type="number" id="bg-tolerance" value="40" style="width: 44px; padding: 4px; font-size: 12px;" title="Tolerance">
-                            <button id="btn-remove-bg" class="btn-secondary" disabled title="Magic Erase" style="padding: 4px 8px; font-size: 12px;">🪄 Remove BG</button>
+                            <input type="color" id="color-to-erase" value="#ffffff" title="Color to Erase" style="width: 24px; height: 24px; padding: 0;">
+                            <input type="number" id="bg-tolerance" value="40" style="width: 40px; padding: 3px; font-size: 12px;" title="Tolerance">
+                            <button id="btn-remove-bg" class="btn-secondary" disabled title="Magic Erase" style="padding: 3px 8px; font-size: 12px;">🪄 Remove BG</button>
                             
-                            <input type="color" id="new-bg-color" value="#38bdf8" title="Fill Color / Brush Color" style="width: 26px; height: 26px; padding: 0; margin-left: 4px;">
-                            <button id="btn-add-bg" class="btn-secondary" disabled title="Fill Transparent Areas" style="padding: 4px 8px; font-size: 12px;">🎨 Fill</button>
+                            <input type="color" id="new-bg-color" value="#38bdf8" title="Fill Color / Brush Color" style="width: 24px; height: 24px; padding: 0; margin-left: 4px;">
+                            <button id="btn-add-bg" class="btn-secondary" disabled title="Fill Transparent Areas" style="padding: 3px 8px; font-size: 12px;">🎨 Fill</button>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 4px; border-right: 1px solid var(--border-color); padding-right: 8px;">
-                            <button id="btn-manual-erase" class="btn-secondary" disabled title="Manual Eraser" style="padding: 4px 8px; font-size: 12px;">🧼 Eraser</button>
-                            <button id="btn-manual-brush" class="btn-secondary" disabled title="Manual Brush" style="padding: 4px 8px; font-size: 12px;">🖌️ Brush</button>
+                            <button id="btn-manual-erase" class="btn-secondary" disabled title="Manual Eraser" style="padding: 3px 8px; font-size: 12px;">🧼 Eraser</button>
+                            <button id="btn-manual-brush" class="btn-secondary" disabled title="Manual Brush" style="padding: 3px 8px; font-size: 12px;">🖌️ Brush</button>
                             <input type="range" id="brush-size" min="2" max="250" value="20" style="width: 90px;" title="Brush Size">
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 4px;">
-                            <input type="text" id="wm-text" placeholder="Text" style="width: 70px; padding: 4px; font-size: 12px;">
-                            <input type="color" id="wm-color" value="#ffffff" title="Text Color" style="width: 26px; height: 26px; padding: 0;">
-                            <input type="number" id="wm-size" value="32" style="width: 45px; padding: 4px; font-size: 12px;">
-                            <button id="btn-add-wm" class="btn-secondary" disabled style="padding: 4px 8px; font-size: 12px;">+ Txt</button>
-                            <label class="btn-upload-label btn-secondary disabled" id="label-logo-upload" style="padding: 4px 8px; margin: 0; font-size: 12px;">
+                            <input type="text" id="wm-text" placeholder="Text" style="width: 60px; padding: 3px; font-size: 12px;">
+                            <input type="color" id="wm-color" value="#ffffff" title="Text Color" style="width: 24px; height: 24px; padding: 0;">
+                            <input type="number" id="wm-size" value="32" style="width: 40px; padding: 3px; font-size: 12px;">
+                            <button id="btn-add-wm" class="btn-secondary" disabled style="padding: 3px 8px; font-size: 12px;">+ Txt</button>
+                            <label class="btn-upload-label btn-secondary disabled" id="label-logo-upload" style="padding: 3px 8px; margin: 0; font-size: 12px;">
                                 🖼 Logo <input type="file" id="logo-upload" accept="image/png, image/jpeg, image/webp" style="display:none;" disabled>
                             </label>
                         </div>
@@ -217,8 +248,8 @@
                     <div id="editor-canvas-container">
                         <span id="placeholder-text" style="color: #94a3b8; margin: auto;">Select an image from the gallery</span>
                         <div id="canvas-wrapper">
-                            <img id="main-image" src="" alt="Editor" draggable="false" ondragstart="return false;">
-                            <canvas id="draw-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; touch-action: none; opacity: 0;"></canvas>
+                            <img id="main-image" draggable="false" ondragstart="return false;">
+                            <canvas id="draw-canvas"></canvas>
                         </div>
                     </div>
                 </section>
@@ -239,15 +270,15 @@
                                 </label>
                             </div>
                             <div style="display: flex; align-items: center;">
-                                <input type="number" id="resize-width" placeholder="W (px)" style="width: 75px; padding: 4px;">
+                                <input type="number" id="resize-width" placeholder="W (px)" style="width: 70px; padding: 3px;">
                                 <span style="color: #64748b; margin: 0 4px;">x</span>
-                                <input type="number" id="resize-height" placeholder="H (px)" style="width: 75px; padding: 4px;">
+                                <input type="number" id="resize-height" placeholder="H (px)" style="width: 70px; padding: 3px;">
                             </div>
                         </div>
                         
                         <div class="control-group" style="border-right: 1px solid #334155; padding-right: 15px;">
                             <span class="control-label" style="color: #10b981;">Target Size:</span>
-                            <input type="number" id="target-kb" placeholder="Max KB" style="width: 85px; padding: 4px; border-color: #10b981;" title="Leave blank to use manual slider below">
+                            <input type="number" id="target-kb" placeholder="Max KB" style="width: 80px; padding: 3px; border-color: #10b981;" title="Leave blank to use manual slider below">
                         </div>
 
                         <div class="control-group" id="manual-quality-group" style="flex: 1; min-width: 120px;">
@@ -266,7 +297,7 @@
                     <div class="control-panel" style="margin-bottom: 0;">
                         <div class="control-group" style="margin-right: auto;">
                             <span class="control-label">Format:</span>
-                            <select id="export-format" style="padding: 4px;">
+                            <select id="export-format" style="padding: 3px;">
                                 <option value="image/jpeg">.JPG</option>
                                 <option value="image/png">.PNG</option>
                                 <option value="image/webp">.WEBP</option>
@@ -283,9 +314,9 @@
                         </div>
 
                         <div class="control-group">
-                            <button id="btn-preview-print" class="btn-secondary" style="background: #1e293b; color: white; padding: 6px 12px;" disabled>🖨️ Print</button>
-                            <button id="btn-download-single" class="btn-secondary" style="padding: 6px 12px;" disabled>💾 Save</button>
-                            <button id="btn-download-zip" class="btn-success" style="padding: 6px 12px;" disabled>📦 Export All</button>
+                            <button id="btn-preview-print" class="btn-secondary" style="background: #1e293b; color: white; padding: 4px 10px;" disabled>🖨️ Print</button>
+                            <button id="btn-download-single" class="btn-secondary" style="padding: 4px 10px;" disabled>💾 Save</button>
+                            <button id="btn-download-zip" class="btn-success" style="padding: 4px 10px;" disabled>📦 Export All</button>
                         </div>
                     </div>
                 </section>
@@ -297,6 +328,7 @@
     <script src="libs/cropper.min.js"></script>
     <script src="libs/jszip.min.js"></script>
     <script src="../pdf-tools/libs/Sortable.min.js"></script>
+    
     <script src="libs/script.js"></script>
 </body>
 </html>
