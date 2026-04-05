@@ -8,6 +8,8 @@ const CORE_ASSETS = [
     '/index.html',
     '/manifest.json',
     '/404.html',
+    '/about.html',
+    '/privacy.html',
     
     // Global Assets (Crucial for Theme & Layout)
     '/assets/logo.png',
