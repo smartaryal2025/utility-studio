@@ -31,6 +31,7 @@ const CORE_ASSETS = [
     '/projects/image-tools/libs/cropper.min.js',
     '/projects/image-tools/libs/image-style.css',
     '/projects/image-tools/libs/jszip.min.js',
+    '/projects/image-tools/libs/script.js',
 
     // PDF Tools
     '/projects/pdf-tools/index.html',
