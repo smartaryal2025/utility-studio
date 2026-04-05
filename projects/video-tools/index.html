@@ -10,12 +10,6 @@
     
     <link rel="canonical" href="https://kishoraryal.com.np/projects/video-tools/">
 
-    <meta property="og:title" content="Media Studio | Utility Studio">
-    <meta property="og:description" content="Convert and compress video and audio files locally in your browser. Fast and private.">
-    <meta property="og:image" content="https://kishoraryal.com.np/assets/logo.png">
-    <meta property="og:url" content="https://kishoraryal.com.np/projects/video-tools/">
-    <meta property="og:type" content="website">
-
     <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo.png">
     <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo.png">
     <link rel="manifest" href="../../manifest.json">
@@ -25,22 +19,75 @@
 
     <link rel="stylesheet" href="libs/video-style.css">
     
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Media Studio",
-        "url": "https://kishoraryal.com.np/projects/video-tools/",
-        "description": "Browser-based video editing, conversion, and compression tools.",
-        "applicationCategory": "MultimediaApplication",
-        "operatingSystem": "All",
-        "offers": { "@type": "Offer", "price": "0" }
-    }
-    </script>
-    
+    <script src="../image-tools/libs/jszip.min.js"></script>
     <script src="libs/ffmpeg.js"></script>
     <script src="libs/index.js"></script> 
 
+    <style>
+        /* Forces ALL sliders to go exactly edge-to-edge (0% to 100%) */
+        input[type="range"] {
+            padding: 0 !important;
+            margin: 0 !important;
+            box-sizing: border-box;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            background: #000;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .video-wrapper video {
+            width: 100%;
+            max-height: 450px; 
+            object-fit: contain;
+            display: block;
+        }
+
+        #cropOverlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            cursor: crosshair;
+            z-index: 10;
+            display: none;
+            background: rgba(0, 0, 0, 0.3); 
+        }
+        #cropBox {
+            position: absolute;
+            border: 2px dashed #00d9ff;
+            background: rgba(0, 217, 255, 0.2);
+            pointer-events: none;
+            display: none;
+        }
+
+        .trim-sliders {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .trim-sliders input[type="range"] {
+            width: 100%;
+            cursor: pointer;
+            accent-color: var(--accent-primary);
+        }
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .slider-label {
+            font-size: 13px;
+            color: var(--text-secondary);
+            font-weight: bold;
+            min-width: 50px;
+        }
+    </style>
 </head>
 <body>
     <div class="us-global-menu top-left">
@@ -65,63 +112,131 @@
 
         <div class="tools-grid">
             
-            <section>
-                <div class="section-header"><h2>Processing Queue</h2></div>
-                
-                <div class="drop-zone" id="dropZone">
-                    <p>Drag media here<br>or <span style="color: var(--accent-primary); font-weight: bold;">click to browse</span></p>
-                    <input type="file" id="fileInput" multiple accept="video/*,audio/*,.aac" style="display: none;">
-                </div>
-                <div id="fileQueue" class="file-queue"></div>
-
-                <div class="control-panel" style="flex-direction: column; align-items: stretch; margin-top: 20px;">
+            <div class="left-column" style="display: flex; flex-direction: column; gap: 20px;">
+                <section>
+                    <div class="section-header">
+                        <h2 style="display:flex; align-items:center; gap: 15px;">
+                            Processing Queue 
+                            <button id="clearQueueBtn" style="background: none; border: 1px solid var(--border-color); color: var(--text-secondary); border-radius: 4px; font-size: 11px; cursor: pointer; padding: 2px 8px; transition: all 0.2s;">Clear</button>
+                        </h2>
+                    </div>
                     
-                    <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%;">
-                        <label class="control-label">Target Format</label>
-                        <select id="outputFormat">
-                            <optgroup label="Video Formats">
-                                <option value="mp4">MP4</option>
-                                <option value="mkv">MKV</option>
-                                <option value="avi">AVI</option>
-                                <option value="mov">MOV</option>
-                                <option value="wmv">WMV</option>
-                                <option value="flv">FLV</option>
-                                <option value="webm">WebM</option>
-                                <option value="gif">GIF Animation</option>
-                            </optgroup>
-                            <optgroup label="Audio Formats">
-                                <option value="mp3">MP3</option>
-                                <option value="aac">AAC</option>
-                            </optgroup>
-                        </select>
+                    <div class="drop-zone" id="dropZone">
+                        <p>Drag media here<br>or <span style="color: var(--accent-primary); font-weight: bold;">click to browse</span></p>
+                        <input type="file" id="fileInput" multiple accept="video/*,audio/*,.aac" style="display: none;">
                     </div>
+                    <div id="fileQueue" class="file-queue"></div>
+                </section>
 
-                    <div class="control-group" style="width: 100%; margin-top: 5px;">
-                        <label style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); cursor: pointer; font-size: 14px;">
-                            <input type="checkbox" id="compressCheck" style="width: 16px; height: 16px;"> Heavy Compression (Video)
-                        </label>
-                    </div>
-
-                    <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%; margin-top: 5px;">
-                        <label class="control-label">Crop Settings (Optional)</label>
-                        <div style="display: flex; gap: 10px; width: 100%;">
-                            <input type="number" id="cropW" placeholder="Width (px)">
-                            <input type="number" id="cropH" placeholder="Height (px)">
+                <section>
+                    <div class="section-header"><h2>Edit & Track Mixer</h2></div>
+                    
+                    <div class="control-panel" style="margin-bottom: 15px;">
+                        <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                            <label style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); cursor: pointer; font-size: 14px; margin-bottom: 8px;">
+                                <input type="checkbox" id="muteCheck" style="width: 16px; height: 16px;"> Mute Original Source Audio
+                            </label>
+                            <div style="width: 100%;">
+                                <label style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; display: block;">Overlay Custom Background Audio:</label>
+                                <input type="file" id="audioInput" accept="audio/*" style="display: block; width: 100%; padding: 8px; font-size: 13px; background: var(--surface-dark); border: 1px dashed var(--border-color); border-radius: 4px; color: var(--text-secondary);">
+                            </div>
                         </div>
                     </div>
 
-                </div>
+                    <div class="control-panel" style="margin-bottom: 0;">
+                        <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                            <div style="display: flex; justify-content: space-between; width: 100%; margin-bottom: 8px;">
+                                <span class="control-label">Trim & Crop Values</span>
+                                <button id="clearCropBtn" style="background: none; border: none; color: var(--color-error); font-size: 12px; cursor: pointer; padding: 0;">✖ Clear Crop</button>
+                            </div>
+                            
+                            <div class="crop-grid" style="width: 100%; margin-bottom: 8px;">
+                                <input type="text" id="trimStart" placeholder="Start (e.g. 00:00:10)">
+                                <input type="text" id="trimEnd" placeholder="End (e.g. 00:00:20)">
+                            </div>
 
-                <button id="processBtn" class="btn-primary" style="width: 100%; padding: 12px; margin-top: 15px; font-size: 15px;">🚀 Execute Engine</button>
+                            <div class="crop-grid" style="width: 100%;">
+                                <input type="number" id="cropW" placeholder="Width (px)">
+                                <input type="number" id="cropH" placeholder="Height (px)">
+                                <input type="number" id="cropX" placeholder="X Offset (px)">
+                                <input type="number" id="cropY" placeholder="Y Offset (px)">
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
-                <button id="stopBtn" style="display: none; width: 100%; padding: 12px; margin-top: 15px; font-size: 15px; background: var(--color-error); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;">🛑 Stop Execution</button>
-            </section>
+                <section>
+                    <div class="section-header"><h2>Convert & Export</h2></div>
+                    <div class="control-panel" style="margin-bottom: 0;">
+                        <div class="control-group" style="margin-right: auto;">
+                            <span class="control-label">Format:</span>
+                            <select id="outputFormat" style="padding: 3px; width: auto; margin: 0;">
+                                <optgroup label="Video Formats">
+                                    <option value="mp4">MP4</option>
+                                    <option value="mkv">MKV</option>
+                                    <option value="avi">AVI</option>
+                                    <option value="mov">MOV</option>
+                                    <option value="webm">WebM</option>
+                                    <option value="gif">GIF Animation</option>
+                                </optgroup>
+                                <optgroup label="Audio Formats">
+                                    <option value="mp3">MP3</option>
+                                    <option value="aac">AAC</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                        
+                        <div class="control-group" style="border-right: 1px solid var(--border-color); padding-right: 15px;">
+                            <label style="display: flex; align-items: center; gap: 5px; color: var(--text-primary); cursor: pointer; font-size: 13px;">
+                                <input type="checkbox" id="compressCheck" style="width: 14px; height: 14px;"> Compress
+                            </label>
+                        </div>
+
+                        <div class="control-group" style="margin-top: 10px; width: 100%; display: flex; gap: 8px;">
+                            <button id="processBtn" class="btn-primary" style="flex: 1; padding: 8px 10px;">🚀 Execute</button>
+                            <button id="stopBtn" class="btn-danger" style="display: none; flex: 1; padding: 8px 10px;">🛑 Stop</button>
+                            <button id="btn-download-single" class="btn-secondary" style="padding: 8px 10px;" disabled>💾 Save</button>
+                            <button id="btn-download-zip" class="btn-success" style="padding: 8px 10px;" disabled>📦 Export All</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
 
             <div class="right-column">
                 
-                <section>
+                <section id="previewContainer" style="display: none;">
+                    <div class="section-header">
+                        <h2 style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                            Media Preview
+                            <button id="toggleCropBtn" class="btn-secondary" style="font-size: 12px; height: 30px; padding: 0 10px; display: inline-flex; align-items: center; gap: 6px;">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                                Draw Crop Area
+                            </button>
+                        </h2>
+                    </div>
+
+                    <div class="video-wrapper">
+                        <video id="videoPreview" controls muted></video>
+                        <div id="cropOverlay">
+                            <div id="cropBox"></div>
+                        </div>
+                    </div>
+
+                    <div class="trim-sliders">
+                        <div class="slider-row">
+                            <span class="slider-label">START</span>
+                            <input type="range" id="sliderStart" min="0" step="0.1" value="0">
+                        </div>
+                        <div class="slider-row">
+                            <span class="slider-label">END</span>
+                            <input type="range" id="sliderEnd" min="0" step="0.1" value="0">
+                        </div>
+                    </div>
+                </section>
+
+                <section style="flex-grow: 1; display: flex; flex-direction: column;">
                     <div class="section-header"><h2>System Terminal</h2></div>
-                    <div class="terminal-container">
+                    <div class="terminal-container" style="flex-grow: 1; display: flex; flex-direction: column;">
                         <div class="terminal-header">
                             <div class="terminal-dots">
                                 <span class="dot close"></span>
@@ -135,19 +250,12 @@
                             <div class="progress-fill" id="progressFill"></div>
                         </div>
 
-                        <div class="terminal-window" id="terminal">
+                        <div class="terminal-window" id="terminal" style="flex-grow: 1; min-height: 250px;">
                             <p class="log-info"><span class="term-prompt">~</span> System initialized. Awaiting files.</p>
                         </div>
                     </div>
                 </section>
-
-                <section>
-                    <div class="section-header"><h2>Recent Exports</h2></div>
-                    <div id="historyContainer">
-                        <div style="color: var(--text-secondary); font-size: 14px; text-align: center; padding: 10px;">Outputs will appear here.</div>
-                    </div>
-                </section>
-
+                
             </div>
         </div>
     </div>
@@ -155,16 +263,38 @@
     <script>
         const terminal = document.getElementById('terminal');
         const processBtn = document.getElementById('processBtn');
-        const stopBtn = document.getElementById('stopBtn'); // NEW
+        const stopBtn = document.getElementById('stopBtn');
         const fileInput = document.getElementById('fileInput');
         const dropZone = document.getElementById('dropZone');
         const fileQueue = document.getElementById('fileQueue');
+        const clearQueueBtn = document.getElementById('clearQueueBtn');
         const progressWrapper = document.getElementById('progressWrapper');
         const progressFill = document.getElementById('progressFill');
-        let selectedFiles = [];
         
-        // NEW: Keep track of the active FFmpeg engine so we can kill it
+        // Export UI
+        const btnDownloadSingle = document.getElementById('btn-download-single');
+        const btnDownloadZip = document.getElementById('btn-download-zip');
+
+        const previewContainer = document.getElementById('previewContainer');
+        const videoPreview = document.getElementById('videoPreview');
+        const sliderStart = document.getElementById('sliderStart');
+        const sliderEnd = document.getElementById('sliderEnd');
+        const trimStartInput = document.getElementById('trimStart');
+        const trimEndInput = document.getElementById('trimEnd');
+        const audioInput = document.getElementById('audioInput');
+
+        const toggleCropBtn = document.getElementById('toggleCropBtn');
+        const cropOverlay = document.getElementById('cropOverlay');
+        const cropBox = document.getElementById('cropBox');
+        const clearCropBtn = document.getElementById('clearCropBtn');
+
+        let selectedFiles = [];
+        let batchOutputs = [];
         let activeFfmpeg = null; 
+        
+        let isCropping = false;
+        let isDragging = false;
+        let startX, startY;
 
         function log(msg, type = 'log-info') {
             const p = document.createElement('p'); 
@@ -174,8 +304,180 @@
             terminal.scrollTop = terminal.scrollHeight;
         }
 
-        window.addEventListener('dragover', function(e) { e.preventDefault(); }, false);
-        window.addEventListener('drop', function(e) { e.preventDefault(); }, false);
+        function formatTime(seconds) {
+            const d = new Date(null);
+            d.setSeconds(seconds);
+            return d.toISOString().slice(11, 19);
+        }
+
+        function setupPreview(file) {
+            if (file && file.type.startsWith('video/')) {
+                const url = URL.createObjectURL(file);
+                videoPreview.src = url;
+                previewContainer.style.display = 'flex'; // Sets section to visible
+                previewContainer.style.flexDirection = 'column';
+
+                videoPreview.onloadedmetadata = () => {
+                    const dur = videoPreview.duration;
+                    sliderStart.max = dur;
+                    sliderEnd.max = dur;
+                    sliderStart.value = 0;
+                    sliderEnd.value = dur;
+                    trimStartInput.value = formatTime(0);
+                    trimEndInput.value = formatTime(dur);
+                };
+            } else {
+                previewContainer.style.display = 'none';
+                videoPreview.src = "";
+            }
+        }
+
+        clearQueueBtn.addEventListener('click', () => {
+            selectedFiles = [];
+            fileQueue.innerHTML = '';
+            fileInput.value = '';
+            setupPreview(null);
+            
+            batchOutputs = [];
+            btnDownloadSingle.disabled = true;
+            btnDownloadZip.disabled = true;
+            
+            log('Processing queue cleared.', 'log-warning');
+        });
+
+        function handleFiles(files) {
+            const newFiles = Array.from(files);
+            selectedFiles = [...selectedFiles, ...newFiles];
+            
+            fileQueue.innerHTML = '';
+            selectedFiles.forEach((f, index) => {
+                fileQueue.innerHTML += `<div class="file-item"><span>${index + 1}. ${f.name}</span><span style="color:var(--text-secondary)">${(f.size/1048576).toFixed(1)}MB</span></div>`;
+            });
+            log(`Queued total of ${selectedFiles.length} file(s).`);
+            
+            if (selectedFiles.length > 0) setupPreview(selectedFiles[0]);
+        }
+
+        sliderStart.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            const endVal = parseFloat(sliderEnd.value);
+            if (val >= endVal) { sliderStart.value = endVal - 0.1; } 
+            videoPreview.currentTime = sliderStart.value;
+            trimStartInput.value = formatTime(sliderStart.value);
+        });
+
+        sliderEnd.addEventListener('input', (e) => {
+            const val = parseFloat(e.target.value);
+            const startVal = parseFloat(sliderStart.value);
+            if (val <= startVal) { sliderEnd.value = startVal + 0.1; } 
+            videoPreview.currentTime = sliderEnd.value;
+            trimEndInput.value = formatTime(sliderEnd.value);
+        });
+
+        toggleCropBtn.addEventListener('click', () => {
+            isCropping = !isCropping;
+            if (isCropping) {
+                videoPreview.pause();
+                cropOverlay.style.display = 'block';
+                toggleCropBtn.innerHTML = '✖ Cancel Cropping';
+                toggleCropBtn.style.color = 'var(--color-error)';
+            } else {
+                cropOverlay.style.display = 'none';
+                toggleCropBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4 4"><rect x="3" y="3" width="18" height="18" rx="2"/></svg> Draw Crop Area';
+                toggleCropBtn.style.color = '';
+            }
+        });
+
+        clearCropBtn.addEventListener('click', () => {
+            document.getElementById('cropW').value = '';
+            document.getElementById('cropH').value = '';
+            document.getElementById('cropX').value = '';
+            document.getElementById('cropY').value = '';
+            cropBox.style.display = 'none';
+        });
+
+        cropOverlay.addEventListener('mousedown', (e) => {
+            const rect = cropOverlay.getBoundingClientRect();
+            startX = e.clientX - rect.left;
+            startY = e.clientY - rect.top;
+            isDragging = true;
+            
+            cropBox.style.left = startX + 'px';
+            cropBox.style.top = startY + 'px';
+            cropBox.style.width = '0px';
+            cropBox.style.height = '0px';
+            cropBox.style.display = 'block';
+        });
+
+        cropOverlay.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const rect = cropOverlay.getBoundingClientRect();
+            const currentX = e.clientX - rect.left;
+            const currentY = e.clientY - rect.top;
+
+            const width = Math.abs(currentX - startX);
+            const height = Math.abs(currentY - startY);
+            const left = Math.min(currentX, startX);
+            const top = Math.min(currentY, startY);
+
+            cropBox.style.width = width + 'px';
+            cropBox.style.height = height + 'px';
+            cropBox.style.left = left + 'px';
+            cropBox.style.top = top + 'px';
+        });
+
+        cropOverlay.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            calculateTrueVideoCrop();
+        });
+
+        function calculateTrueVideoCrop() {
+            const rect = videoPreview.getBoundingClientRect();
+            const vW = videoPreview.videoWidth;
+            const vH = videoPreview.videoHeight;
+            if (!vW || !vH) return;
+
+            const videoRatio = vW / vH;
+            const elementRatio = rect.width / rect.height;
+
+            let renderW, renderH, offsetX = 0, offsetY = 0;
+
+            if (videoRatio > elementRatio) {
+                renderW = rect.width;
+                renderH = rect.width / videoRatio;
+                offsetY = (rect.height - renderH) / 2;
+            } else {
+                renderH = rect.height;
+                renderW = rect.height * videoRatio;
+                offsetX = (rect.width - renderW) / 2;
+            }
+
+            const boxLeft = parseFloat(cropBox.style.left);
+            const boxTop = parseFloat(cropBox.style.top);
+            const boxW = parseFloat(cropBox.style.width);
+            const boxH = parseFloat(cropBox.style.height);
+
+            const clampX = Math.max(offsetX, Math.min(boxLeft, offsetX + renderW));
+            const clampY = Math.max(offsetY, Math.min(boxTop, offsetY + renderH));
+            const clampW = Math.min(boxW, offsetX + renderW - clampX);
+            const clampH = Math.min(boxH, offsetY + renderH - clampY);
+
+            if (clampW <= 0 || clampH <= 0) {
+                clearCropBtn.click();
+                return;
+            }
+
+            const scaleX = vW / renderW;
+            const scaleY = vH / renderH;
+
+            document.getElementById('cropX').value = Math.round((clampX - offsetX) * scaleX);
+            document.getElementById('cropY').value = Math.round((clampY - offsetY) * scaleY);
+            document.getElementById('cropW').value = Math.round(clampW * scaleX);
+            document.getElementById('cropH').value = Math.round(clampH * scaleY);
+            
+            toggleCropBtn.click();
+        }
 
         dropZone.addEventListener('click', () => fileInput.click());
         dropZone.addEventListener('dragover', (e) => { e.preventDefault(); dropZone.style.borderColor = "var(--accent-primary)"; });
@@ -183,38 +485,41 @@
         dropZone.addEventListener('drop', (e) => { e.preventDefault(); dropZone.style.borderColor = "var(--border-color)"; handleFiles(e.dataTransfer.files); });
         fileInput.addEventListener('change', (e) => handleFiles(e.target.files));
 
-        function handleFiles(files) {
-            selectedFiles = Array.from(files);
-            fileQueue.innerHTML = '';
-            selectedFiles.forEach(f => {
-                fileQueue.innerHTML += `<div class="file-item"><span>${f.name}</span><span style="color:var(--text-secondary)">${(f.size/1048576).toFixed(1)}MB</span></div>`;
-            });
-            log(`Queued ${selectedFiles.length} file(s) for processing.`);
-        }
+        btnDownloadSingle.addEventListener('click', () => {
+            if (batchOutputs.length > 0) {
+                const url = URL.createObjectURL(batchOutputs[0].blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = batchOutputs[0].filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }
+        });
 
-        function addLocalHistory(filename, url) {
-            const container = document.getElementById('historyContainer');
-            if(container.innerHTML.includes('Outputs will appear here')) { container.innerHTML = ''; }
-            const item = document.createElement('div');
-            item.className = 'history-item';
-            item.innerHTML = `
-                <span title="${filename}" class="history-data">${filename}</span>
-                <a href="${url}" download="${filename}" class="btn-secondary" style="padding: 6px 12px; border-radius: 4px; text-decoration: none; font-size: 13px;">Download</a>
-            `;
-            container.prepend(item);
-        }
+        btnDownloadZip.addEventListener('click', async () => {
+            if (batchOutputs.length > 1) {
+                log('Bundling ZIP archive...', 'log-warning');
+                const zip = new JSZip();
+                batchOutputs.forEach(item => {
+                    zip.file(item.filename, item.blob);
+                });
+                const zipBlob = await zip.generateAsync({ type: "blob" });
+                const zipUrl = URL.createObjectURL(zipBlob);
+                
+                const a = document.createElement('a');
+                a.href = zipUrl;
+                a.download = "MediaStudio_Batch.zip";
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                log('ZIP download successfully triggered.', 'log-success');
+            }
+        });
 
-        // NEW: Stop Button Logic
         stopBtn.addEventListener('click', () => {
             if (activeFfmpeg) {
-                try {
-                    activeFfmpeg.terminate(); // Instantly kills the web worker
-                    log('Execution halted by user.', 'log-warning');
-                } catch (err) {
-                    console.error("Termination error:", err);
-                }
-                
-                // Reset UI
+                try { activeFfmpeg.terminate(); log('Execution halted by user.', 'log-warning'); } catch (err) {}
                 progressWrapper.style.display = 'none';
                 stopBtn.style.display = 'none';
                 processBtn.style.display = 'block';
@@ -228,35 +533,30 @@
             }
             if (!selectedFiles.length) return log('Error: Queue empty.', 'log-error');
 
-            // Toggle UI states
             processBtn.style.display = 'none';
             stopBtn.style.display = 'block';
             progressWrapper.style.display = 'block';
             progressFill.style.width = '0%';
-            progressFill.textContent = '0%'; // NEW: Reset text
+            progressFill.textContent = '0%';
+            
+            batchOutputs = [];
+            btnDownloadSingle.disabled = true;
+            btnDownloadZip.disabled = true;
 
             try {
                 const { FFmpeg } = window.FFmpegWASM;
                 const { toBlobURL, fetchFile } = window.FFmpegUtil;
                 
-                // Assign to our global variable
                 activeFfmpeg = new FFmpeg();
 
-                activeFfmpeg.on('log', ({ message }) => {
-                    if (message.includes('Aborted')) return;
-                    log(message, 'log-info');
-                });
-
+                activeFfmpeg.on('log', ({ message }) => { if (!message.includes('Aborted')) log(message, 'log-info'); });
                 activeFfmpeg.on('progress', ({ progress }) => { 
-                    const percent = Math.max(0, Math.min(100, progress * 100));
-                    const displayString = `${percent.toFixed(1)}%`; // Formats to e.g. "45.2%"
-                
+                    const displayString = `${Math.max(0, Math.min(100, progress * 100)).toFixed(1)}%`;
                     progressFill.style.width = displayString;
-                    progressFill.textContent = displayString; // NEW: Adds text inside the bar
+                    progressFill.textContent = displayString;
                 });
 
                 log('Booting media engine components...', 'log-info');
-                
                 const localBase = 'libs';
                 const cloudBase = 'https://cdn.jsdelivr.net/npm/@ffmpeg/core@0.12.4/dist/umd';
 
@@ -266,7 +566,7 @@
                         wasmURL: await toBlobURL(`${localBase}/ffmpeg-core.wasm`, 'application/wasm'),
                         classWorkerURL: await toBlobURL(`${localBase}/814.ffmpeg.js`, 'text/javascript')
                     });
-                    log('Engine initialized successfully.', 'log-success');
+                    log('Engine initialized.', 'log-success');
                 } catch (error) {
                     log('Connecting to secure cloud engine...', 'log-warning'); 
                     await activeFfmpeg.load({
@@ -274,13 +574,28 @@
                         wasmURL: await toBlobURL(`${cloudBase}/ffmpeg-core.wasm`, 'application/wasm'),
                         classWorkerURL: await toBlobURL(`${cloudBase}/814.ffmpeg.js`, 'text/javascript')
                     });
-                    log('Cloud engine initialized successfully.', 'log-success');
+                    log('Cloud engine initialized.', 'log-success');
                 }
 
                 const format = document.getElementById('outputFormat').value;
                 const compress = document.getElementById('compressCheck').checked;
+                const muteOriginal = document.getElementById('muteCheck').checked;
+                const customAudioFile = audioInput.files[0];
+                
+                const trimStart = document.getElementById('trimStart').value.trim();
+                const trimEnd = document.getElementById('trimEnd').value.trim();
                 const cropW = document.getElementById('cropW').value;
                 const cropH = document.getElementById('cropH').value;
+                const cropX = document.getElementById('cropX').value;
+                const cropY = document.getElementById('cropY').value;
+
+                let audioExt = '';
+
+                if (customAudioFile) {
+                    log(`Loading custom audio track: ${customAudioFile.name}`);
+                    audioExt = customAudioFile.name.split('.').pop();
+                    await activeFfmpeg.writeFile(`custom_bg.${audioExt}`, await fetchFile(customAudioFile));
+                }
 
                 for (let i = 0; i < selectedFiles.length; i++) {
                     const file = selectedFiles[i];
@@ -291,18 +606,46 @@
                     const finalFilename = `${file.name.substring(0, file.name.lastIndexOf('.')) || file.name}_processed.${format}`;
 
                     await activeFfmpeg.writeFile(inName, await fetchFile(file));
-
+                    
                     let args = ['-i', inName];
-                    if (cropW) args.push('-vf', `crop=${cropW}:${cropH || cropW}`);
-                    if (format === 'mp3') { args.push('-vn', '-c:a', 'libmp3lame', '-q:a', '2'); } 
-                    else if (format === 'aac') { args.push('-vn', '-c:a', 'aac'); } 
-                    else if (format === 'gif') { args.push('-vf', 'fps=10,scale=320:-1:flags=lanczos'); } 
-                    else if (compress && ['mp4', 'mkv', 'mov', 'avi'].includes(format)) { args.push('-vcodec', 'libx264', '-crf', '28', '-preset', 'fast'); }
+
+                    if (customAudioFile) {
+                        args.push('-i', `custom_bg.${audioExt}`);
+                    }
+
+                    if (trimStart && trimStart !== '00:00:00') args.push('-ss', trimStart);
+                    if (trimEnd && sliderEnd.value < videoPreview.duration) args.push('-to', trimEnd);
+
+                    let vfFilters = [];
+                    if (cropW || cropH || cropX || cropY) {
+                        vfFilters.push(`crop=${cropW || 'in_w'}:${cropH || 'in_h'}:${cropX || '0'}:${cropY || '0'}`);
+                    }
+
+                    if (format === 'mp3') { 
+                        args.push('-vn', '-c:a', 'libmp3lame', '-q:a', '2'); 
+                    } else if (format === 'aac') { 
+                        args.push('-vn', '-c:a', 'aac'); 
+                    } else if (format === 'gif') { 
+                        vfFilters.push('fps=10,scale=320:-1:flags=lanczos'); 
+                    } else {
+                        if (compress) {
+                            args.push('-vcodec', 'libx264', '-crf', '28', '-preset', 'fast');
+                        }
+                        
+                        if (customAudioFile) {
+                            args.push('-map', '0:v:0'); 
+                            args.push('-map', '1:a:0'); 
+                            args.push('-shortest');     
+                        } else if (muteOriginal) {
+                            args.push('-an');           
+                        }
+                    }
+
+                    if (vfFilters.length > 0) args.push('-vf', vfFilters.join(','));
+                    
                     args.push(outName);
                     
-                    log(`Process Command Initiated.`);
                     await activeFfmpeg.exec(args);
-
                     const data = await activeFfmpeg.readFile(outName);
                     
                     let mimeType = `video/${format}`;
@@ -310,23 +653,23 @@
                     if (format === 'gif') mimeType = 'image/gif';
 
                     const blob = new Blob([data.buffer], { type: mimeType });
-                    const url = URL.createObjectURL(blob);
                     
-                    addLocalHistory(finalFilename, url);
+                    batchOutputs.push({ filename: finalFilename, blob: blob });
                     log(`Build Completed: ${file.name}`, 'log-success');
                 }
                 
                 setTimeout(() => { progressWrapper.style.display = 'none'; }, 2000);
 
-            } catch (err) {
-                // Ignore the error if it was manually terminated by the user
-                if (err.message && err.message.includes('terminated')) {
-                    // Do nothing, handled by the stopBtn listener
-                } else {
-                    log(`System Exception: ${err.message || err}`, 'log-error');
+                if (batchOutputs.length > 0) {
+                    btnDownloadSingle.disabled = false;
                 }
+                if (batchOutputs.length > 1) {
+                    btnDownloadZip.disabled = false;
+                }
+
+            } catch (err) {
+                if (!err.message || !err.message.includes('terminated')) log(`System Exception: ${err.message || err}`, 'log-error');
             } finally {
-                // Revert UI back to Execute button when completely done or crashed
                 stopBtn.style.display = 'none';
                 processBtn.style.display = 'block';
                 processBtn.disabled = false;
