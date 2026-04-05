@@ -1,33 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
-  <!-- <base href="./"> -->
-<base href="/projects/unit-converter/">
+  <base href="/projects/unit-converter/">
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
-
+  
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="unit_converter">
   <link rel="apple-touch-icon" href="./icons/Icon-192.png">
-
   <link rel="icon" type="image/png" href="./favicon.png"/>
 
-  <title>unit_converter</title>
+  <title>Unit Converter | Utility Studio</title>
   <meta name="description" content="Convert length, area, volume, weight, time, temperature, speed, and digital storage easily with this fast, offline-capable web app.">
   <meta name="keywords" content="unit converter, conversion calculator, metric to imperial, measurements, offline unit converter">
   <meta name="author" content="Kishor Aryal">
@@ -52,112 +36,52 @@
     const serviceWorkerVersion = "1663175092";
   </script>
   <script src="./flutter.js" defer></script>
+
+  <link rel="stylesheet" id="master-style" href="../../assets/master.css">
+  <script src="../../assets/theme.js"></script>
   
   <style>
-    /* Flutter Base Styles */
-    html, body {
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      background-color: #0f172a; 
+    /* Cleaned up styles: Master.css handles 90% of the layout now */
+    .app-container {
+      max-width: 900px !important; /* Slightly narrower for the calculator UI */
     }
 
-    .container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 100%;
-      height: 100vh;
+    #flutter-target {
+        width: 100%;
+        height: 70vh;
+        min-height: 550px;
+        border: 1px solid var(--border-color);
+        border-radius: var(--radius-lg);
+        background: var(--surface-dark);
+        overflow: hidden;
+        position: relative;
+        box-shadow: var(--shadow-soft);
     }
 
     .loader {
-      border: 16px solid #f3f3f3;
-      border-top: 16px solid #305E78;
+      border: 6px solid var(--surface-light);
+      border-top: 6px solid var(--accent-primary);
       border-radius: 50%;
-      width: 120px;
-      height: 120px;
-      animation: spin 2s linear infinite;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
     @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
-
-    /* Embedded Bottom-Right Dropdown Menu (Offline Safe) */
-    .us-global-menu {
-        position: fixed; 
-        bottom: 25px; 
-        right: 25px; 
-        z-index: 999999;
-        display: flex; 
-        background: #1e293b; 
-        border: 1px solid #1e293b;
-        border-radius: 25px; 
-        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-        font-family: system-ui, sans-serif;
-        align-items: center;
-    }
-    .us-home-btn {
-        display: flex; 
-        align-items: center; 
-        justify-content: center;
-        width: 45px; 
-        height: 45px; 
-        color: #e2e8f0; 
-        text-decoration: none; 
-        border-radius: 50%;
-        transition: all 0.2s ease;
-    }
-    .us-home-btn:hover { background: #0f172a; color: #38bdf8; }
-    
-    .us-dropdown { position: relative; display: flex; align-items: center;}
-    .us-dropbtn {
-        background: transparent; color: #e2e8f0; border: none;
-        height: 45px; padding: 0 15px 0 5px; font-size: 14px; font-weight: 600;
-        cursor: pointer; display: flex; align-items: center; gap: 6px;
-        border-radius: 0 25px 25px 0; transition: all 0.2s ease; outline: none;
-    }
-    .us-dropdown:hover .us-dropbtn { color: #38bdf8; }
-    
-    .us-dropdown-content {
-        display: none; 
-        position: absolute; 
-        right: 0; 
-        bottom: 55px; 
-        background-color: #0f172a; 
-        min-width: 220px; 
-        border: 1px solid #38bdf8; 
-        border-radius: 8px; 
-        overflow: hidden;
-        box-shadow: 0 -10px 25px rgba(0,0,0,0.6);
-    }
-    .us-dropdown:hover .us-dropdown-content { 
-        display: block; 
-    }
-    .us-dropdown-content a {
-        color: #e2e8f0; 
-        padding: 12px 16px; 
-        text-decoration: none;
-        display: flex; 
-        align-items: center; 
-        gap: 10px; 
-        font-size: 14px;
-        border-bottom: 1px solid #1e293b; 
-        transition: all 0.2s ease;
-    }
-    .us-dropdown-content a:last-child { border-bottom: none; }
-    .us-dropdown-content a:hover { background-color: rgba(56, 189, 248, 0.1); color: #38bdf8; }
   </style>
 </head>
 <body>
 
-    <div class="us-global-menu">
+    <div class="us-global-menu top-left">
         <a href="../../index.html" class="us-home-btn" title="Dashboard">
-            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-            </svg>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
         </a>
         <div class="us-dropdown">
             <button class="us-dropbtn">Tools ▾</button>
@@ -173,24 +97,56 @@
         </div>
     </div>
 
-    <div class="container">
-      <div class="loader"></div>
+    <div class="app-container">
+        
+        <nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 5px;">
+            <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
+            <span style="color: var(--text-secondary); font-size: 13px; margin: 0 5px;">/</span> 
+            <span style="color: var(--text-secondary); font-size: 13px;" aria-current="page">Unit Converter</span>
+        </nav>
+        <h1 class="app-header">Unit Converter</h1>
+      
+        <div id="flutter-target">
+            <div class="loader" id="loading-spinner"></div>
+        </div>
+
+        <article class="seo-content" style="margin-top: 40px; padding: 25px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: var(--radius-lg); line-height: 1.6;">
+            <h2 style="color: var(--text-primary); font-size: 20px; margin-bottom: 15px;">Fast Offline Unit Converter</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 15px;">
+                Perform rapid conversions for length, weight, area, volume, temperature, and digital storage. Built with an optimized Flutter engine, this tool runs entirely offline on your device for instant, lag-free calculations.
+            </p>
+        </article>
+
+        <footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13px;">
+            <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap;">
+                <a href="../../index.html" style="color: var(--text-secondary); text-decoration: none;">Home</a>
+                <a href="../../about.html" style="color: var(--text-secondary); text-decoration: none;">About the Developer</a>
+                <a href="mailto:smartaryal2025@gmail.com" style="color: var(--text-secondary); text-decoration: none;">Contact Support</a>
+                <a href="../../privacy.html" style="color: var(--text-secondary); text-decoration: none;">Privacy Policy</a>
+            </div>
+            <p style="margin: 0;">&copy; 2026 Utility Studio. All tools process data locally in your browser.</p>
+        </footer>
     </div>
 
     <script>
       window.addEventListener('load', function(ev) {
+        let targetDiv = document.querySelector('#flutter-target');
+        let spinner = document.querySelector('#loading-spinner');
+        
         _flutter.loader.loadEntrypoint({
           serviceWorker: {
             serviceWorkerVersion: serviceWorkerVersion,
           },
           onEntrypointLoaded: function(engineInitializer) {
-            engineInitializer.initializeEngine().then(function(appRunner) {
+            engineInitializer.initializeEngine({
+                hostElement: targetDiv
+            }).then(function(appRunner) {
+              spinner.style.display = 'none'; // Hide loader when ready
               appRunner.runApp();
             });
           }
         });
       });
     </script>
-    <script src="./main.dart.js" defer></script>
 </body>
 </html>
