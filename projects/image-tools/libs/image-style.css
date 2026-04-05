@@ -1,161 +1,84 @@
 .image-stats { 
-    font-size: 13px; 
-    color: var(--text-secondary); 
-    text-align: center; 
-    margin-bottom: 15px; 
-    padding: 10px; 
-    background: var(--surface-dark); 
-    border-radius: 6px; 
-    border: 1px solid var(--border-color); 
+    font-size: 13px; color: var(--text-secondary); text-align: center; margin-bottom: 15px; padding: 10px; background: var(--surface-dark); border-radius: 6px; border: 1px solid var(--border-color); 
 }
-
 .thumb-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); 
-    gap: 10px; 
-    background: var(--surface-light); 
-    padding: 10px; 
-    border-radius: 6px; 
-    min-height: 100px; 
-    max-height: 600px; 
-    overflow-y: auto; 
-    width: 100%; 
-    box-sizing: border-box; 
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 10px; background: var(--surface-light); padding: 10px; border-radius: 6px; min-height: 100px; max-height: 600px; overflow-y: auto; width: 100%; box-sizing: border-box; 
 }
-
 .thumbnail-item { 
-    background: var(--surface-dark); 
-    padding: 6px; 
-    border-radius: 6px; 
-    border: 1px solid var(--border-color); 
-    text-align: center; 
-    cursor: pointer; 
-    transition: 0.2s; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    position: relative; 
+    background: var(--surface-dark); padding: 6px; border-radius: 6px; border: 1px solid var(--border-color); text-align: center; cursor: pointer; transition: 0.2s; display: flex; flex-direction: column; align-items: center; position: relative; 
 }
+.thumbnail-item:hover { border-color: var(--accent-primary); }
+.thumbnail-item.active { border-color: var(--color-success); background: var(--surface-light); }
+.thumbnail-item img, .thumbnail-item canvas { width: 100%; height: 70px; object-fit: cover; border-radius: 4px; background: white; display: block; margin: 0 auto; } 
+.page-label { font-size: 11px; color: var(--text-secondary); margin-top: 6px; word-break: break-all; }
 
-.thumbnail-item:hover { 
-    border-color: var(--accent-primary); 
-}
+/* FIX: Ensure sliders go edge-to-edge */
+input[type="range"] { padding: 0 !important; margin: 0 !important; box-sizing: border-box; }
 
-.thumbnail-item.active { 
-    border-color: var(--color-success); 
-    background: var(--surface-light); 
-}
-
-.thumbnail-item img, .thumbnail-item canvas { 
-    width: 100%; 
-    height: 70px; 
-    object-fit: cover; 
-    border-radius: 4px; 
-    background: white; 
-    display: block; 
-    margin: 0 auto; 
-} 
-
-.page-label { 
-    font-size: 11px; 
-    color: var(--text-secondary); 
-    margin-top: 6px; 
-    word-break: break-all; 
-}
-
+/* CANVAS CONTAINERS */
 #editor-canvas-container { 
-    position: relative; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    border: 1px solid var(--border-color); 
-    background: var(--surface-light); 
-    padding: 10px; 
-    border-radius: 6px; 
-    overflow: hidden; 
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); 
-    width: 100%; 
-    min-height: 300px; 
-    touch-action: none; 
-    box-sizing: border-box; 
+    position: relative; display: flex; justify-content: center; align-items: center; border: 1px solid var(--border-color); background: var(--surface-light); padding: 10px; border-radius: 6px; overflow: auto !important; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5); width: 100%; min-height: 300px; touch-action: none; box-sizing: border-box; 
+}
+
+#canvas-wrapper {
+    margin: auto; position: relative; display: none; line-height: 0; transform-origin: top left;
 }
 
 #main-image { 
-    display: none; 
-    max-width: 100%; 
-    max-height: 50vh; 
-    border-radius: 4px; 
-    background: white; 
-    touch-action: none; 
+    display: none; max-width: 100%; max-height: 50vh; border-radius: 4px; background: white; touch-action: none; -webkit-user-drag: none; user-select: none; 
 }
 
+/* WATERMARK / OVERLAYS */
 .live-overlay { 
-    position: absolute; 
-    z-index: 10; 
-    cursor: move; 
-    user-select: none; 
-    border: 1px dashed transparent; 
-    padding: 2px; 
-    box-sizing: border-box; 
-    touch-action: none; 
-    line-height: 1; 
+    position: absolute; z-index: 10; cursor: move; user-select: none; -webkit-user-drag: none; touch-action: none; border: 1px dashed transparent; padding: 2px; box-sizing: border-box; line-height: 1; 
+}
+.live-overlay.selected { border-color: var(--accent-primary); outline: 2px solid var(--accent-hover); z-index: 100 !important; background: rgba(56, 189, 248, 0.1); }
+.live-overlay img { pointer-events: none; -webkit-user-drag: none; }
+.resize-handle { display: none; position: absolute; bottom: -8px; right: -8px; width: 16px; height: 16px; background: var(--accent-primary); border: 2px solid var(--surface-light); border-radius: 50%; cursor: nwse-resize; z-index: 12; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+.del-overlay-btn { display: none; position: absolute; top: -12px; left: -12px; background: var(--color-error); color: white; border: none; border-radius: 50% !important; width: 24px !important; height: 24px !important; min-width: 24px !important; min-height: 24px !important; padding: 0 !important; box-sizing: border-box !important; font-size: 12px; cursor: pointer; z-index: 11; justify-content: center; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+.thumbnail-item .del-overlay-btn { top: -10px !important; right: -10px !important; left: auto !important; }
+.live-overlay.selected .resize-handle, .live-overlay.selected .del-overlay-btn { display: flex; }
+.thumbnail-item:hover .del-overlay-btn { display: flex; }
+
+/* =========================================
+   FULLSCREEN MODE (RIGHT WORKSPACE) 
+   ========================================= */
+#right-workspace.fullscreen-mode { 
+    position: fixed !important; top: 0; left: 0; right: 0; bottom: 0; width: 100% !important; height: 100% !important; z-index: 9999; border-radius: 0; overflow-y: auto; overflow-x: hidden; background: var(--surface-dark); padding: 20px; margin: 0; display: flex; flex-direction: column; gap: 15px; 
 }
 
-.live-overlay.selected { 
-    border-color: var(--accent-primary); 
-    outline: 2px solid var(--accent-hover); 
-    z-index: 100 !important; 
-    background: rgba(56, 189, 248, 0.1); 
+/* Sections don't shrink, push to bottom */
+#right-workspace.fullscreen-mode > section {
+    flex-shrink: 0; margin-bottom: 0;
 }
 
-.resize-handle { 
-    display: none; 
-    position: absolute; 
-    bottom: -8px; 
-    right: -8px; 
-    width: 16px; 
-    height: 16px; 
-    background: var(--accent-primary); 
-    border: 2px solid var(--surface-light); 
-    border-radius: 50%; 
-    cursor: nwse-resize; 
-    z-index: 12; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+/* Editor takes remaining space dynamically */
+#right-workspace.fullscreen-mode #editor-section {
+    flex: 1 0 auto; display: flex; flex-direction: column; min-height: 50vh;
 }
 
-.del-overlay-btn { 
-    display: none; 
-    position: absolute; 
-    top: -12px; 
-    left: -12px; 
-    background: var(--color-error); 
-    color: white; 
-    border: none; 
-    border-radius: 50% !important; 
-    width: 24px !important; 
-    height: 24px !important; 
-    min-width: 24px !important; 
-    min-height: 24px !important; 
-    padding: 0 !important; 
-    box-sizing: border-box !important; 
-    font-size: 12px; 
-    cursor: pointer; 
-    z-index: 11; 
-    justify-content: center; 
-    align-items: center; 
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4); 
+/* Canvas container explicitly fills the expanded editor */
+#right-workspace.fullscreen-mode #editor-canvas-container {
+    flex: 1; min-height: 350px; height: auto;
 }
 
-.thumbnail-item .del-overlay-btn { 
-    top: -10px !important; 
-    right: -10px !important; 
-    left: auto !important; 
+/* Image scales up beautifully without breaking layout */
+#right-workspace.fullscreen-mode #main-image,
+#right-workspace.fullscreen-mode #draw-canvas {
+    max-height: 65vh !important;
 }
 
-.live-overlay.selected .resize-handle, .live-overlay.selected .del-overlay-btn { 
-    display: flex; 
-}
-
-.thumbnail-item:hover .del-overlay-btn { 
-    display: flex; 
+/* MOBILE RESPONSIVE TWEAKS */
+@media (max-width: 850px) {
+    #right-workspace.fullscreen-mode { padding: 10px; gap: 10px; }
+    
+    /* Horizontal toolbar scrolling */
+    .control-panel { 
+        flex-wrap: nowrap !important; overflow-x: auto !important; -webkit-overflow-scrolling: touch; padding-bottom: 8px !important; justify-content: flex-start !important; 
+    }
+    .control-panel > div, .control-group { flex-shrink: 0; }
+    
+    /* Safe limits for mobile canvas */
+    #right-workspace.fullscreen-mode #main-image,
+    #right-workspace.fullscreen-mode #draw-canvas { max-height: 55vh !important; }
 }
