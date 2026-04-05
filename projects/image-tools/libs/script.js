@@ -58,18 +58,20 @@ if (typeof Sortable !== 'undefined') {
 const cropIconHtml = `<svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M10.5 3a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-1 0V4H2a.5.5 0 0 1 0-1h8.5zm-5 10a.5.5 0 0 1-.5-.5v-8a.5.5 0 0 1 1 0v7.5H14a.5.5 0 0 1 0 1H5.5z"/></svg> Crop`;
 
 // ==========================================
-// ZOOM ENGINE (Safely Pins Top Left to avoid clipping)
+// ZOOM ENGINE
 // ==========================================
 function applyZoom() {
     zoomValText.innerText = Math.round(currentZoom * 100) + '%';
     canvasWrapper.style.transform = `scale(${currentZoom})`;
     
     if (currentZoom > 1) {
-        // When zoomed in, push it to the top left so scrollbars handle the overflow properly
+        canvasContainer.style.alignItems = 'flex-start';
+        canvasContainer.style.justifyContent = 'flex-start';
         canvasWrapper.style.margin = '0';
         canvasWrapper.style.transformOrigin = 'top left';
     } else {
-        // When normal, perfectly center it
+        canvasContainer.style.alignItems = 'center';
+        canvasContainer.style.justifyContent = 'center';
         canvasWrapper.style.margin = 'auto';
         canvasWrapper.style.transformOrigin = 'center center';
     }
@@ -605,8 +607,16 @@ let activeDrag = null, activeResize = null, startX, startY, startWMSize;
 function createOverlayNode(contentHTML, isText) {
     const wmNode = document.createElement('div');
     wmNode.className = `live-overlay selected ${isText ? 'text-type' : ''}`;
+    wmNode.style.position = 'absolute';
+    wmNode.style.zIndex = '1000';
+    wmNode.style.userSelect = 'none';
+    wmNode.style.touchAction = 'none'; 
+    
     wmNode.innerHTML = contentHTML;
     wmNode.style.top = '40%'; wmNode.style.left = '40%';
+
+    const img = wmNode.querySelector('.wm-image');
+    if (img) img.draggable = false;
 
     const delBtn = document.createElement('button');
     delBtn.className = 'del-overlay-btn'; delBtn.innerHTML = '×';
@@ -634,7 +644,7 @@ logoUpload.addEventListener('change', function(e) {
     if(!this.files.length) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
-        createOverlayNode(`<img src="${ev.target.result}" class="wm-image" style="width: 150px; height: auto; pointer-events: none; display: block;">`, false);
+        createOverlayNode(`<img src="${ev.target.result}" class="wm-image" style="width: 150px; height: auto; pointer-events: none; display: block;" draggable="false">`, false);
     };
     reader.readAsDataURL(this.files[0]);
     this.value = ''; 
@@ -653,6 +663,10 @@ canvasContainer.addEventListener('pointerdown', (e) => {
 
 function startWmDrag(e) {
     if (e.target.classList.contains('del-overlay-btn') || e.target.classList.contains('resize-handle')) return;
+    
+    e.preventDefault(); 
+    e.stopPropagation(); 
+    
     document.querySelectorAll('.live-overlay').forEach(el => el.classList.remove('selected'));
     activeDrag = this; activeDrag.classList.add('selected');
     
@@ -662,7 +676,10 @@ function startWmDrag(e) {
 
     const rect = activeDrag.getBoundingClientRect();
     offsetX = e.clientX - rect.left; offsetY = e.clientY - rect.top;
-    document.addEventListener('pointermove', doWmDrag); document.addEventListener('pointerup', stopWmDrag);
+    
+    activeDrag.setPointerCapture(e.pointerId);
+    activeDrag.addEventListener('pointermove', doWmDrag); 
+    activeDrag.addEventListener('pointerup', stopWmDrag);
 }
 
 function doWmDrag(e) {
@@ -671,10 +688,19 @@ function doWmDrag(e) {
     activeDrag.style.left = `${e.clientX - containerRect.left - offsetX}px`;
     activeDrag.style.top = `${e.clientY - containerRect.top - offsetY}px`;
 }
-function stopWmDrag() { activeDrag = null; document.removeEventListener('pointermove', doWmDrag); document.removeEventListener('pointerup', stopWmDrag); }
+
+function stopWmDrag(e) { 
+    if(!activeDrag) return;
+    activeDrag.releasePointerCapture(e.pointerId);
+    activeDrag.removeEventListener('pointermove', doWmDrag); 
+    activeDrag.removeEventListener('pointerup', stopWmDrag);
+    activeDrag = null; 
+}
 
 function startWmResize(e) {
-    e.stopPropagation(); activeResize = this.parentElement;
+    e.stopPropagation(); 
+    e.preventDefault(); 
+    activeResize = this.parentElement;
     startX = e.clientX; startY = e.clientY;
     
     if(activeResize.classList.contains('text-type')) {
@@ -683,7 +709,9 @@ function startWmResize(e) {
         startWMSize = parseInt(window.getComputedStyle(activeResize.querySelector('.wm-image')).width);
     }
     
-    document.addEventListener('pointermove', doWmResize); document.addEventListener('pointerup', stopWmResize);
+    activeResize.setPointerCapture(e.pointerId);
+    activeResize.addEventListener('pointermove', doWmResize); 
+    activeResize.addEventListener('pointerup', stopWmResize);
 }
 
 function doWmResize(e) {
@@ -698,7 +726,13 @@ function doWmResize(e) {
         activeResize.querySelector('.wm-image').style.width = `${newSize}px`;
     }
 }
-function stopWmResize() { activeResize = null; document.removeEventListener('pointermove', doWmResize); document.removeEventListener('pointerup', stopWmResize); }
+function stopWmResize(e) { 
+    if(!activeResize) return;
+    activeResize.releasePointerCapture(e.pointerId);
+    activeResize.removeEventListener('pointermove', doWmResize); 
+    activeResize.removeEventListener('pointerup', stopWmResize);
+    activeResize = null; 
+}
 
 function getExtension() {
     let val = formatSelect.value;
