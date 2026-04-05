@@ -8,21 +8,81 @@
         localStorage.setItem("theme", theme);
     }
 
-    // Smart path swapper (handles both root and tool pages)
+    // --- UPDATED ANTI-FLASH FIX (The Blocker) ---
+    // If light mode is needed, we must block the default dark CSS from painting
+    // while the browser downloads the light CSS files over the network.
+    if (theme === "light") {
+        // Set the base canvas to your light background color instantly
+        document.documentElement.style.backgroundColor = "#eef2ff"; 
+        
+        // Create a temporary style to hide the body content completely
+        const style = document.createElement('style');
+        style.id = "fouc-blocker";
+        style.textContent = `
+            body { 
+                opacity: 0 !important; 
+                visibility: hidden !important; 
+            }
+        `;
+        document.documentElement.appendChild(style);
+    } else {
+        // Set base canvas to dark instantly
+        document.documentElement.style.backgroundColor = "#020617"; 
+    }
+
+    // Smart path swapper
+    let stylesheetsToLoad = 0;
+
     function applyTheme(linkId) {
         const link = document.getElementById(linkId);
         if (link) {
             let href = link.getAttribute("href");
+            let isSwapping = false;
+
+            // Detect if we need to swap the CSS file
             if (theme === "light" && !href.includes("-light.css")) {
                 link.setAttribute("href", href.replace(".css", "-light.css"));
+                isSwapping = true;
             } else if (theme === "dark" && href.includes("-light.css")) {
                 link.setAttribute("href", href.replace("-light.css", ".css"));
+                isSwapping = true;
+            }
+
+            // If we are swapping, wait for the new CSS to finish downloading
+            if (isSwapping) {
+                stylesheetsToLoad++;
+                link.onload = () => {
+                    stylesheetsToLoad--;
+                    removeBlockerIfReady();
+                };
+            }
+        }
+    }
+
+    // Removes the invisible cloak once the correct CSS is ready
+    function removeBlockerIfReady() {
+        if (stylesheetsToLoad === 0) {
+            const blocker = document.getElementById("fouc-blocker");
+            if (blocker) {
+                // Smoothly fade the UI into view
+                blocker.textContent = `
+                    body { 
+                        opacity: 1 !important; 
+                        visibility: visible !important; 
+                        transition: opacity 0.2s ease !important; 
+                    }
+                `;
             }
         }
     }
 
     applyTheme("master-style");
     applyTheme("hub-style");
+
+    // Safety fallback: Unhide the body just in case the network hangs or onload fails
+    window.addEventListener('load', () => {
+        setTimeout(removeBlockerIfReady, 100); 
+    });
 })();
 
 // 2. Set the correct Sun/Moon icon when the page loads
