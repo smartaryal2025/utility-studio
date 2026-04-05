@@ -24,7 +24,6 @@
     <script src="libs/index.js"></script> 
 
     <style>
-        /* Forces ALL sliders to go exactly edge-to-edge (0% to 100%) */
         input[type="range"] {
             padding: 0 !important;
             margin: 0 !important;
@@ -56,6 +55,8 @@
             z-index: 10;
             display: none;
             background: rgba(0, 0, 0, 0.3); 
+            /* Prevent native mobile drag behaviors inside the crop zone */
+            touch-action: none; 
         }
         #cropBox {
             position: absolute;
@@ -92,7 +93,7 @@
 <body>
     <div class="us-global-menu top-left">
         <a href="../../index.html" class="us-home-btn" title="Dashboard">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 001 1m-6 0h6"></path></svg>
         </a>
         <div class="us-dropdown">
             <button class="us-dropbtn">Tools ▾</button>
@@ -271,7 +272,6 @@
         const progressWrapper = document.getElementById('progressWrapper');
         const progressFill = document.getElementById('progressFill');
         
-        // Export UI
         const btnDownloadSingle = document.getElementById('btn-download-single');
         const btnDownloadZip = document.getElementById('btn-download-zip');
 
@@ -314,7 +314,7 @@
             if (file && file.type.startsWith('video/')) {
                 const url = URL.createObjectURL(file);
                 videoPreview.src = url;
-                previewContainer.style.display = 'flex'; // Sets section to visible
+                previewContainer.style.display = 'flex'; 
                 previewContainer.style.flexDirection = 'column';
 
                 videoPreview.onloadedmetadata = () => {
@@ -396,10 +396,19 @@
             cropBox.style.display = 'none';
         });
 
-        cropOverlay.addEventListener('mousedown', (e) => {
+        // --- NEW: Unified Mouse & Touch Event Handlers ---
+        function getCoords(e, rect) {
+            if (e.touches && e.touches.length > 0) {
+                return { x: e.touches[0].clientX - rect.left, y: e.touches[0].clientY - rect.top };
+            }
+            return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+        }
+
+        function handleCropStart(e) {
             const rect = cropOverlay.getBoundingClientRect();
-            startX = e.clientX - rect.left;
-            startY = e.clientY - rect.top;
+            const coords = getCoords(e, rect);
+            startX = coords.x;
+            startY = coords.y;
             isDragging = true;
             
             cropBox.style.left = startX + 'px';
@@ -407,30 +416,41 @@
             cropBox.style.width = '0px';
             cropBox.style.height = '0px';
             cropBox.style.display = 'block';
-        });
+        }
 
-        cropOverlay.addEventListener('mousemove', (e) => {
+        function handleCropMove(e) {
             if (!isDragging) return;
+            e.preventDefault(); // Crucial: prevents mobile screen from scrolling while drawing
             const rect = cropOverlay.getBoundingClientRect();
-            const currentX = e.clientX - rect.left;
-            const currentY = e.clientY - rect.top;
+            const coords = getCoords(e, rect);
 
-            const width = Math.abs(currentX - startX);
-            const height = Math.abs(currentY - startY);
-            const left = Math.min(currentX, startX);
-            const top = Math.min(currentY, startY);
+            const width = Math.abs(coords.x - startX);
+            const height = Math.abs(coords.y - startY);
+            const left = Math.min(coords.x, startX);
+            const top = Math.min(coords.y, startY);
 
             cropBox.style.width = width + 'px';
             cropBox.style.height = height + 'px';
             cropBox.style.left = left + 'px';
             cropBox.style.top = top + 'px';
-        });
+        }
 
-        cropOverlay.addEventListener('mouseup', () => {
+        function handleCropEnd() {
             if (!isDragging) return;
             isDragging = false;
             calculateTrueVideoCrop();
-        });
+        }
+
+        // Attach Mouse Events
+        cropOverlay.addEventListener('mousedown', handleCropStart);
+        cropOverlay.addEventListener('mousemove', handleCropMove);
+        cropOverlay.addEventListener('mouseup', handleCropEnd);
+
+        // Attach Touch Events (Mobile Support)
+        cropOverlay.addEventListener('touchstart', handleCropStart, { passive: false });
+        cropOverlay.addEventListener('touchmove', handleCropMove, { passive: false });
+        cropOverlay.addEventListener('touchend', handleCropEnd);
+        // ------------------------------------------------
 
         function calculateTrueVideoCrop() {
             const rect = videoPreview.getBoundingClientRect();
