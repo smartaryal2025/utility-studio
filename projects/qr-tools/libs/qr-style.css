@@ -17,7 +17,8 @@
     flex-wrap: wrap; 
 }
 
-#qrcode, canvas, svg { 
+/* FIX: Changed 'svg' to '#barcode' so it stops breaking the home icon! */
+#qrcode, canvas, #barcode { 
     margin-top: 15px !important; 
     margin-bottom: 25px !important; 
     display: block; 
