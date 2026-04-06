@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v4.1';
+const CACHE_NAME = 'utility-studio-v5.2';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
@@ -41,6 +41,7 @@ const CORE_ASSETS = [
     '/projects/pdf-tools/libs/pdf-style.css',
     '/projects/pdf-tools/libs/pdf.min.js',
     '/projects/pdf-tools/libs/Sortable.min.js',
+    '/projects/pdf-tools/libs/script.js', // NEWLY ADDED
 
     // QR Tools
     '/projects/qr-tools/index.html',
@@ -51,6 +52,7 @@ const CORE_ASSETS = [
     '/projects/qr-tools/libs/JsBarcode.all.min.js',
     '/projects/qr-tools/libs/qr-style.css',
     '/projects/qr-tools/libs/qrcode.min.js',
+    '/projects/qr-tools/libs/script.js', // NEWLY ADDED
 
     // Unicode Tools
     '/projects/uni-tools/index.html',
@@ -67,7 +69,8 @@ const CORE_ASSETS = [
     '/projects/video-tools/libs/ffmpeg.js',
     '/projects/video-tools/libs/index.js',
     '/projects/video-tools/libs/util.js',
-    '/projects/video-tools/libs/video-style.css'
+    '/projects/video-tools/libs/video-style.css',
+    '/projects/video-tools/libs/script.js' // NEWLY ADDED
 ];
 
 // Install Event - Caches all core assets
