@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="unit_converter">
@@ -41,15 +43,15 @@
   <script src="../../assets/theme.js"></script>
   
   <style>
-    /* Cleaned up styles: Master.css handles 90% of the layout now */
     .app-container {
-      max-width: 900px !important; /* Slightly narrower for the calculator UI */
+      max-width: 900px !important;
     }
 
+    /* Fixed mobile height for the Flutter container */
     #flutter-target {
         width: 100%;
         height: 70vh;
-        min-height: 550px;
+        min-height: 500px;
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
         background: var(--surface-dark);
