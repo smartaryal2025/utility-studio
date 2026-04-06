@@ -2,7 +2,6 @@ const { PDFDocument, rgb, degrees } = PDFLib;
 const pdfjsLib = window['pdfjs-dist/build/pdf'];
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
 
-// Global Output Handlers
 function downloadFile(data, filename) {
     const blob = new Blob([data], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob); const link = document.createElement('a');
@@ -12,37 +11,25 @@ function downloadFile(data, filename) {
 
 function printPdfBlob(data) {
     const blob = new Blob([data], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    window.open(url, '_blank'); 
+    const url = URL.createObjectURL(blob); window.open(url, '_blank'); 
 }
 
-// FIX: Safe mobile icon for Compact
 function toggleFullscreen(sectionId, btn) {
     const sec = document.getElementById(sectionId);
     sec.classList.toggle('fullscreen-mode');
     if(sec.classList.contains('fullscreen-mode')){ btn.innerHTML = '❐ Compact'; } 
-    else { btn.innerHTML = '⛶ Expand';
-    if(sectionId === 'edit-section' && editJsDoc) renderPage(currPage); }
+    else { btn.innerHTML = '⛶ Expand'; if(sectionId === 'edit-section' && editJsDoc) renderPage(currPage); }
 }
 
-// ==========================================
-// STANDARD TOOLS (Merge, Compress, Split, Org)
-// ==========================================
 const mergeList = document.getElementById('merge-file-list');
 const mergeBtn = document.getElementById('merge-btn');
 let mergeFiles = []; new Sortable(mergeList, { animation: 150 });
 
-// FIX: Blue Highlight and PDF Icon
 document.getElementById('merge-upload').addEventListener('change', e => {
     mergeList.innerHTML = ''; mergeFiles = Array.from(e.target.files);
     mergeFiles.forEach((f, i) => {
         const li = document.createElement('li'); li.dataset.i = i;
-        li.innerHTML = `
-            <span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);">
-                <img src="../../assets/pdf.png" alt="PDF" style="width: 18px; height: 18px;">
-                ${f.name}
-            </span>
-            <span style="color:#94a3b8">☰</span>`;
+        li.innerHTML = `<span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);"><img src="../../assets/pdf.png" alt="PDF" style="width: 18px; height: 18px;">${f.name}</span><span style="color:#94a3b8">☰</span>`;
         li.style.cssText = "background:var(--surface-light); display:flex; justify-content:space-between; align-items:center; padding:10px; margin-bottom:5px; border-radius:4px; border-left:4px solid var(--accent-primary); cursor:grab;";
         mergeList.appendChild(li);
     });
@@ -69,7 +56,6 @@ const compUpload = document.getElementById('compress-upload');
 const compBtn = document.getElementById('compress-btn');
 let compBuffer = null;
 
-// FIX: Blue Highlight and PDF Icon
 compUpload.addEventListener('change', async e => {
     const queue = document.getElementById('compress-queue');
     queue.innerHTML = '';
@@ -77,14 +63,7 @@ compUpload.addEventListener('change', async e => {
         const file = e.target.files[0];
         compBuffer = await file.arrayBuffer(); 
         compBtn.disabled = false; 
-        queue.innerHTML = `
-        <div class="file-item" style="border-left: 4px solid var(--accent-primary); display: flex; justify-content: space-between; align-items: center; background: var(--surface-light); padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-            <span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);">
-                <img src="../../assets/pdf.png" alt="PDF" style="width: 18px; height: 18px;">
-                ${file.name}
-            </span>
-            <span style="color:var(--text-secondary); font-size: 12px;">${(file.size / 1048576).toFixed(2)} MB</span>
-        </div>`;
+        queue.innerHTML = `<div class="file-item" style="border-left: 4px solid var(--accent-primary); display: flex; justify-content: space-between; align-items: center; background: var(--surface-light); padding: 10px; border-radius: 4px; margin-bottom: 10px;"><span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);"><img src="../../assets/pdf.png" alt="PDF" style="width: 18px; height: 18px;">${file.name}</span><span style="color:var(--text-secondary); font-size: 12px;">${(file.size / 1048576).toFixed(2)} MB</span></div>`;
     }
 });
 
@@ -189,28 +168,17 @@ document.getElementById('organize-btn').onclick = async () => {
     } catch(e) { status.innerText = "Error Exporting."; status.style.color = "#ef4444"; }
 };
 
-// ==========================================
-// PDF TO IMAGE
-// ==========================================
 const pdfToImgUpload = document.getElementById('pdf-to-img-upload');
 const pdfToImgBtn = document.getElementById('pdf-to-img-btn');
 let ptiFile = null;
 
-// FIX: Blue Highlight and PDF Icon
 pdfToImgUpload.addEventListener('change', e => {
     const queue = document.getElementById('pdf-to-img-queue');
     queue.innerHTML = '';
     if (e.target.files.length) { 
         ptiFile = e.target.files[0]; 
         pdfToImgBtn.disabled = false; 
-        queue.innerHTML = `
-        <div class="file-item" style="border-left: 4px solid var(--accent-primary); display: flex; justify-content: space-between; align-items: center; background: var(--surface-light); padding: 10px; border-radius: 4px; margin-bottom: 10px;">
-            <span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);">
-                <img src="../../assets/pdf.png" alt="PDF" style="width: 18px; height: 18px;">
-                ${ptiFile.name}
-            </span>
-            <span style="color:var(--text-secondary); font-size: 12px;">${(ptiFile.size / 1048576).toFixed(2)} MB</span>
-        </div>`;
+        queue.innerHTML = `<div class="file-item" style="border-left: 4px solid var(--accent-primary); display: flex; justify-content: space-between; align-items: center; background: var(--surface-light); padding: 10px; border-radius: 4px; margin-bottom: 10px;"><span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);"><img src="../../assets/pdf.png" alt="PDF" style="width: 18px; height: 18px;">${ptiFile.name}</span><span style="color:var(--text-secondary); font-size: 12px;">${(ptiFile.size / 1048576).toFixed(2)} MB</span></div>`;
     }
 });
 
@@ -233,7 +201,6 @@ pdfToImgBtn.addEventListener('click', async () => {
 
             if (format === 'image/svg+xml') {
                 try {
-                    if (typeof pdfjsLib.SVGGraphics !== 'function') throw new Error("SVG engine missing in this build");
                     const opList = await page.getOperatorList();
                     const svgGfx = new pdfjsLib.SVGGraphics(page.commonObjs, page.objs);
                     const svgElement = await svgGfx.getSVG(opList, viewport);
@@ -242,15 +209,12 @@ pdfToImgBtn.addEventListener('click', async () => {
                     const blob = new Blob([svgString], {type: 'image/svg+xml;charset=utf-8'});
                     link.href = URL.createObjectURL(blob);
                 } catch (svgErr) {
-                    console.warn("Native SVG failed, using high-res fallback wrapper.");
                     const canvas = document.createElement('canvas');
                     const highResVp = page.getViewport({scale: 3.0}); 
                     canvas.width = highResVp.width; canvas.height = highResVp.height;
                     await page.render({canvasContext: canvas.getContext('2d'), viewport: highResVp}).promise;
                     const imgDataUrl = canvas.toDataURL('image/png');
-                    const fallbackSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${viewport.width}" height="${viewport.height}" viewBox="0 0 ${highResVp.width} ${highResVp.height}">
-                        <image width="${highResVp.width}" height="${highResVp.height}" href="${imgDataUrl}" />
-                    </svg>`;
+                    const fallbackSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="${viewport.width}" height="${viewport.height}" viewBox="0 0 ${highResVp.width} ${highResVp.height}"><image width="${highResVp.width}" height="${highResVp.height}" href="${imgDataUrl}" /></svg>`;
                     const blob = new Blob([fallbackSvg], {type: 'image/svg+xml;charset=utf-8'});
                     link.href = URL.createObjectURL(blob);
                 }
@@ -265,19 +229,11 @@ pdfToImgBtn.addEventListener('click', async () => {
             link.click(); document.body.removeChild(link);
             await new Promise(r => setTimeout(r, 400)); 
         }
-        status.innerText = "All pages extracted!";
-        status.style.color = "#10b981";
-    } catch(e) { 
-        status.innerText = "Error extracting images.";
-        status.style.color = "#ef4444"; 
-        console.error(e);
-    }
+        status.innerText = "All pages extracted!"; status.style.color = "#10b981";
+    } catch(e) { status.innerText = "Error extracting images."; status.style.color = "#ef4444"; }
     pdfToImgBtn.disabled = false;
 });
 
-// ==========================================
-// IMAGE TO PDF
-// ==========================================
 const imgToPdfUpload = document.getElementById('img-to-pdf-upload');
 const imgToPdfList = document.getElementById('img-to-pdf-list');
 const imgToPdfBtn = document.getElementById('img-to-pdf-btn');
@@ -287,17 +243,8 @@ imgToPdfUpload.addEventListener('change', e => {
     imgToPdfList.innerHTML = ''; imgFiles = Array.from(e.target.files);
     imgFiles.forEach((f, i) => {
         const li = document.createElement('li'); li.dataset.i = i;
-        
-        // FIX: Generate a real thumbnail URL from the uploaded image file
         const imgThumbnailUrl = URL.createObjectURL(f);
-        
-        li.innerHTML = `
-            <span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);">
-                <img src="${imgThumbnailUrl}" alt="Img" style="width: 24px; height: 24px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);">
-                ${f.name}
-            </span>
-            <span style="color:#94a3b8">☰</span>`;
-        // FIX: Highlight border changed to blue (var(--accent-primary))
+        li.innerHTML = `<span style="display:flex; align-items:center; gap:8px; font-weight: bold; color: var(--text-primary);"><img src="${imgThumbnailUrl}" alt="Img" style="width: 24px; height: 24px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);">${f.name}</span><span style="color:#94a3b8">☰</span>`;
         li.style.cssText = "background:var(--surface-light); display:flex; justify-content:space-between; align-items:center; padding:10px; margin-bottom:5px; border-radius:4px; border-left:4px solid var(--accent-primary); cursor:grab;";
         imgToPdfList.appendChild(li);
     });
@@ -336,12 +283,12 @@ imgToPdfBtn.addEventListener('click', async () => {
         const fName = document.getElementById('img-to-pdf-filename').value || document.getElementById('img-to-pdf-filename').placeholder;
         downloadFile(await pdf.save(), fName);
         status.innerText = "Successfully Converted!"; status.style.color = "#10b981";
-    } catch(e) { status.innerText = "Error converting images."; status.style.color = "#ef4444"; console.error(e); }
+    } catch(e) { status.innerText = "Error converting images."; status.style.color = "#ef4444"; }
     imgToPdfBtn.disabled = false;
 });
 
 // ==========================================
-// 5. THE PRO EDITOR
+// 7. THE PRO EDITOR & CROP TOOL
 // ==========================================
 const editContainer = document.getElementById('editor-canvas-container');
 const editCanvas = document.getElementById('editor-canvas');
@@ -365,6 +312,11 @@ function setEditorTool(toolCategory, specificTool) {
     document.querySelectorAll('.tool-btn, .tool-select').forEach(el => el.classList.remove('active'));
     activeTool = toolCategory; document.body.dataset.activeTool = activeTool; selectObject(null);
     const tool = specificTool || toolCategory;
+    
+    document.getElementById('text-format-bar').style.display = (tool === 'text' || tool === 'rect' || tool === 'ellipse' || tool === 'line' || tool === 'highlight' || tool === 'formtext' || tool === 'checkbox' || tool === 'tick' || tool === 'cross') ? 'flex' : 'none';
+    const cropBar = document.getElementById('crop-format-bar');
+    if(cropBar) cropBar.style.display = (tool === 'crop') ? 'flex' : 'none';
+
     if (tool === 'highlight') { fColorInput.value = '#facc15'; noFillInput.checked = false; } 
     else if (tool === 'rect' || tool === 'ellipse' || tool === 'line') { bColorInput.value = '#000000'; noFillInput.checked = true; } 
     else if (tool === 'text' || tool === 'tick' || tool === 'cross' || tool === 'formtext' || tool === 'checkbox') { tColorInput.value = '#000000'; bColorInput.value = '#000000'; noFillInput.checked = true; }
@@ -384,6 +336,11 @@ document.getElementById('edit-image-upload').addEventListener('change', e => {
     const reader = new FileReader();
     reader.onload = (event) => { customImgData = event.target.result; setEditorTool('image', 'image'); };
     reader.readAsDataURL(e.target.files[0]);
+    e.target.value = ''; // Duplicate image bypass
+});
+
+document.getElementById('crop-all-pages-check').addEventListener('change', (e) => {
+    if (selectedEdit && selectedEdit.type === 'crop') selectedEdit.allPages = e.target.checked;
 });
 
 document.getElementById('edit-upload').addEventListener('change', async e => {
@@ -396,7 +353,7 @@ document.getElementById('edit-upload').addEventListener('change', async e => {
 
 async function renderPage(num) {
     currPage = num;
-    document.getElementById('edit-page-info').innerText = `Page ${num}`;
+    document.getElementById('edit-page-info').innerText = `Page ${num} of ${editJsDoc.numPages}`;
     const page = await editJsDoc.getPage(num);
     const rotation = pageRotations[currPage] || 0;
     const internalViewport = page.getViewport({scale: 2.0, rotation: rotation});
@@ -428,17 +385,15 @@ boldBtn.addEventListener('click', () => {
     }
 });
 
+// COMPLETELY NEW SCREEN-COORDINATE ENGINE
 function syncVisuals(edit) {
-    const [vpX, vpY] = currentViewport.convertToViewportPoint(edit.pdfX, edit.pdfY);
-    const screenX = vpX * 2.0 * cssScale; const screenY = vpY * 2.0 * cssScale; 
-    edit.el.style.left = `${screenX}px`;
-    let adjustedScreenY = screenY;
-    if(edit.type === 'text' || edit.type === 'tick' || edit.type === 'cross') { adjustedScreenY = screenY - (edit.fontSize * 2.0 * cssScale); } 
-    else if (edit.pdfH) { adjustedScreenY = screenY - (edit.pdfH * 2.0 * cssScale); }
-    edit.el.style.top = `${adjustedScreenY}px`;
+    edit.el.style.left = `${edit.vpX * 2.0 * cssScale}px`;
+    let adjustedScreenY = edit.vpY;
+    if(edit.type === 'text' || edit.type === 'tick' || edit.type === 'cross') { adjustedScreenY = edit.vpY - edit.fontSize; } 
+    edit.el.style.top = `${adjustedScreenY * 2.0 * cssScale}px`;
     
-    if(edit.pdfW && edit.type !== 'text' && edit.type !== 'tick' && edit.type !== 'cross') edit.el.style.width = `${edit.pdfW * 2.0 * cssScale}px`;
-    if(edit.pdfH && edit.type !== 'text' && edit.type !== 'tick' && edit.type !== 'cross') edit.el.style.height = `${edit.pdfH * 2.0 * cssScale}px`;
+    if(edit.vpW && edit.type !== 'text' && edit.type !== 'tick' && edit.type !== 'cross') edit.el.style.width = `${edit.vpW * 2.0 * cssScale}px`;
+    if(edit.vpH && edit.type !== 'text' && edit.type !== 'tick' && edit.type !== 'cross') edit.el.style.height = `${edit.vpH * 2.0 * cssScale}px`;
     
     if(edit.type === 'text' || edit.type === 'tick' || edit.type === 'cross') {
         edit.el.style.color = edit.textColor || '#000000'; 
@@ -447,6 +402,11 @@ function syncVisuals(edit) {
     } else if (edit.type === 'formtext') {
         edit.el.style.color = edit.textColor || '#000000'; 
         edit.el.style.backgroundColor = edit.noFill ? 'transparent' : (edit.fillColor || '#ffffff');
+    } else if (edit.type === 'crop') {
+        edit.el.style.borderColor = '#38bdf8';
+        edit.el.style.borderWidth = '2px';
+        edit.el.style.borderStyle = 'dashed';
+        edit.el.style.backgroundColor = 'rgba(56, 189, 248, 0.1)';
     } else {
         edit.el.style.borderColor = edit.borderColor || '#ef4444';
         if(edit.type === 'highlight') {
@@ -471,6 +431,9 @@ function selectObject(edit) {
             boldBtn.style.background = edit.isBold ? '#0ea5e9' : '#1e293b';
             boldBtn.style.color = edit.isBold ? 'black' : '#38bdf8';
         }
+        if(edit.type === 'crop') {
+            document.getElementById('crop-all-pages-check').checked = !!edit.allPages;
+        }
     }
 }
 
@@ -480,8 +443,7 @@ overlayLayer.addEventListener('pointerdown', e => {
     
     const rect = overlayLayer.getBoundingClientRect();
     const clickX = e.clientX - rect.left; const clickY = e.clientY - rect.top;
-    const unscaledX = clickX / (2.0 * cssScale); const unscaledY = clickY / (2.0 * cssScale);
-    let [pdfX, pdfY] = currentViewport.convertToPdfPoint(unscaledX, unscaledY);
+    const vpX = clickX / (2.0 * cssScale); const vpY = clickY / (2.0 * cssScale);
 
     const el = document.createElement('div');
     el.className = 'live-overlay'; el.style.pointerEvents = 'auto'; 
@@ -492,74 +454,125 @@ overlayLayer.addEventListener('pointerdown', e => {
     if(type === 'form') type = document.getElementById('form-selector').value;
     
     let newEdit = { 
-        pageNum: currPage, type: type, el: el, pdfX, pdfY, zIndex: baseZIndex, 
+        pageNum: currPage, type: type, el: el, vpX: vpX, vpY: vpY, zIndex: baseZIndex, 
         textColor: tColorInput.value, borderColor: bColorInput.value, fillColor: fColorInput.value, noFill: noFillInput.checked,
         fontSize: parseInt(sizeInput.value) || 16, isBold: false 
     };
     
-    let pdfW = 0, pdfH = 0;
+    let vpW = 0, vpH = 0;
 
     if (type === 'text') { el.classList.add('overlay-text'); el.contentEditable = true; el.innerText = "Type text"; } 
     else if (type === 'tick') { el.classList.add('overlay-text'); el.innerText = "✓"; } 
     else if (type === 'cross') { el.classList.add('overlay-text'); el.innerText = "✖"; } 
-    else if (type === 'formtext') { el.classList.add('overlay-formtext'); el.innerText = "Text Box"; pdfW = 120; pdfH = 20; } 
-    else if (type === 'checkbox') { el.classList.add('overlay-checkbox'); pdfW = 16; pdfH = 16; } 
-    else if (type === 'rect') { el.classList.add('overlay-rect'); pdfW = 80; pdfH = 50; } 
-    else if (type === 'ellipse') { el.classList.add('overlay-ellipse'); pdfW = 60; pdfH = 60; } 
-    else if (type === 'line') { el.classList.add('overlay-line'); pdfW = 100; pdfH = 5; } 
-    else if (type === 'highlight') { el.classList.add('overlay-highlight'); pdfW = 120; pdfH = 15; newEdit.noFill = false; newEdit.fillColor = fColorInput.value || '#facc15'; } 
-    else if (type === 'image' && customImgData) { el.classList.add('overlay-img'); el.style.backgroundImage = `url(${customImgData})`; pdfW = 100; pdfH = 100; newEdit.imgData = customImgData; }
+    else if (type === 'formtext') { el.classList.add('overlay-formtext'); el.innerText = "Text Box"; vpW = 120; vpH = 20; } 
+    else if (type === 'checkbox') { el.classList.add('overlay-checkbox'); vpW = 16; vpH = 16; } 
+    else if (type === 'rect') { el.classList.add('overlay-rect'); vpW = 80; vpH = 50; } 
+    else if (type === 'ellipse') { el.classList.add('overlay-ellipse'); vpW = 60; vpH = 60; } 
+    else if (type === 'line') { el.classList.add('overlay-line'); vpW = 100; vpH = 5; } 
+    else if (type === 'highlight') { el.classList.add('overlay-highlight'); vpW = 120; vpH = 15; newEdit.noFill = false; newEdit.fillColor = fColorInput.value || '#facc15'; } 
+    else if (type === 'crop') { 
+        el.classList.add('overlay-crop'); vpW = 200; vpH = 200; 
+        newEdit.allPages = document.getElementById('crop-all-pages-check').checked; 
+    } 
+    else if (type === 'image' && customImgData) { 
+        el.classList.add('overlay-img'); 
+        el.style.backgroundImage = `url(${customImgData})`; 
+        el.style.backgroundSize = '100% 100%';
+        vpW = 100; vpH = 100; newEdit.imgData = customImgData; 
+        
+        const img = new Image();
+        img.onload = () => {
+            const ratio = img.width / img.height;
+            newEdit.vpH = newEdit.vpW / ratio;
+            syncVisuals(newEdit);
+        };
+        img.src = customImgData;
+    }
 
-    if(pdfW && pdfH) { newEdit.pdfW = pdfW; newEdit.pdfH = pdfH; newEdit.pdfY -= pdfH; }
+    if(vpW && vpH) { newEdit.vpW = vpW; newEdit.vpH = vpH; }
 
     overlayLayer.appendChild(el);
-    const resizer = document.createElement('div'); resizer.className = 'resize-handle'; el.appendChild(resizer);
     const delBtn = document.createElement('button'); delBtn.className = 'del-overlay-btn'; delBtn.innerHTML = '&times;'; el.appendChild(delBtn);
+
+    // NEW: 8-Way Crop Handle Generator
+    const handleClasses = type === 'crop' ? ['nw','n','ne','e','se','s','sw','w'] : ['se'];
+    handleClasses.forEach(pos => {
+        const resizer = document.createElement('div');
+        resizer.className = type === 'crop' ? `resize-handle-${pos}` : 'resize-handle';
+        el.appendChild(resizer);
+
+        resizer.addEventListener('pointerdown', (ev) => {
+            if(activeTool !== 'select') return;
+            ev.preventDefault(); ev.stopPropagation();
+            let isResizing = true; let startY = ev.clientY; let startX = ev.clientX;
+            let initW = newEdit.vpW || 0; let initH = newEdit.vpH || 0; 
+            let initX = newEdit.vpX; let initY = newEdit.vpY;
+            let initSize = newEdit.fontSize;
+
+            const onMove = (mv) => {
+                if(!isResizing) return;
+                const dy = (mv.clientY - startY) / (2.0 * cssScale);
+                const dx = (mv.clientX - startX) / (2.0 * cssScale);
+                
+                if(type === 'text' || type === 'tick' || type === 'cross') {
+                    newEdit.fontSize = Math.max(8, initSize + dy);
+                } else if (type === 'image') {
+                    const ratio = initW / initH;
+                    const delta = Math.max(dx, dy); 
+                    newEdit.vpW = Math.max(10, initW + delta);
+                    newEdit.vpH = newEdit.vpW / ratio;
+                } else if (type === 'crop') {
+                    let newW = initW, newH = initH, newX = initX, newY = initY;
+                    
+                    if (pos.includes('e')) { newW = Math.max(10, initW + dx); }
+                    if (pos.includes('s')) { newH = Math.max(10, initH + dy); }
+                    if (pos.includes('w')) { 
+                        let deltaX = dx;
+                        if (initW - deltaX < 10) deltaX = initW - 10;
+                        newW = initW - deltaX;
+                        newX = initX + deltaX;
+                    }
+                    if (pos.includes('n')) {
+                        let deltaY = dy;
+                        if (initH - deltaY < 10) deltaY = initH - 10;
+                        newH = initH - deltaY;
+                        newY = initY + deltaY;
+                    }
+                    newEdit.vpW = newW; newEdit.vpH = newH;
+                    newEdit.vpX = newX; newEdit.vpY = newY;
+                } else {
+                    newEdit.vpW = Math.max(10, initW + dx);
+                    if(type !== 'line') newEdit.vpH = Math.max(10, initH + dy);
+                }
+                syncVisuals(newEdit);
+            };
+            const onUp = () => { isResizing = false; document.removeEventListener('pointermove', onMove); document.removeEventListener('pointerup', onUp); };
+            document.addEventListener('pointermove', onMove); document.addEventListener('pointerup', onUp);
+        });
+    });
 
     liveEdits.push(newEdit);
     syncVisuals(newEdit);
     
     el.addEventListener('pointerdown', (ev) => {
-        if(activeTool !== 'select') return;
-        if(ev.target === resizer || ev.target === delBtn) return;
-        ev.preventDefault(); selectObject(newEdit);
+        if(activeTool !== 'select' || ev.target.className.includes('resize-handle') || ev.target === delBtn) return;
+        ev.preventDefault(); ev.stopPropagation();
+        selectObject(newEdit);
         let isDragging = true; let startX = ev.clientX; let startY = ev.clientY;
-        let initPdfX = newEdit.pdfX; let initPdfY = newEdit.pdfY;
-        ev.stopPropagation();
+        let initVpX = newEdit.vpX; let initVpY = newEdit.vpY;
 
         const onMove = (mv) => {
             if(!isDragging) return;
             const dxScreen = (mv.clientX - startX) / (2.0 * cssScale);
             const dyScreen = (mv.clientY - startY) / (2.0 * cssScale);
-            const [startXunscaled, startYunscaled] = currentViewport.convertToViewportPoint(initPdfX, initPdfY);
-            const [newPdfX, newPdfY] = currentViewport.convertToPdfPoint(startXunscaled + dxScreen, startYunscaled + dyScreen);
-            newEdit.pdfX = newPdfX; newEdit.pdfY = newPdfY; syncVisuals(newEdit);
+            newEdit.vpX = initVpX + dxScreen;
+            newEdit.vpY = initVpY + dyScreen;
+            syncVisuals(newEdit);
         };
         const onUp = () => { isDragging = false; document.removeEventListener('pointermove', onMove); document.removeEventListener('pointerup', onUp); };
         document.addEventListener('pointermove', onMove); document.addEventListener('pointerup', onUp);
     });
 
-    resizer.addEventListener('pointerdown', (ev) => {
-        if(activeTool !== 'select') return;
-        ev.preventDefault(); let isResizing = true; let startY = ev.clientY; let startX = ev.clientX;
-        let initW = newEdit.pdfW; let initH = newEdit.pdfH; let initSize = newEdit.fontSize;
-        ev.stopPropagation();
-
-        const onMove = (mv) => {
-            if(!isResizing) return;
-            const dy = (mv.clientY - startY) / (2.0 * cssScale);
-            const dx = (mv.clientX - startX) / (2.0 * cssScale);
-            if(type === 'text' || type === 'tick' || type === 'cross') {
-                newEdit.fontSize = Math.max(8, initSize + dy);
-            } else {
-                newEdit.pdfW = Math.max(10, initW + dx);
-                if(type !== 'line') newEdit.pdfH = Math.max(10, initH + dy);
-            }
-            syncVisuals(newEdit);
-        };
-        const onUp = () => { isResizing = false; document.removeEventListener('pointermove', onMove); document.removeEventListener('pointerup', onUp); };
-        document.addEventListener('pointermove', onMove); document.addEventListener('pointerup', onUp);
-    });
     delBtn.onclick = () => { el.remove(); liveEdits = liveEdits.filter(item => item !== newEdit); selectedEdit = null; };
     selectObject(newEdit);
     if(type === 'text') { setTimeout(() => el.focus(), 50); }
@@ -587,25 +600,34 @@ async function generateEditedPdfBytes() {
             const page = pages[edit.pageNum - 1];
             const tRgb = hexToRgb(edit.textColor || '#000000'); const bRgb = hexToRgb(edit.borderColor || '#000000'); let fRgb;
             if (!edit.noFill && edit.fillColor) fRgb = hexToRgb(edit.fillColor);
-            const w = Math.max(1, edit.pdfW || 50); const h = Math.max(1, edit.pdfH || 20);
+
+            // FINAL PDF-LIB BOTTOM-LEFT CONVERSION HAPPENS ONLY HERE
+            const [pdfL, pdfT] = currentViewport.convertToPdfPoint(edit.vpX, edit.vpY);
+            const [pdfR, pdfB] = currentViewport.convertToPdfPoint(edit.vpX + (edit.vpW||0), edit.vpY + (edit.vpH||0));
+            const w = Math.abs(pdfR - pdfL); const h = Math.abs(pdfT - pdfB);
+            const x = Math.min(pdfL, pdfR); const y = Math.min(pdfT, pdfB); 
+            const [txtX, txtBaselineY] = currentViewport.convertToPdfPoint(edit.vpX, edit.vpY + (edit.fontSize || 16));
 
             if (edit.type === 'text') {
                 let clone = edit.el.cloneNode(true);
                 let del = clone.querySelector('.del-overlay-btn'); if(del) del.remove();
-                let resizer = clone.querySelector('.resize-handle'); if(resizer) resizer.remove();
                 let text = clone.innerText || " "; text = text.replace(/[^\x00-\x7F]/g, ""); 
-                if (text.trim().length > 0) { page.drawText(text, { x: edit.pdfX, y: edit.pdfY, size: edit.fontSize || 16, color: tRgb }); }
+                if (text.trim().length > 0) { page.drawText(text, { x: txtX, y: txtBaselineY, size: edit.fontSize || 16, color: tRgb }); }
             } 
-            else if (edit.type === 'tick') { const s = edit.fontSize || 16; page.drawLine({ start: {x: edit.pdfX + s*0.1, y: edit.pdfY + s*0.4}, end: {x: edit.pdfX + s*0.4, y: edit.pdfY + s*0.1}, thickness: 2, color: tRgb }); page.drawLine({ start: {x: edit.pdfX + s*0.4, y: edit.pdfY + s*0.1}, end: {x: edit.pdfX + s*0.9, y: edit.pdfY + s*0.9}, thickness: 2, color: tRgb }); }
-            else if (edit.type === 'cross') { const s = edit.fontSize || 16; page.drawLine({ start: {x: edit.pdfX + s*0.2, y: edit.pdfY + s*0.2}, end: {x: edit.pdfX + s*0.8, y: edit.pdfY + s*0.8}, thickness: 2, color: tRgb }); page.drawLine({ start: {x: edit.pdfX + s*0.2, y: edit.pdfY + s*0.8}, end: {x: edit.pdfX + s*0.8, y: edit.pdfY + s*0.2}, thickness: 2, color: tRgb }); }
-            else if (edit.type === 'rect') { page.drawRectangle({ x: edit.pdfX, y: edit.pdfY, width: w, height: h, borderColor: bRgb, borderWidth: 2, color: fRgb }); }
-            else if (edit.type === 'ellipse') { page.drawEllipse({ x: edit.pdfX + w/2, y: edit.pdfY + h/2, xScale: w/2, yScale: h/2, borderColor: bRgb, borderWidth: 2, color: fRgb }); }
-            else if (edit.type === 'line') { page.drawLine({ start: {x: edit.pdfX, y: edit.pdfY}, end: {x: edit.pdfX + w, y: edit.pdfY}, thickness: 3, color: bRgb }); }
-            else if (edit.type === 'highlight') { page.drawRectangle({ x: edit.pdfX, y: edit.pdfY, width: w, height: h, color: hexToRgb(edit.fillColor || '#facc15'), opacity: 0.4 }); }
-            else if (edit.type === 'formtext') { const tf = form.createTextField(`tf_${Date.now()}_${Math.floor(Math.random()*10000)}`); const opts = { x: edit.pdfX, y: edit.pdfY, width: w, height: h, textColor: tRgb, borderWidth: 0 }; if(fRgb) opts.backgroundColor = fRgb; tf.addToPage(page, opts); }
-            else if (edit.type === 'checkbox') { const cb = form.createCheckBox(`cb_${Date.now()}_${Math.floor(Math.random()*10000)}`); cb.addToPage(page, { x: edit.pdfX, y: edit.pdfY, width: w, height: h }); }
-            else if (edit.type === 'image' && edit.imgData) { let img = edit.imgData.includes('image/png') ? await tempDoc.embedPng(edit.imgData) : await tempDoc.embedJpg(edit.imgData); if(img) page.drawImage(img, { x: edit.pdfX, y: edit.pdfY, width: w, height: h }); }
-        } catch(err) { console.warn("Skipping an element due to internal draw error:", err); }
+            else if (edit.type === 'tick') { page.drawLine({ start: {x: x + w*0.1, y: y + h*0.6}, end: {x: x + w*0.4, y: y + h*0.1}, thickness: 2, color: tRgb }); page.drawLine({ start: {x: x + w*0.4, y: y + h*0.1}, end: {x: x + w*0.9, y: y + h*0.9}, thickness: 2, color: tRgb }); }
+            else if (edit.type === 'cross') { page.drawLine({ start: {x: x + w*0.2, y: y + h*0.2}, end: {x: x + w*0.8, y: y + h*0.8}, thickness: 2, color: tRgb }); page.drawLine({ start: {x: x + w*0.2, y: y + h*0.8}, end: {x: x + w*0.8, y: y + h*0.2}, thickness: 2, color: tRgb }); }
+            else if (edit.type === 'rect') { page.drawRectangle({ x: x, y: y, width: w, height: h, borderColor: bRgb, borderWidth: 2, color: fRgb }); }
+            else if (edit.type === 'ellipse') { page.drawEllipse({ x: x + w/2, y: y + h/2, xScale: w/2, yScale: h/2, borderColor: bRgb, borderWidth: 2, color: fRgb }); }
+            else if (edit.type === 'line') { page.drawLine({ start: {x: pdfL, y: pdfT}, end: {x: pdfR, y: pdfB}, thickness: 3, color: bRgb }); }
+            else if (edit.type === 'highlight') { page.drawRectangle({ x: x, y: y, width: w, height: h, color: hexToRgb(edit.fillColor || '#facc15'), opacity: 0.4 }); }
+            else if (edit.type === 'formtext') { const tf = form.createTextField(`tf_${Date.now()}`); const opts = { x: x, y: y, width: w, height: h, textColor: tRgb, borderWidth: 0 }; if(fRgb) opts.backgroundColor = fRgb; tf.addToPage(page, opts); }
+            else if (edit.type === 'checkbox') { const cb = form.createCheckBox(`cb_${Date.now()}`); cb.addToPage(page, { x: x, y: y, width: w, height: h }); }
+            else if (edit.type === 'image' && edit.imgData) { let img = edit.imgData.includes('image/png') ? await tempDoc.embedPng(edit.imgData) : await tempDoc.embedJpg(edit.imgData); if(img) page.drawImage(img, { x: x, y: y, width: w, height: h }); }
+            else if (edit.type === 'crop') {
+                const targetPages = edit.allPages ? pages : [page];
+                targetPages.forEach(p => p.setCropBox(x, y, w, h));
+            }
+        } catch(err) { console.warn("Internal draw error:", err); }
     }
     return await tempDoc.save();
 }
