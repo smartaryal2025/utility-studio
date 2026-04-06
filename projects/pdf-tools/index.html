@@ -5,16 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Toolkit Pro | Utility Studio</title>
     <meta name="description" content="Free, secure, and offline-capable PDF Toolkit. Merge, compress, split, organize, and edit PDFs directly in your browser.">
-    <meta name="keywords" content="PDF tools, merge PDF, compress PDF, split PDF, offline PDF editor, Kishor Aryal">
-    <meta name="author" content="Kishor Aryal">
     
-    <link rel="canonical" href="https://kishoraryal.com.np/projects/pdf-tools/">
-    <meta property="og:title" content="PDF Toolkit Pro | Utility Studio">
-    <meta property="og:description" content="Free, secure, and offline-capable PDF Toolkit. Merge, compress, and edit PDFs.">
-    <meta property="og:image" content="https://kishoraryal.com.np/assets/logo.png">
-    <meta property="og:url" content="https://kishoraryal.com.np/projects/pdf-tools/">
-    <meta property="og:type" content="website">
-
     <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo.png">
     <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo.png">
     <link rel="manifest" href="../../manifest.json">
@@ -26,19 +17,31 @@
     <script src="libs/pdf.min.js"></script>
     <script src="libs/pdf-lib.min.js"></script>
     <script src="libs/Sortable.min.js"></script>
-    
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "PDF Toolkit",
-        "url": "https://kishoraryal.com.np/projects/pdf-tools/",
-        "description": "Merge, split, and edit PDF documents entirely in your browser without uploading files.",
-        "applicationCategory": "BusinessApplication",
-        "operatingSystem": "All",
-        "offers": { "@type": "Offer", "price": "0" }
-    }
-    </script>
+
+    <style>
+        .resize-handle-nw, .resize-handle-n, .resize-handle-ne,
+        .resize-handle-w, .resize-handle-e, .resize-handle-se, /* Standard SE fallback */
+        .resize-handle-sw, .resize-handle-s {
+            position: absolute;
+            width: 12px; height: 12px;
+            background: #38bdf8;
+            border: 2px solid #fff;
+            z-index: 12;
+            border-radius: 2px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        .resize-handle-nw { top: -6px; left: -6px; cursor: nw-resize; }
+        .resize-handle-ne { top: -6px; right: -6px; cursor: ne-resize; }
+        .resize-handle-sw { bottom: -6px; left: -6px; cursor: sw-resize; }
+        .resize-handle-se, .resize-handle { bottom: -6px; right: -6px; cursor: se-resize; }
+        .resize-handle-n { top: -6px; left: calc(50% - 6px); cursor: n-resize; }
+        .resize-handle-s { bottom: -6px; left: calc(50% - 6px); cursor: s-resize; }
+        .resize-handle-e { top: calc(50% - 6px); right: -6px; cursor: e-resize; }
+        .resize-handle-w { top: calc(50% - 6px); left: -6px; cursor: w-resize; }
+        
+        .live-overlay.selected div[class*="resize-handle"] { display: block; }
+        .live-overlay:not(.selected) div[class*="resize-handle"] { display: none; }
+    </style>
 </head>
 <body data-active-tool="select">
     <div class="us-global-menu top-left">
@@ -82,7 +85,6 @@
 
             <section id="compress-section">
                 <div class="section-header"><h2>Compress PDF</h2></div>
-                
                 <button class="btn-secondary" onclick="document.getElementById('compress-upload').click()" style="width: 100%; margin-bottom: 10px;">📁 Choose PDF File</button>
                 <input type="file" id="compress-upload" accept="application/pdf" style="display: none;">
                 <div id="compress-queue" class="file-queue"></div>
@@ -177,6 +179,8 @@
                         <button class="tool-btn active" data-tool="select" data-subtool="select" title="Select & Move Object"><span>↖</span> Select</button>
                         <div style="border-left: 1px solid #334155; height: 30px; margin: 0 5px;"></div>
                         
+                        <button class="tool-btn" data-tool="crop" data-subtool="crop" title="Crop PDF Margin"><span>◩</span> Crop</button>
+
                         <button class="tool-btn" data-tool="text" data-subtool="text"><span>T</span> Text</button>
                         <button class="tool-btn" data-tool="highlight" data-subtool="highlight"><span>🟨</span> Highlight</button>
                         
@@ -229,6 +233,12 @@
                             <input type="number" id="elem-size" value="16" style="width: 50px; height:28px;" title="Font Size">
                             <button id="text-bold" class="btn-secondary" style="padding: 4px 8px; font-weight:bold; height:28px;">B</button>
                         </div>
+                        
+                        <div class="format-bar" id="crop-format-bar" style="display:none; align-items:center; margin-left: 10px; border-left: 1px solid #334155; padding-left: 10px;">
+                            <label style="font-size: 12px; color:#38bdf8; display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:bold;">
+                                <input type="checkbox" id="crop-all-pages-check" style="margin:0; width: 16px; height: 16px;"> Apply Crop to ALL Pages
+                            </label>
+                        </div>
                     </div>
                     
                     <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-bottom: 10px;">
@@ -254,31 +264,35 @@
                 </div>
             </section>
         </div>
-<article class="seo-content" style="margin-top: 40px; padding: 25px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: var(--radius-lg); line-height: 1.6;">
-    <h2 style="color: var(--text-primary); font-size: 20px; margin-bottom: 15px;">Private PDF Merger, Splitter, and Editor</h2>
-    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 15px;">
-        Manage your sensitive documents securely with the Utility Studio PDF Toolkit. Because the processing is done locally via javascript, you can merge multiple PDFs, extract specific pages, and organize documents without ever uploading them to the cloud.
-    </p>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
-        <div>
-            <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">📄 Drag-and-Drop Merging</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Visually reorder files and merge multiple documents into a single, clean PDF file instantly.</p>
-        </div>
-        <div>
-            <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">🔒 No Server Uploads</h3>
-            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Ideal for sensitive business, legal, or accounting documents that require absolute privacy and local processing.</p>
-        </div>
+        
+        <article class="seo-content" style="margin-top: 40px; padding: 25px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: var(--radius-lg); line-height: 1.6;">
+            <h2 style="color: var(--text-primary); font-size: 20px; margin-bottom: 15px;">Private PDF Merger, Splitter, and Editor</h2>
+            <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 15px;">
+                Manage your sensitive documents securely with the Utility Studio PDF Toolkit. Because the processing is done locally via javascript, you can merge multiple PDFs, extract specific pages, and organize documents without ever uploading them to the cloud.
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+                <div>
+                    <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">📄 Drag-and-Drop Merging</h3>
+                    <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Visually reorder files and merge multiple documents into a single, clean PDF file instantly.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">🔒 No Server Uploads</h3>
+                    <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Ideal for sensitive business, legal, or accounting documents that require absolute privacy and local processing.</p>
+                </div>
+            </div>
+        </article>
+
+        <footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13px;">
+            <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap;">
+                <a href="../../index.html" style="color: var(--text-secondary); text-decoration: none;">Home</a>
+                <a href="../../about.html" style="color: var(--text-secondary); text-decoration: none;">About the Developer</a>
+                <a href="mailto:smartaryal2025@gmail.com" style="color: var(--text-secondary); text-decoration: none;">Contact Support</a>
+                <a href="../../privacy.html" style="color: var(--text-secondary); text-decoration: none;">Privacy Policy</a>
+            </div>
+            <p style="margin: 0;">&copy; 2026 Utility Studio. All tools process data locally in your browser.</p>
+        </footer>
     </div>
-</article>
-<footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13px;">
-    <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap;">
-        <a href="../../index.html" style="color: var(--text-secondary); text-decoration: none;">Home</a>
-        <a href="../../about.html" style="color: var(--text-secondary); text-decoration: none;">About the Developer</a>
-        <a href="mailto:smartaryal2025@gmail.com" style="color: var(--text-secondary); text-decoration: none;">Contact Support</a>
-        <a href="../../privacy.html" style="color: var(--text-secondary); text-decoration: none;">Privacy Policy</a>
-    </div>
-    <p style="margin: 0;">&copy; 2026 Utility Studio. All tools process data locally in your browser.</p>
-</footer>
-    </div> <script src="libs/script.js"></script>
+    
+    <script src="libs/script.js"></script>
 </body>
 </html>
