@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v5.2';
+const CACHE_NAME = 'utility-studio-v5.3';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
@@ -10,6 +10,7 @@ const CORE_ASSETS = [
     '/404.html',
     '/about.html',
     '/privacy.html',
+    '/faq.html',
     
     // Global Assets (Crucial for Theme & Layout)
     '/assets/logo.png',
@@ -41,7 +42,7 @@ const CORE_ASSETS = [
     '/projects/pdf-tools/libs/pdf-style.css',
     '/projects/pdf-tools/libs/pdf.min.js',
     '/projects/pdf-tools/libs/Sortable.min.js',
-    '/projects/pdf-tools/libs/script.js', // NEWLY ADDED
+    '/projects/pdf-tools/libs/script.js',
 
     // QR Tools
     '/projects/qr-tools/index.html',
@@ -52,13 +53,18 @@ const CORE_ASSETS = [
     '/projects/qr-tools/libs/JsBarcode.all.min.js',
     '/projects/qr-tools/libs/qr-style.css',
     '/projects/qr-tools/libs/qrcode.min.js',
-    '/projects/qr-tools/libs/script.js', // NEWLY ADDED
+    '/projects/qr-tools/libs/script.js',
 
     // Unicode Tools
     '/projects/uni-tools/index.html',
     '/projects/uni-tools/libs/mammoth.browser.min.js',
     '/projects/uni-tools/libs/script.js',
     '/projects/uni-tools/libs/uni-style.css',
+
+    // Unit Converter
+    '/projects/unit-converter/index.html',
+    '/projects/unit-converter/libs/script.js',
+    '/projects/unit-converter/libs/unit-style.css',
 
     // Video Tools
     '/projects/video-tools/index.html',
@@ -70,7 +76,7 @@ const CORE_ASSETS = [
     '/projects/video-tools/libs/index.js',
     '/projects/video-tools/libs/util.js',
     '/projects/video-tools/libs/video-style.css',
-    '/projects/video-tools/libs/script.js' // NEWLY ADDED
+    '/projects/video-tools/libs/script.js'
 ];
 
 // Install Event - Caches all core assets
