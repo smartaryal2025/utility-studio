@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v5.3';
+const CACHE_NAME = 'utility-studio-v5.4';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
@@ -21,6 +21,16 @@ const CORE_ASSETS = [
     '/assets/master-light.css',
     '/assets/hub.css',
     '/assets/hub-light.css',
+
+    // Articles & Guides
+    '/articles/index.html',
+    '/articles/secure-offline-pdf-editing.html',
+    '/articles/hidden-photo-data-privacy.html',
+    '/articles/offline-nepali-date-converter.html',
+    '/articles/offline-preeti-unicode-converter.html',
+    '/articles/offline-qr-barcode-generator.html',
+    '/articles/offline-video-media-converter.html',
+    '/articles/offline-unit-converter.html',
 
     // Date Converter
     '/projects/date-converter/index.html',
@@ -114,9 +124,7 @@ self.addEventListener('fetch', (event) => {
 
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
-            // Return cached version if found
             if (cachedResponse) {
-                // Fetch new version in background to update cache for next time
                 fetch(event.request).then((networkResponse) => {
                     if (networkResponse && networkResponse.status === 200) {
                         caches.open(CACHE_NAME).then((cache) => {
@@ -124,28 +132,22 @@ self.addEventListener('fetch', (event) => {
                         });
                     }
                 }).catch(() => { /* Ignore background fetch errors */ });
-                
                 return cachedResponse;
             }
 
-            // If not in cache, fetch from network
             return fetch(event.request).then((networkResponse) => {
                 if (!networkResponse || networkResponse.status !== 200 || networkResponse.type !== 'basic') {
                     return networkResponse;
                 }
-                
                 const responseToCache = networkResponse.clone();
                 caches.open(CACHE_NAME).then((cache) => {
                     cache.put(event.request, responseToCache);
                 });
-
                 return networkResponse;
             });
         }).catch(() => {
-            // Optional: Return an offline fallback page here if the network fails 
-            // and the page isn't in the cache
             if (event.request.headers.get('accept').includes('text/html')) {
-                return caches.match('/404.html'); // Ensure you have a 404/Offline page
+                return caches.match('/404.html');
             }
         })
     );

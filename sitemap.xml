@@ -6,6 +6,24 @@
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
+    <url>
+        <loc>https://kishoraryal.com.np/about.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://kishoraryal.com.np/faq.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://kishoraryal.com.np/privacy.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.5</priority>
+    </url>
 
     <url>
         <loc>https://kishoraryal.com.np/projects/date-converter/</loc>
@@ -13,42 +31,36 @@
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
-
     <url>
         <loc>https://kishoraryal.com.np/projects/qr-tools/</loc>
         <lastmod>2026-04-08</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.9</priority>
     </url>
-
     <url>
         <loc>https://kishoraryal.com.np/projects/image-tools/</loc>
         <lastmod>2026-04-08</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-
     <url>
         <loc>https://kishoraryal.com.np/projects/pdf-tools/</loc>
         <lastmod>2026-04-08</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-
     <url>
         <loc>https://kishoraryal.com.np/projects/video-tools/</loc>
         <lastmod>2026-04-08</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-
     <url>
         <loc>https://kishoraryal.com.np/projects/uni-tools/</loc>
         <lastmod>2026-04-08</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
-
     <url>
         <loc>https://kishoraryal.com.np/projects/unit-converter/</loc>
         <lastmod>2026-04-08</lastmod>
@@ -57,23 +69,51 @@
     </url>
 
     <url>
-        <loc>https://kishoraryal.com.np/about.html</loc>
+        <loc>https://kishoraryal.com.np/articles/index.html</loc>
         <lastmod>2026-04-08</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
-    
     <url>
-        <loc>https://kishoraryal.com.np/faq.html</loc>
+        <loc>https://kishoraryal.com.np/articles/secure-offline-pdf-editing.html</loc>
         <lastmod>2026-04-08</lastmod>
         <changefreq>monthly</changefreq>
-        <priority>0.6</priority>
+        <priority>0.7</priority>
     </url>
-
     <url>
-        <loc>https://kishoraryal.com.np/privacy.html</loc>
+        <loc>https://kishoraryal.com.np/articles/hidden-photo-data-privacy.html</loc>
         <lastmod>2026-04-08</lastmod>
-        <changefreq>yearly</changefreq>
-        <priority>0.5</priority>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kishoraryal.com.np/articles/offline-nepali-date-converter.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kishoraryal.com.np/articles/offline-preeti-unicode-converter.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kishoraryal.com.np/articles/offline-qr-barcode-generator.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kishoraryal.com.np/articles/offline-video-media-converter.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://kishoraryal.com.np/articles/offline-unit-converter.html</loc>
+        <lastmod>2026-04-08</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
     </url>
 </urlset>
