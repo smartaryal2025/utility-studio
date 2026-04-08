@@ -35,8 +35,9 @@
 
     /* Soft modern shadow (floating cards look) */
     --shadow-soft:
-        0 1px 3px rgba(0, 0, 0, 0.08),
-        0 6px 18px rgba(0, 0, 0, 0.08);
+        0 0 4px rgba(0, 217, 255, 0.25),
+        0 0 8px rgba(0, 217, 255, 0.20),
+        0 0 16px rgba(0, 217, 255, 0.15);
 
     --transition-smooth: all 0.25s ease;
 }
