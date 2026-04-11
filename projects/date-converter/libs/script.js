@@ -98,7 +98,8 @@ const getFixedEvent = (bsMonth, bsDay) => {
     const events = {
         '0-1': { name: 'नव वर्ष', isHoliday: true },
         '0-11': { name: 'लोकतन्त्र दिवस', isHoliday: true },
-        '4-24': { name: 'नारी दिवस', isHoliday: false }, // Your corrected BS date
+        '1-15': { name: 'गणतन्त्र दिवस', isHoliday: true },
+        '4-24': { name: 'नारी दिवस', isHoliday: false },
         '9-1': { name: 'माघे संक्रान्ति', isHoliday: true },
         '10-7': { name: 'प्रजातन्त्र दिवस', isHoliday: true }
     };
