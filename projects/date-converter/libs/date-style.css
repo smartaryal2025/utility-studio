@@ -245,3 +245,49 @@
     vertical-align: middle !important; 
     margin: 0 15px 0 0 !important; 
 }
+
+
+/* Bulletproof Holiday / Weekend Styling */
+.cal-day.holiday {
+    color: #ef4444 !important; /* Forces the red text to override any master theme settings */
+    font-weight: 700 !important;
+}
+
+.cal-day.holiday:hover {
+    background-color: rgba(239, 68, 68, 0.1) !important; /* Soft red hover effect */
+}
+
+/* Ensure the tiny English date also turns red on holidays */
+.cal-day.holiday .eng-date-small {
+    color: #ef4444 !important;
+    opacity: 0.8;
+}
+
+/* Update the event label to pin to the top */
+.event-label {
+    position: absolute; /* Takes the text out of the flow, stopping the shift */
+    top: 4px; /* Pins it to the top edge */
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 0.60rem;
+    color: #ef4444;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none; /* Ensures the user is clicking the box, not the text */
+}
+
+/* If you are using the "Pro" view with the small English dates, pin them to the bottom right */
+.eng-date-small {
+    position: absolute;
+    bottom: 4px;
+    right: 6px;
+    font-size: 0.65rem;
+    pointer-events: none;
+}
+
+/* Keeps non-holiday events distinct from the red text */
+.event-label.observance {
+    color: #38bdf8 !important; 
+}
