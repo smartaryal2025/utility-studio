@@ -1,0 +1,470 @@
+{
+  "0-1": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "नयाँ वर्ष २०८३",
+        "isHoliday": true
+      }
+    ]
+  },
+  "0-2": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-4": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "मातातीर्थ औंसी",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-5": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-6": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-7": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-8": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-9": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-10": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-11": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-12": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-13": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-14": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-15": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-16": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-17": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-18": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "बुद्ध जयन्ती",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-20": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-22": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-24": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-25": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-26": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-28": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-29": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "0-30": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "",
+        "isHoliday": false
+      }
+    ]
+  },
+  "4-12": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "रक्षाबन्धन, जनै पूर्णिमा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "4-13": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "गाईजात्रा (उपत्यका बिदा)",
+        "isHoliday": true
+      }
+    ]
+  },
+  "4-19": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "श्रीकृष्ण जन्माष्टमी",
+        "isHoliday": true
+      }
+    ]
+  },
+  "4-28": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "दर खाने दिन",
+        "isHoliday": false
+      }
+    ]
+  },
+  "4-29": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "हरितालिका तीज (महिला बिदा)",
+        "isHoliday": false
+      }
+    ]
+  },
+  "5-9": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "इन्द्र जात्रा (उपत्यका बिदा)",
+        "isHoliday": false
+      }
+    ]
+  },
+  "5-25": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "घटस्थापना, नवरात्र प्रारम्भ",
+        "isHoliday": true
+      }
+    ]
+  },
+  "5-31": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "फूलपाती",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-1": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "महाअष्टमी",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-2": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "दशैं बिदा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-3": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "महानवमी",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-4": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "विजया दशमी",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-5": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "दशैं बिदा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-6": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "दशैं बिदा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-8": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "कोजाग्रत पूर्णिमा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-21": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "काग तिहार",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-22": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "कुकुर तिहार, लक्ष्मी पूजा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-23": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "गाई तिहार",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-24": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "गोवर्धन पूजा, म्ह पूजा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-25": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "भाइटीका, कीजा पूजा",
+        "isHoliday": true
+      }
+    ]
+  },
+  "6-29": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "छठ पर्व",
+        "isHoliday": true
+      }
+    ]
+  },
+  "9-28": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "सरस्वती पूजा, वसन्त पञ्चमी",
+        "isHoliday": true
+      }
+    ]
+  },
+  "10-22": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "महाशिवरात्री, नेपाली सेना दिवस",
+        "isHoliday": true
+      }
+    ]
+  },
+  "10-25": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "ग्याल्पो ल्होसार",
+        "isHoliday": true
+      }
+    ]
+  },
+  "11-7": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "फागु पूर्णिमा (पहाडमा होली)",
+        "isHoliday": true
+      }
+    ]
+  },
+  "11-8": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "तराई होली",
+        "isHoliday": true
+      }
+    ]
+  },
+  "11-23": {
+    "tithi": "",
+    "events": [
+      {
+        "name": "घोडे जात्रा (उपत्यका बिदा)",
+        "isHoliday": false
+      }
+    ]
+  }
+}

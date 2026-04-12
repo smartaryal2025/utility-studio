@@ -31,50 +31,6 @@
     } 
 }
 
-#bs-cal-days .cal-day { 
-    position: relative; 
-    min-height: 85px !important; 
-    font-size: 32px !important; 
-    font-weight: bold; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    background: var(--surface-light); 
-    border-radius: var(--radius-md); 
-    border: 1px solid transparent; 
-    transition: var(--transition-smooth); 
-    cursor: pointer; 
-    padding: 0 !important; 
-}
-
-#bs-cal-days .cal-day:hover { 
-    border-color: var(--accent-primary); 
-    background: var(--surface-dark); 
-}
-
-#bs-cal-days .cal-day.today { 
-    background: rgba(16, 185, 129, 0.15) !important; 
-    border-color: var(--color-success) !important; 
-    color: var(--color-success) !important; 
-}
-
-.eng-date-small { 
-    position: absolute; 
-    bottom: 6px; 
-    right: 8px; 
-    font-size: 13px; 
-    color: var(--text-secondary); 
-    font-weight: normal; 
-    font-family: monospace; 
-}
-
-#bs-cal-days .cal-day.muted { 
-    opacity: 0.15 !important; 
-    background: transparent !important; 
-    pointer-events: none !important; 
-    border: none !important; 
-}
-
 .live-date-container { 
     display: flex; 
     justify-content: center; 
@@ -200,6 +156,7 @@
     display: contents !important; 
 }
 
+/* Header Styling - Sunday and Saturday highlighted Red */
 .weekday { 
     font-size: 12px; 
     color: var(--text-secondary); 
@@ -209,6 +166,13 @@
     margin-bottom: 6px; 
 }
 
+/* Header Styling - Sunday and Saturday highlighted Red */
+.calendar-grid .weekday:first-child,
+.calendar-grid .weekday:nth-child(7) {
+    color: #ef4444;
+}
+
+/* Base Calendar Cell */
 .cal-day { 
     padding: 10px 4px; 
     background: var(--surface-light); 
@@ -217,13 +181,107 @@
     border: 1px solid transparent; 
 }
 
-.cal-day.today { 
-    background: rgba(16, 185, 129, 0.15); 
-    border-color: var(--color-success); 
-    color: var(--color-success); 
+#bs-cal-days .cal-day { 
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 110px !important; 
     font-weight: bold; 
+    background: var(--surface-light); 
+    border-radius: var(--radius-md); 
+    transition: var(--transition-smooth); 
+    cursor: pointer; 
+    padding: 4px !important; 
 }
 
+#bs-cal-days .cal-day:hover { 
+    border-color: var(--accent-primary); 
+    background: var(--surface-dark); 
+}
+
+#bs-cal-days .cal-day.today { 
+    background: rgba(16, 185, 129, 0.15) !important; 
+    border-color: var(--color-success) !important; 
+    color: var(--color-success) !important; 
+}
+
+#bs-cal-days .cal-day.muted { 
+    opacity: 0.15 !important; 
+    background: transparent !important; 
+    pointer-events: none !important; 
+    border: none !important; 
+}
+
+.cal-day.holiday {
+    color: #ef4444 !important;
+    font-weight: 700 !important;
+}
+
+.cal-day.holiday:hover {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Event & Date Layout Inside Cell */
+.event-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 28px;
+    margin-bottom: auto;
+}
+
+.event-label {
+    font-size: 0.65rem;
+    line-height: 1.2;
+    text-align: center;
+    white-space: normal;
+    word-wrap: break-word;
+    color: #ef4444 !important;
+    margin-bottom: 2px;
+}
+
+.event-label.observance {
+    color: #38bdf8 !important; 
+}
+
+.date-number {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.tithi-label {
+    position: absolute;
+    bottom: 4px;
+    left: 6px;
+    font-size: 0.7rem;
+    color: var(--text-secondary); /* Default to neutral grey */
+}
+
+/* Make Tithi red ONLY if the day is a holiday/weekend */
+.cal-day.holiday .tithi-label {
+    color: #ef4444 !important;
+}
+
+.eng-date-small { 
+    position: absolute; 
+    bottom: 4px; 
+    right: 6px; 
+    font-size: 0.7rem; 
+    color: var(--text-secondary); 
+    font-weight: normal; 
+    font-family: monospace; 
+}
+
+.cal-day.holiday .eng-date-small {
+    color: #ef4444 !important;
+    opacity: 0.8;
+}
+
+/* Output Card */
 .output-card { 
     margin-top: 20px; 
     background: var(--surface-light); 
@@ -244,50 +302,4 @@
     display: inline-block !important; 
     vertical-align: middle !important; 
     margin: 0 15px 0 0 !important; 
-}
-
-
-/* Bulletproof Holiday / Weekend Styling */
-.cal-day.holiday {
-    color: #ef4444 !important; /* Forces the red text to override any master theme settings */
-    font-weight: 700 !important;
-}
-
-.cal-day.holiday:hover {
-    background-color: rgba(239, 68, 68, 0.1) !important; /* Soft red hover effect */
-}
-
-/* Ensure the tiny English date also turns red on holidays */
-.cal-day.holiday .eng-date-small {
-    color: #ef4444 !important;
-    opacity: 0.8;
-}
-
-/* Update the event label to pin to the top */
-.event-label {
-    position: absolute; /* Takes the text out of the flow, stopping the shift */
-    top: 4px; /* Pins it to the top edge */
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 0.60rem;
-    color: #ef4444;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    pointer-events: none; /* Ensures the user is clicking the box, not the text */
-}
-
-/* If you are using the "Pro" view with the small English dates, pin them to the bottom right */
-.eng-date-small {
-    position: absolute;
-    bottom: 4px;
-    right: 6px;
-    font-size: 0.65rem;
-    pointer-events: none;
-}
-
-/* Keeps non-holiday events distinct from the red text */
-.event-label.observance {
-    color: #38bdf8 !important; 
 }
