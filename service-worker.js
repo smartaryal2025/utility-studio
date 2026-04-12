@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v5.4';
+const CACHE_NAME = 'utility-studio-v5.5';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
@@ -37,6 +37,7 @@ const CORE_ASSETS = [
     '/projects/date-converter/libs/date-style.css',
     '/projects/date-converter/libs/date-widget.js',
     '/projects/date-converter/libs/script.js',
+    '/projects/date-converter/libs/date.js',
 
     // Image Tools
     '/projects/image-tools/index.html',
