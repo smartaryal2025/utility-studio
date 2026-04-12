@@ -38,6 +38,8 @@ const CORE_ASSETS = [
     '/projects/date-converter/libs/date-widget.js',
     '/projects/date-converter/libs/script.js',
     '/projects/date-converter/libs/date.js',
+    '/projects/date-converter/libs/events/2082.json',
+    '/projects/date-converter/libs/events/2083.json',
 
     // Image Tools
     '/projects/image-tools/index.html',
