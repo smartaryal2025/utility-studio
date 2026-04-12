@@ -1,57 +1,12 @@
-/**
- * Utility Studio - Embeddable Nepali Date Widget
- * Author: Kishor Aryal
+/*!
+ * Copyright (c) 2026 Kishor Aryal. All rights reserved.
+ * Application: Utility Studio
+ * Website: https://kishoraryal.com.np
+ * * PROPRIETARY AND CONFIDENTIAL
+ * This source code and associated documentation are proprietary to Kishor Aryal.
+ * Unauthorized copying, reproduction, distribution, modification, or use of this 
+ * file, via any medium, is strictly prohibited without express written permission.
+ * * Violators will be prosecuted to the maximum extent possible under the law.
  */
-(function() {
-    const devMap = {'0':'०','1':'१','2':'२','3':'३','4':'४','5':'५','6':'६','7':'७','8':'८','9':'९'};
-    const toDevanagari = (num) => String(num).split('').map(c => devMap[c] || c).join('');
-    
-    const engMonths = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-    const nepMonthsDevanagari = ['वैशाख','जेष्ठ','आषाढ','श्रावण','भाद्र','आश्विन','कार्तिक','मंसिर','पौष','माघ','फाल्गुण','चैत्र'];
-    const engWeekdays = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    const nepWeekdays = ['आइतबार','सोमबार','मंगलबार','बुधबार','बिहीबार','शुक्रबार','शनिबार'];
 
-    // Compressed matrix for accurate dates (2079 to 2090 for lightweight embed)
-    const recentNepDays = {
-        2079: [31,31,32,31,31,31,30,29,30,29,30,30], 2080: [31,32,31,32,31,30,30,30,29,29,30,30],
-        2081: [31,32,31,32,31,30,30,30,29,30,29,31], 2082: [31,31,32,31,31,31,30,29,30,29,30,30],
-        2083: [31,31,32,31,31,30,30,30,29,30,30,30], 2084: [31,31,32,31,31,30,30,30,29,30,30,30],
-        2085: [31,32,31,32,30,31,30,30,29,30,30,30], 2086: [30,32,31,32,31,30,30,30,29,30,30,30],
-        2087: [31,31,32,31,31,31,30,30,29,30,30,30], 2088: [30,31,32,32,30,31,30,30,29,30,30,30],
-        2089: [30,32,31,32,31,30,30,30,29,30,30,30], 2090: [30,32,31,32,31,30,30,30,29,30,30,30]
-    };
-
-    function getAdToBs(adDate) {
-        const refAd = new Date(Date.UTC(2022, 3, 14)); // Ref: April 14, 2022 -> Baisakh 1, 2079
-        let daysPassed = Math.floor(Date.UTC(adDate.getFullYear(), adDate.getMonth(), adDate.getDate()) / 86400000) - Math.floor(refAd.getTime() / 86400000);
-        
-        let bsY = 2079, bsM = 0, bsD = 1;
-        while (daysPassed > 0) {
-            if (!recentNepDays[bsY]) return null;
-            let daysLeft = recentNepDays[bsY][bsM] - bsD + 1;
-            if (daysPassed >= daysLeft) { daysPassed -= daysLeft; bsD = 1; bsM++; if (bsM > 11) { bsM = 0; bsY++; } } 
-            else { bsD += daysPassed; daysPassed = 0; }
-        }
-        return { year: bsY, month: bsM, day: bsD, w: adDate.getDay() };
-    }
-
-    // Auto-inject on load
-    window.addEventListener('DOMContentLoaded', () => {
-        const targetDiv = document.getElementById('us-nepali-date-widget');
-        if (!targetDiv) return;
-
-        const today = new Date();
-        const bsDate = getAdToBs(today) || { year: 2082, month: 11, day: 13, w: 5 }; // Fallback
-
-        const textString = `आज: मिति ${toDevanagari(bsDate.year)} साल ${nepMonthsDevanagari[bsDate.month]} ${toDevanagari(bsDate.day)} गते, ${nepWeekdays[bsDate.w]} | ${engMonths[today.getMonth()]} ${today.getDate()}, ${today.getFullYear()}, ${engWeekdays[today.getDay()]}`;
-
-        // Apply styles if the user didn't write their own CSS
-        targetDiv.style.fontFamily = "sans-serif";
-        targetDiv.style.padding = "10px 15px";
-        targetDiv.style.borderRadius = "8px";
-        targetDiv.style.display = "inline-flex";
-        targetDiv.style.alignItems = "center";
-        targetDiv.style.gap = "8px";
-        targetDiv.innerHTML = `<span style="display:inline-block; width:10px; height:10px; background:#10b981; border-radius:50%; box-shadow:0 0 8px #10b981;"></span> <span>${textString}</span>`;
-    });
-})();
+(function(_0x1a2b,_0x3c4d){eval(decodeURIComponent(escape(atob(_0x1a2b))));})("LyoqCiAqIFV0aWxpdHkgU3R1ZGlvIC0gRW1iZWRkYWJsZSBOZXBhbGkgRGF0ZSBXaWRnZXQKICogQXV0aG9yOiBLaXNob3IgQXJ5YWwKICovCihmdW5jdGlvbigpIHsKICAgIGNvbnN0IGRldk1hcCA9IHsnMCc6J+ClpicsJzEnOifgpacnLCcyJzon4KWoJywnMyc6J+ClqScsJzQnOifgpaonLCc1Jzon4KWrJywnNic6J+ClrCcsJzcnOifgpa0nLCc4Jzon4KWuJywnOSc6J+Clryd9OwogICAgY29uc3QgdG9EZXZhbmFnYXJpID0gKG51bSkgPT4gU3RyaW5nKG51bSkuc3BsaXQoJycpLm1hcChjID0+IGRldk1hcFtjXSB8fCBjKS5qb2luKCcnKTsKICAgIAogICAgY29uc3QgZW5nTW9udGhzID0gWydKYW51YXJ5JywnRmVicnVhcnknLCdNYXJjaCcsJ0FwcmlsJywnTWF5JywnSnVuZScsJ0p1bHknLCdBdWd1c3QnLCdTZXB0ZW1iZXInLCdPY3RvYmVyJywnTm92ZW1iZXInLCdEZWNlbWJlciddOwogICAgY29uc3QgbmVwTW9udGhzRGV2YW5hZ2FyaSA9IFsn4KS14KWI4KS24KS+4KSWJywn4KSc4KWH4KS34KWN4KSgJywn4KSG4KS34KS+4KSiJywn4KS24KWN4KSw4KS+4KS14KSjJywn4KSt4KS+4KSm4KWN4KSwJywn4KSG4KS24KWN4KS14KS/4KSoJywn4KSV4KS+4KSw4KWN4KSk4KS/4KSVJywn4KSu4KSC4KS44KS/4KSwJywn4KSq4KWM4KS3Jywn4KSu4KS+4KSYJywn4KSr4KS+4KSy4KWN4KSX4KWB4KSjJywn4KSa4KWI4KSk4KWN4KSwJ107CiAgICBjb25zdCBlbmdXZWVrZGF5cyA9IFsnU3VuZGF5JywnTW9uZGF5JywnVHVlc2RheScsJ1dlZG5lc2RheScsJ1RodXJzZGF5JywnRnJpZGF5JywnU2F0dXJkYXknXTsKICAgIGNvbnN0IG5lcFdlZWtkYXlzID0gWyfgpIbgpIfgpKTgpKzgpL7gpLAnLCfgpLjgpYvgpK7gpKzgpL7gpLAnLCfgpK7gpILgpJfgpLLgpKzgpL7gpLAnLCfgpKzgpYHgpKfgpKzgpL7gpLAnLCfgpKzgpL/gpLngpYDgpKzgpL7gpLAnLCfgpLbgpYHgpJXgpY3gpLDgpKzgpL7gpLAnLCfgpLbgpKjgpL/gpKzgpL7gpLAnXTsKCiAgICAvLyBDb21wcmVzc2VkIG1hdHJpeCBmb3IgYWNjdXJhdGUgZGF0ZXMgKDIwNzkgdG8gMjA5MCBmb3IgbGlnaHR3ZWlnaHQgZW1iZWQpCiAgICBjb25zdCByZWNlbnROZXBEYXlzID0gewogICAgICAgIDIwNzk6IFszMSwzMSwzMiwzMSwzMSwzMSwzMCwyOSwzMCwyOSwzMCwzMF0sIDIwODA6IFszMSwzMiwzMSwzMiwzMSwzMCwzMCwzMCwyOSwyOSwzMCwzMF0sCiAgICAgICAgMjA4MTogWzMxLDMyLDMxLDMyLDMxLDMwLDMwLDMwLDI5LDMwLDI5LDMxXSwgMjA4MjogWzMxLDMxLDMyLDMxLDMxLDMxLDMwLDI5LDMwLDI5LDMwLDMwXSwKICAgICAgICAyMDgzOiBbMzEsMzEsMzIsMzEsMzEsMzAsMzAsMzAsMjksMzAsMzAsMzBdLCAyMDg0OiBbMzEsMzEsMzIsMzEsMzEsMzAsMzAsMzAsMjksMzAsMzAsMzBdLAogICAgICAgIDIwODU6IFszMSwzMiwzMSwzMiwzMCwzMSwzMCwzMCwyOSwzMCwzMCwzMF0sIDIwODY6IFszMCwzMiwzMSwzMiwzMSwzMCwzMCwzMCwyOSwzMCwzMCwzMF0sCiAgICAgICAgMjA4NzogWzMxLDMxLDMyLDMxLDMxLDMxLDMwLDMwLDI5LDMwLDMwLDMwXSwgMjA4ODogWzMwLDMxLDMyLDMyLDMwLDMxLDMwLDMwLDI5LDMwLDMwLDMwXSwKICAgICAgICAyMDg5OiBbMzAsMzIsMzEsMzIsMzEsMzAsMzAsMzAsMjksMzAsMzAsMzBdLCAyMDkwOiBbMzAsMzIsMzEsMzIsMzEsMzAsMzAsMzAsMjksMzAsMzAsMzBdCiAgICB9OwoKICAgIGZ1bmN0aW9uIGdldEFkVG9CcyhhZERhdGUpIHsKICAgICAgICBjb25zdCByZWZBZCA9IG5ldyBEYXRlKERhdGUuVVRDKDIwMjIsIDMsIDE0KSk7IC8vIFJlZjogQXByaWwgMTQsIDIwMjIgLT4gQmFpc2FraCAxLCAyMDc5CiAgICAgICAgbGV0IGRheXNQYXNzZWQgPSBNYXRoLmZsb29yKERhdGUuVVRDKGFkRGF0ZS5nZXRGdWxsWWVhcigpLCBhZERhdGUuZ2V0TW9udGgoKSwgYWREYXRlLmdldERhdGUoKSkgLyA4NjQwMDAwMCkgLSBNYXRoLmZsb29yKHJlZkFkLmdldFRpbWUoKSAvIDg2NDAwMDAwKTsKICAgICAgICAKICAgICAgICBsZXQgYnNZID0gMjA3OSwgYnNNID0gMCwgYnNEID0gMTsKICAgICAgICB3aGlsZSAoZGF5c1Bhc3NlZCA+IDApIHsKICAgICAgICAgICAgaWYgKCFyZWNlbnROZXBEYXlzW2JzWV0pIHJldHVybiBudWxsOwogICAgICAgICAgICBsZXQgZGF5c0xlZnQgPSByZWNlbnROZXBEYXlzW2JzWV1bYnNNXSAtIGJzRCArIDE7CiAgICAgICAgICAgIGlmIChkYXlzUGFzc2VkID49IGRheXNMZWZ0KSB7IGRheXNQYXNzZWQgLT0gZGF5c0xlZnQ7IGJzRCA9IDE7IGJzTSsrOyBpZiAoYnNNID4gMTEpIHsgYnNNID0gMDsgYnNZKys7IH0gfSAKICAgICAgICAgICAgZWxzZSB7IGJzRCArPSBkYXlzUGFzc2VkOyBkYXlzUGFzc2VkID0gMDsgfQogICAgICAgIH0KICAgICAgICByZXR1cm4geyB5ZWFyOiBic1ksIG1vbnRoOiBic00sIGRheTogYnNELCB3OiBhZERhdGUuZ2V0RGF5KCkgfTsKICAgIH0KCiAgICAvLyBBdXRvLWluamVjdCBvbiBsb2FkCiAgICB3aW5kb3cuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsICgpID0+IHsKICAgICAgICBjb25zdCB0YXJnZXREaXYgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgndXMtbmVwYWxpLWRhdGUtd2lkZ2V0Jyk7CiAgICAgICAgaWYgKCF0YXJnZXREaXYpIHJldHVybjsKCiAgICAgICAgY29uc3QgdG9kYXkgPSBuZXcgRGF0ZSgpOwogICAgICAgIGNvbnN0IGJzRGF0ZSA9IGdldEFkVG9Ccyh0b2RheSkgfHwgeyB5ZWFyOiAyMDgyLCBtb250aDogMTEsIGRheTogMTMsIHc6IDUgfTsgLy8gRmFsbGJhY2sKCiAgICAgICAgY29uc3QgdGV4dFN0cmluZyA9IGDgpIbgpJw6IOCkruCkv+CkpOCkvyAke3RvRGV2YW5hZ2FyaShic0RhdGUueWVhcil9IOCkuOCkvuCksiAke25lcE1vbnRoc0RldmFuYWdhcmlbYnNEYXRlLm1vbnRoXX0gJHt0b0RldmFuYWdhcmkoYnNEYXRlLmRheSl9IOCkl+CkpOClhywgJHtuZXBXZWVrZGF5c1tic0RhdGUud119IHwgJHtlbmdNb250aHNbdG9kYXkuZ2V0TW9udGgoKV19ICR7dG9kYXkuZ2V0RGF0ZSgpfSwgJHt0b2RheS5nZXRGdWxsWWVhcigpfSwgJHtlbmdXZWVrZGF5c1t0b2RheS5nZXREYXkoKV19YDsKCiAgICAgICAgLy8gQXBwbHkgc3R5bGVzIGlmIHRoZSB1c2VyIGRpZG4ndCB3cml0ZSB0aGVpciBvd24gQ1NTCiAgICAgICAgdGFyZ2V0RGl2LnN0eWxlLmZvbnRGYW1pbHkgPSAic2Fucy1zZXJpZiI7CiAgICAgICAgdGFyZ2V0RGl2LnN0eWxlLnBhZGRpbmcgPSAiMTBweCAxNXB4IjsKICAgICAgICB0YXJnZXREaXYuc3R5bGUuYm9yZGVyUmFkaXVzID0gIjhweCI7CiAgICAgICAgdGFyZ2V0RGl2LnN0eWxlLmRpc3BsYXkgPSAiaW5saW5lLWZsZXgiOwogICAgICAgIHRhcmdldERpdi5zdHlsZS5hbGlnbkl0ZW1zID0gImNlbnRlciI7CiAgICAgICAgdGFyZ2V0RGl2LnN0eWxlLmdhcCA9ICI4cHgiOwogICAgICAgIHRhcmdldERpdi5pbm5lckhUTUwgPSBgPHNwYW4gc3R5bGU9ImRpc3BsYXk6aW5saW5lLWJsb2NrOyB3aWR0aDoxMHB4OyBoZWlnaHQ6MTBweDsgYmFja2dyb3VuZDojMTBiOTgxOyBib3JkZXItcmFkaXVzOjUwJTsgYm94LXNoYWRvdzowIDAgOHB4ICMxMGI5ODE7Ij48L3NwYW4+IDxzcGFuPiR7dGV4dFN0cmluZ308L3NwYW4+YDsKICAgIH0pOwp9KSgpOw==");
