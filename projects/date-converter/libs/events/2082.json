@@ -1387,7 +1387,9 @@
   },
   "11-12": {
     "tithi": "अष्टमी",
-    "events": []
+    "events": [
+      { "name": "चैते दशैं", "isHoliday": false }
+    ]
   },
   "11-13": {
     "tithi": "",

@@ -93,7 +93,7 @@ const getFixedEvent = (bsMonth, bsDay) => {
     "0-1": { name: "नव वर्ष", isHoliday: true },
     "0-11": { name: "लोकतन्त्र दिवस", isHoliday: false },
     "1-15": { name: "गणतन्त्र दिवस", isHoliday: true },
-    "3-1": { name: "साउने संक्रान्ति", isHoliday: false },
+    "3-1": { name: "साउने संक्रान्ति", isHoliday: true },
     "4-24": { name: "नारी दिवस", isHoliday: false },
     "5-3": { name: "संविधान दिवस", isHoliday: false },
     "8-27": { name: "पृथ्वी जयन्ती, राष्ट्रिय एकता दिवस", isHoliday: true },
@@ -106,7 +106,7 @@ const getFixedEvent = (bsMonth, bsDay) => {
 
 const getAdFixedEvent = (adMonth, adDay) => {
   const events = {
-    "0-1": { name: "अंग्रेजी नयाँ वर्ष", isHoliday: false },
+    "0-1": { name: "अंग्रेजी नयाँ वर्ष, टोपी दिवस", isHoliday: false },
     "2-8": { name: "अन्तर्राष्ट्रिय नारी दिवस", isHoliday: false },
     "4-1": { name: "अन्तर्राष्ट्रिय श्रम दिवस", isHoliday: true },
     "11-25": { name: "क्रिसमस डे", isHoliday: true }
