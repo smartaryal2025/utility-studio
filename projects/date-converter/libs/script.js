@@ -568,7 +568,11 @@ document.addEventListener("DOMContentLoaded", () => {
             startX = e.touches[0].clientX;
             isDragging = true;
             
-            // Remove CSS transitions so it sticks perfectly to the finger instantly
+            // --- THE FIX ---
+            // 1. Strip away the old CSS animation locks from the previous swipe
+            calendarGrid.classList.remove('slide-in-next', 'slide-in-prev'); 
+            
+            // 2. Remove CSS transitions so it sticks perfectly to the finger instantly
             calendarGrid.style.transition = 'none';
         }, { passive: true });
 
