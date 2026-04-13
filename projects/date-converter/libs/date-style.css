@@ -358,36 +358,81 @@
     }
 }
 
-/* --------------------------------------------------- */
-/* FIX: 4-Dropdown Header Layout & Mobile Wrapping     */
-/* --------------------------------------------------- */
+/* ========================================================= */
+/* FIX: MOBILE RESPONSIVENESS OVERRIDES                      */
+/* Add to the very bottom of date-style.css                  */
+/* ========================================================= */
 
-/* 1. Override master.css to stop selects from stretching to 100% */
-.cal-header-select {
-    width: auto !important;
-    flex: 0 0 auto !important;
-}
-
-/* 2. Mobile Graceful Degradation */
-@media (max-width: 850px) {
+@media (max-width: 768px) {
+    /* --- 1. HEADER COMPACTION --- */
     .calendar-header {
-        flex-wrap: wrap; /* Allows header to break into two rows if squeezed */
+        flex-wrap: wrap !important;
+        padding: 0 5px;
     }
     
     .cal-controls {
-        flex-wrap: wrap !important;
         width: 100%;
-        order: 3; /* Drops the 4 dropdowns BELOW the < > buttons on mobile */
-        margin-top: 15px;
+        order: 3; /* Drops the dropdowns below the < > arrows */
+        display: grid !important; 
+        grid-template-columns: 1fr 1fr; /* Forces a perfect 2x2 grid */
+        gap: 6px !important;
+        margin-top: 10px;
     }
     
     .cal-header-select {
-        flex: 1 1 40% !important; /* Converts dropdowns to a neat 2x2 grid */
-        font-size: 14px !important;
-        height: 38px;
+        width: 100% !important;
+        height: 36px !important;
+        font-size: 13px !important;
+        padding: 2px !important;
     }
     
-    .cal-divider {
-        display: none !important; /* Hide the vertical pipe line on phones */
+    .cal-divider { 
+        display: none !important; /* Hide the vertical pipe */
+    }
+
+    /* --- 2. CELL OVERLAP FIX --- */
+    #bs-cal-days .cal-day {
+        min-height: 85px !important; 
+        padding-top: 2px !important;
+        padding-bottom: 20px !important; /* CRITICAL: Creates a safe zone for the bottom text */
+        justify-content: flex-start;
+    }
+
+    /* --- 3. FONT SIZING & SPACING --- */
+    /* Shrink the massive main number */
+    .date-number {
+        font-size: 1.15rem !important; 
+        margin-top: auto; 
+        margin-bottom: auto;
+    }
+
+    /* Shrink event text and force it to truncate if it's too long */
+    .event-area {
+        min-height: auto !important;
+        margin-bottom: 0 !important;
+        margin-top: 2px !important;
+    }
+    
+    .event-label {
+        font-size: 0.5rem !important; 
+        line-height: 1.1 !important;
+        /* Prevent long event names from blowing out the cell height */
+        display: -webkit-box;
+        -webkit-line-clamp: 2; 
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Tuck the bottom text tightly into the corners */
+    .tithi-label {
+        font-size: 0.5rem !important;
+        bottom: 2px !important;
+        left: 2px !important;
+    }
+    
+    .eng-date-small {
+        font-size: 0.55rem !important;
+        bottom: 2px !important;
+        right: 2px !important;
     }
 }
