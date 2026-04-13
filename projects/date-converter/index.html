@@ -284,7 +284,23 @@
             <div id="ad-cal-grid"></div>
             <div id="ad-cal-days"></div>
         </div>
-        
+
+        <div id="day-modal" class="us-modal hidden">
+        <div class="us-modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Date</h3>
+                <span class="us-modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div id="modal-ad-date" style="color: var(--text-secondary); font-size: 13px; margin-bottom: 10px; font-family: monospace;"></div>
+                <div id="modal-tithi" style="font-weight: bold; color: var(--text-primary); margin-bottom: 15px;"></div>
+                
+                <h4 style="font-size: 12px; color: var(--text-secondary); text-transform: uppercase; border-bottom: 1px solid var(--border-color); padding-bottom: 5px; margin-bottom: 10px; text-align: left;">Events & Holidays</h4>
+                <ul id="modal-events" class="modal-events-list"></ul>
+            </div>
+        </div>
+    </div>
+
         <article class="seo-content" style="margin-top: 40px; padding: 25px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: var(--radius-lg); line-height: 1.6;">
             <h2 style="color: var(--text-primary); font-size: 20px; margin-bottom: 15px;">Accurate BS to AD Nepali Date Converter</h2>
             <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 15px;">
