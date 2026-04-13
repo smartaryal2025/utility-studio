@@ -554,11 +554,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // 1-TO-1 NATIVE DRAG & SWIPE ENGINE
+    // 1-TO-1 NATIVE DRAG & SWIPE ENGINE (LOCKED)
     // ==========================================
     let startX = 0;
+    let startY = 0;
     let currentMovedX = 0;
     let isDragging = false;
+    let isScrolling = false; // The new gatekeeper
     
     const calendarGrid = document.getElementById('bs-cal-grid');
 
@@ -566,13 +568,11 @@ document.addEventListener("DOMContentLoaded", () => {
         // 1. Finger Touches Down
         calendarGrid.addEventListener('touchstart', (e) => {
             startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
             isDragging = true;
+            isScrolling = false; // Reset the gatekeeper
             
-            // --- THE FIX ---
-            // 1. Strip away the old CSS animation locks from the previous swipe
             calendarGrid.classList.remove('slide-in-next', 'slide-in-prev'); 
-            
-            // 2. Remove CSS transitions so it sticks perfectly to the finger instantly
             calendarGrid.style.transition = 'none';
         }, { passive: true });
 
@@ -580,10 +580,24 @@ document.addEventListener("DOMContentLoaded", () => {
         calendarGrid.addEventListener('touchmove', (e) => {
             if (!isDragging) return;
             
-            // Calculate exact distance dragged
-            currentMovedX = e.touches[0].clientX - startX;
+            const currentX = e.touches[0].clientX;
+            const currentY = e.touches[0].clientY;
             
-            // Physically drag the grid with the finger
+            const deltaX = currentX - startX;
+            const deltaY = currentY - startY;
+
+            // SMART DETECTOR: If the first movement is mostly vertical, lock the calendar!
+            if (!isScrolling) {
+                if (Math.abs(deltaY) > Math.abs(deltaX)) {
+                    isScrolling = true;
+                }
+            }
+
+            // If the gatekeeper says we are scrolling up/down, abort the drag!
+            if (isScrolling) return; 
+            
+            // Otherwise, apply the 1-to-1 horizontal drag
+            currentMovedX = deltaX;
             calendarGrid.style.transform = `translateX(${currentMovedX}px)`;
         }, { passive: true });
 
@@ -592,31 +606,31 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!isDragging) return;
             isDragging = false;
             
-            const commitThreshold = 60; // Must drag 60px to trigger month change
+            // If they were just vertically scrolling, we do nothing and reset.
+            if (isScrolling) {
+                resetDragStyles();
+                currentMovedX = 0;
+                return;
+            }
+
+            const commitThreshold = 60; 
 
             if (currentMovedX < -commitThreshold) {
-                // Dragged Left (Commit to Next)
                 resetDragStyles();
                 const nextBtn = document.getElementById('bs-cal-next');
-                if (nextBtn) nextBtn.click(); // This will trigger your CSS slide-in animation!
-                
+                if (nextBtn) nextBtn.click(); 
             } else if (currentMovedX > commitThreshold) {
-                // Dragged Right (Commit to Previous)
                 resetDragStyles();
                 const prevBtn = document.getElementById('bs-cal-prev');
                 if (prevBtn) prevBtn.click();
-                
             } else {
-                // Half-Swipe / Cancel (Did not cross threshold)
-                // Re-add a smooth transition and snap it back to 0
                 calendarGrid.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
                 calendarGrid.style.transform = 'translateX(0px)';
             }
             
-            currentMovedX = 0; // Reset for next touch
+            currentMovedX = 0; 
         }, { passive: true });
         
-        // Helper to clear drag styles before the next/prev render takes over
         const resetDragStyles = () => {
             calendarGrid.style.transition = '';
             calendarGrid.style.transform = '';
