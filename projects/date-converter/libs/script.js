@@ -321,7 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         eventHtml += `</div>`;
 
-    const tithiHtml = tithi ? `<span class="tithi-label">${tithi}</span>` : "";
+    // Extract ONLY the last word (e.g., "एकादशी") for the tiny box
+        const shortTithi = tithi ? tithi.split(" ").pop() : "";
+        const tithiHtml = shortTithi ? `<span class="tithi-label">${shortTithi}</span>` : "";
 
         if (isPro) {
           let engLabel = adDate ? adDate.day : "";
@@ -482,15 +484,31 @@ document.addEventListener("DOMContentLoaded", () => {
             if (fixedAd) dailyEvents.push(fixedAd);
         }
 
-        // 2. Populate Modal Header
-        document.getElementById('modal-title').innerText = `${toDevanagari(y)} ${nepMonthsDevanagari[m]} ${toDevanagari(d)}`;
+        // --- NEW: Moon Icon Generator ---
+        const getMoonIcon = (tithiText) => {
+            if (!tithiText) return "";
+            if (tithiText.includes("पूर्णिमा")) return " 🌕";
+            if (tithiText.includes("औंसी")) return " 🌑";
+            if (tithiText.includes("एकादशी")) return " 🌓";
+            if (tithiText.includes("अष्टमी")) return " 🌗";
+            return " 🌙"; 
+        };
+
+        // 2. Populate Modal Header (Formatted: २०८२ चैत्र ३०, सोमबार)
+        const weekdayNameBs = adDate ? nepWeekdays[adDate.weekdayIndex] : "";
+        document.getElementById('modal-title').innerText = `${toDevanagari(y)} ${nepMonthsDevanagari[m]} ${toDevanagari(d)}, ${weekdayNameBs}`;
         
         if(adDate) {
-            document.getElementById('modal-ad-date').innerText = `${engMonths[adDate.month]} ${adDate.day}, ${adDate.year}`;
+            const weekdayNameAd = engWeekdays[adDate.weekdayIndex];
+            document.getElementById('modal-ad-date').innerText = `${engMonths[adDate.month]} ${adDate.day}, ${adDate.year}, ${weekdayNameAd}`;
         }
 
-        // 3. Populate Tithi
-        document.getElementById('modal-tithi').innerText = tithi ? `तिथि: ${tithi}` : "";
+        // 3. Populate Tithi (Just the Tithi and Moon Icon)
+        if (tithi) {
+            document.getElementById('modal-tithi').innerText = `${tithi}${getMoonIcon(tithi)}`;
+        } else {
+            document.getElementById('modal-tithi').innerText = "";
+        }
 
         // 4. Populate Events List
         const eventsList = document.getElementById('modal-events');
@@ -504,7 +522,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 eventsList.appendChild(li);
             });
         } else {
-             eventsList.innerHTML = "<li class='empty'>कुनै विशेष पर्व वा बिदा छैन (No events)</li>";
+             eventsList.innerHTML = "<li class='empty'>कुनै विशेष पर्व छैन</li>";
         }
 
         // 5. Show Modal
@@ -520,6 +538,37 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('day-modal').addEventListener('click', (e) => {
         if (e.target.id === 'day-modal') {
             document.getElementById('day-modal').classList.add('hidden');
+        
+        // --- MOBILE SWIPE NAVIGATION ---
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    // Attach listeners to the entire calendar grid area
+    const calendarGrid = document.getElementById('bs-cal-grid');
+
+    calendarGrid.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    calendarGrid.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    const handleSwipe = () => {
+        const swipeThreshold = 50; // Minimum pixel distance to count as a deliberate swipe
+        
+        // Swiped Left (Finger moved from right to left) -> Go to Next Month
+        if (touchEndX < touchStartX - swipeThreshold) {
+            document.getElementById('bs-cal-next').click();
+        }
+        
+        // Swiped Right (Finger moved from left to right) -> Go to Previous Month
+        if (touchEndX > touchStartX + swipeThreshold) {
+            document.getElementById('bs-cal-prev').click();
+        }
+    };
+
         }
     });
 
