@@ -30,96 +30,60 @@
     </script>
     
     <style>
-        /* Bypass the max-width to let the Pro layout expand */
+        /* --- Desktop & Pro Layout --- */
         .wide-date-wrapper { display: flex; justify-content: center; align-items: center; width: 100%; margin-bottom: 30px; }
         .wide-date-wrapper .live-date { font-size: 18px !important; padding: 12px 28px !important; border-radius: 30px !important; }
         .wide-date-wrapper .indicator { width: 12px !important; height: 12px !important; }
 
-        /* Custom Grid Layout for Pro Converter */
-        .pro-date-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            align-items: start;
-            width: 100%;
-        }
-        @media (min-width: 1000px) {
-            .pro-date-grid { grid-template-columns: 350px 1fr; }
-        }
+        .pro-date-grid { display: grid; grid-template-columns: 1fr; gap: 20px; align-items: start; width: 100%; }
+        @media (min-width: 1000px) { .pro-date-grid { grid-template-columns: 350px 1fr; } }
 
-        /* Force script.js output to be Massive Pro Cells */
+        /* --- Base Calendar Cell --- */
         #bs-cal-days .cal-day {
             position: relative;
-            min-height: 85px !important; 
-            display: flex;
-            flex-direction: column; /* FIX: Forces vertical stacking */
-            align-items: center;
-            justify-content: flex-start; /* FIX: Stops text from crushing into the middle */
             background: var(--surface-light);
             border-radius: var(--radius-md);
             border: 1px solid transparent;
             transition: var(--transition-smooth);
             cursor: pointer;
-            padding: 4px !important;
+            padding: 4px;
+            /* Flex properties kept minimal */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         #bs-cal-days .cal-day:hover { border-color: var(--accent-primary); background: var(--surface-dark); }
         #bs-cal-days .cal-day.today { background: rgba(16, 185, 129, 0.15) !important; border-color: var(--color-success) !important; color: var(--color-success) !important; }
+        #bs-cal-days .cal-day.muted { opacity: 0.15 !important; background: transparent !important; pointer-events: none !important; border: none !important; }
         
-        .eng-date-small {
-            position: absolute;
-            bottom: 4px;
-            right: 6px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            font-family: monospace;
-        }
-        
-        #bs-cal-days .cal-day.muted {
-            opacity: 0.15 !important;
-            background: transparent !important;
-            pointer-events: none !important;
-            border: none !important;
-        }
+        .eng-date-small { position: absolute; bottom: 4px; right: 6px; font-size: 13px; color: var(--text-secondary); font-family: monospace; }
 
         /* ========================================================= */
-        /* ABSOLUTE MOBILE RESPONSIVENESS (Bypasses all caches)      */
+        /* SURGICAL MOBILE FIX (NO STRETCHING, JUST SHRINKING)       */
         /* ========================================================= */
         @media (max-width: 768px) {
-            /* 1. Header Grid Fix */
-            .cal-controls {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                width: 100% !important;
-                gap: 6px !important;
-                margin-top: 10px;
-            }
-            .cal-header-select {
-                width: 100% !important;
-                height: 38px !important;
-                font-size: 14px !important;
-            }
+            /* 1. Header Dropdowns: Neatly wrap to 2x2 grid */
+            .cal-controls { flex-wrap: wrap !important; gap: 6px !important; justify-content: center !important; }
+            .cal-header-select { width: 48% !important; flex: 1 1 45% !important; height: 36px !important; font-size: 14px !important; padding: 2px !important; }
             .cal-divider { display: none !important; }
 
-            /* 2. Overlap Fix */
+            /* 2. Cell Dimensions: Protect the bottom text! */
             #bs-cal-days .cal-day {
-                min-height: 85px !important;
-                padding-bottom: 22px !important; /* Safe zone for bottom text */
+                min-height: 75px !important;
+                padding: 2px !important;
+                padding-bottom: 20px !important; /* Creates a hard invisible barrier so nothing touches the bottom text */
             }
-            .date-number {
-                font-size: 1.15rem !important; /* Shrinks the main number */
-                margin-top: auto !important;
-                margin-bottom: auto !important;
-            }
-            .event-label {
-                font-size: 0.55rem !important;
-                line-height: 1.1 !important;
-                display: -webkit-box;
-                -webkit-line-clamp: 2; /* Truncates long text */
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-            .tithi-label { font-size: 0.55rem !important; bottom: 2px !important; left: 2px !important; }
-            .eng-date-small { font-size: 0.55rem !important; bottom: 2px !important; right: 2px !important; }
+            
+            /* 3. Event Area: Stop it from pushing the number down */
+            .event-area { min-height: 14px !important; margin-bottom: 0 !important; margin-top: 2px !important; }
+            .event-label { font-size: 9px !important; line-height: 1.1 !important; margin-bottom: 1px !important; }
+            
+            /* 4. Main Number: Shrink the massive font */
+            .date-number { font-size: 18px !important; margin-bottom: 0 !important; margin-top: auto !important; }
+            
+            /* 5. Bottom Labels: Tuck them tightly into the corners */
+            .tithi-label { font-size: 9px !important; bottom: 2px !important; left: 2px !important; }
+            .eng-date-small { font-size: 10px !important; bottom: 2px !important; right: 2px !important; }
         }
     </style>
 </head>
