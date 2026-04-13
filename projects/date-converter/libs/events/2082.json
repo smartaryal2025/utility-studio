@@ -1169,7 +1169,7 @@
     "events": [
       {
         "name": "तमु ल्होसार",
-        "isHoliday": false
+        "isHoliday": true
       }
     ]
   },
@@ -1259,7 +1259,7 @@
     "events": [
       {
         "name": "सोनम ल्होसार",
-        "isHoliday": false
+        "isHoliday": true
       }
     ]
   },
