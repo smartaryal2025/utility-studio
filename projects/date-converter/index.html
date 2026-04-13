@@ -59,31 +59,92 @@
         .eng-date-small { position: absolute; bottom: 4px; right: 6px; font-size: 13px; color: var(--text-secondary); font-family: monospace; }
 
         /* ========================================================= */
-        /* SURGICAL MOBILE FIX (NO STRETCHING, JUST SHRINKING)       */
+        /* SURGICAL MOBILE FIX: LOCKED GRID & ABSOLUTE PINNING       */
         /* ========================================================= */
         @media (max-width: 768px) {
-            /* 1. Header Dropdowns: Neatly wrap to 2x2 grid */
-            .cal-controls { flex-wrap: wrap !important; gap: 6px !important; justify-content: center !important; }
-            .cal-header-select { width: 48% !important; flex: 1 1 45% !important; height: 36px !important; font-size: 14px !important; padding: 2px !important; }
+            /* 1. HEADER FIX: Lock < and > to the sides permanently */
+            .calendar-header {
+                display: grid !important;
+                grid-template-columns: 40px 1fr 40px !important; /* < | Dropdowns | > */
+                align-items: center !important;
+                gap: 4px !important;
+                padding: 0 !important;
+            }
+            #bs-cal-prev { grid-column: 1; margin: 0 !important; }
+            #bs-cal-next { grid-column: 3; margin: 0 !important; }
+            
+            .cal-controls {
+                grid-column: 2;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important; /* 2x2 grid for dropdowns */
+                gap: 4px !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            .cal-header-select {
+                width: 100% !important;
+                height: 34px !important;
+                font-size: 13px !important;
+                padding: 0px !important;
+            }
             .cal-divider { display: none !important; }
 
-            /* 2. Cell Dimensions: Protect the bottom text! */
+            /* 2. SQUARE CELLS: Shorter height, perfect centering */
             #bs-cal-days .cal-day {
-                min-height: 75px !important;
-                padding: 2px !important;
-                padding-bottom: 20px !important; /* Creates a hard invisible barrier so nothing touches the bottom text */
+                position: relative !important;
+                min-height: 55px !important; /* Shorter to make it square */
+                height: 14vw !important; /* Scales perfectly with phone width */
+                max-height: 65px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important; /* Dead center vertically and horizontally! */
+                padding: 0 !important;
+            }
+
+            /* 3. PIN THE CONTENT: Stop elements from pushing each other */
+            
+            /* Pin Event to the Top */
+            .event-area {
+                position: absolute !important;
+                top: 2px !important;
+                left: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+                min-height: auto !important;
+            }
+            .event-label {
+                font-size: 8px !important;
+                line-height: 1 !important;
+                margin: 0 !important;
+                /* Force to 1 line with ellipsis so it never pushes down */
+                display: -webkit-box;
+                -webkit-line-clamp: 1; 
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
             
-            /* 3. Event Area: Stop it from pushing the number down */
-            .event-area { min-height: 14px !important; margin-bottom: 0 !important; margin-top: 2px !important; }
-            .event-label { font-size: 9px !important; line-height: 1.1 !important; margin-bottom: 1px !important; }
-            
-            /* 4. Main Number: Shrink the massive font */
-            .date-number { font-size: 18px !important; margin-bottom: 0 !important; margin-top: auto !important; }
-            
-            /* 5. Bottom Labels: Tuck them tightly into the corners */
-            .tithi-label { font-size: 9px !important; bottom: 2px !important; left: 2px !important; }
-            .eng-date-small { font-size: 10px !important; bottom: 2px !important; right: 2px !important; }
+            /* Main Number stays in the Dead Center */
+            .date-number {
+                font-size: 1.25rem !important;
+                margin: 0 !important;
+                line-height: 1 !important;
+            }
+
+            /* Pin Tithi and AD Date slightly up from the Bottom */
+            .tithi-label {
+                position: absolute !important;
+                bottom: 5px !important; /* Raised up! */
+                left: 3px !important;
+                font-size: 8px !important;
+                line-height: 1 !important;
+            }
+            .eng-date-small {
+                position: absolute !important;
+                bottom: 5px !important; /* Raised up! */
+                right: 4px !important;
+                font-size: 10px !important;
+                line-height: 1 !important;
+            }
         }
     </style>
 </head>
