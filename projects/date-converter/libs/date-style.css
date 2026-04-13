@@ -357,3 +357,37 @@
         right: 2px;
     }
 }
+
+/* --------------------------------------------------- */
+/* FIX: 4-Dropdown Header Layout & Mobile Wrapping     */
+/* --------------------------------------------------- */
+
+/* 1. Override master.css to stop selects from stretching to 100% */
+.cal-header-select {
+    width: auto !important;
+    flex: 0 0 auto !important;
+}
+
+/* 2. Mobile Graceful Degradation */
+@media (max-width: 850px) {
+    .calendar-header {
+        flex-wrap: wrap; /* Allows header to break into two rows if squeezed */
+    }
+    
+    .cal-controls {
+        flex-wrap: wrap !important;
+        width: 100%;
+        order: 3; /* Drops the 4 dropdowns BELOW the < > buttons on mobile */
+        margin-top: 15px;
+    }
+    
+    .cal-header-select {
+        flex: 1 1 40% !important; /* Converts dropdowns to a neat 2x2 grid */
+        font-size: 14px !important;
+        height: 38px;
+    }
+    
+    .cal-divider {
+        display: none !important; /* Hide the vertical pipe line on phones */
+    }
+}

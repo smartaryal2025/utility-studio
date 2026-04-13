@@ -386,40 +386,78 @@ document.addEventListener("DOMContentLoaded", () => {
     renderBsCalendar();
     if (document.getElementById("ad-cal-days")) renderAdCalendar();
 
-    // Event Listeners (with async loaders)
+    // --- SMART SYNC LOGIC ---
+    const syncDropdowns = async (source) => {
+        if (source === 'BS') {
+            // Find which AD month the 1st of this BS month falls into
+            const adDate = convertBStoAD(calBsYear, calBsMonth, 1);
+            if (adDate) {
+                calAdYear = adDate.year;
+                calAdMonth = adDate.month;
+                document.getElementById("cal-ad-year-select").value = calAdYear;
+                document.getElementById("cal-ad-month-select").value = calAdMonth;
+            }
+        } else if (source === 'AD') {
+            // Check the 15th of the AD month to find the 'majority' overlapping BS month
+            const bsDate = convertADtoBS(calAdYear, calAdMonth, 15);
+            if (bsDate) {
+                calBsYear = bsDate.year;
+                calBsMonth = bsDate.month;
+                document.getElementById("cal-bs-year-select").value = calBsYear;
+                document.getElementById("cal-bs-month-select").value = calBsMonth;
+                
+                await loadLunarData(calBsYear);
+                renderBsCalendar();
+            }
+        }
+    };
+
+    // 1. BS Dropdowns Change
     document.getElementById("cal-bs-year-select").addEventListener("change", async (e) => {
       calBsYear = parseInt(e.target.value);
       await loadLunarData(calBsYear);
+      syncDropdowns('BS'); 
       renderBsCalendar();
     });
     
     document.getElementById("cal-bs-month-select").addEventListener("change", (e) => {
       calBsMonth = parseInt(e.target.value);
+      syncDropdowns('BS'); 
       renderBsCalendar();
     });
 
-    document.getElementById("cal-ad-year-select").addEventListener("change", (e) => { calAdYear = parseInt(e.target.value); renderAdCalendar(); });
-    document.getElementById("cal-ad-month-select").addEventListener("change", (e) => { calAdMonth = parseInt(e.target.value); renderAdCalendar(); });
+    // 2. AD Dropdowns Change
+    document.getElementById("cal-ad-year-select").addEventListener("change", (e) => { 
+        calAdYear = parseInt(e.target.value); 
+        syncDropdowns('AD'); 
+    });
+    
+    document.getElementById("cal-ad-month-select").addEventListener("change", (e) => { 
+        calAdMonth = parseInt(e.target.value); 
+        syncDropdowns('AD'); 
+    });
 
+    // 3. Next / Prev Buttons
     document.getElementById("bs-cal-prev").addEventListener("click", async () => {
       calBsMonth--;
-      if (calBsMonth < 0) {
-        calBsMonth = 11;
-        calBsYear--;
-        await loadLunarData(calBsYear);
-      }
-      if (calBsYear >= minBsYear) renderBsCalendar(); else calBsMonth = 0;
+      if (calBsMonth < 0) { calBsMonth = 11; calBsYear--; await loadLunarData(calBsYear); }
+      if (calBsYear >= minBsYear) {
+          syncDropdowns('BS'); 
+          renderBsCalendar(); 
+      } else calBsMonth = 0;
     });
     
     document.getElementById("bs-cal-next").addEventListener("click", async () => {
       calBsMonth++;
-      if (calBsMonth > 11) {
-        calBsMonth = 0;
-        calBsYear++;
-        await loadLunarData(calBsYear);
-      }
-      if (calBsYear <= maxBsYear) renderBsCalendar(); else calBsMonth = 11;
+      if (calBsMonth > 11) { calBsMonth = 0; calBsYear++; await loadLunarData(calBsYear); }
+      if (calBsYear <= maxBsYear) {
+          syncDropdowns('BS'); 
+          renderBsCalendar(); 
+      } else calBsMonth = 11;
     });
+
+    // 4. Initial Sync on Load
+    syncDropdowns('BS');
 
     const adCalPrev = document.getElementById("ad-cal-prev");
     if (adCalPrev) {
