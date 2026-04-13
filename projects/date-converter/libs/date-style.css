@@ -358,81 +358,48 @@
     }
 }
 
-/* ========================================================= */
-/* FIX: MOBILE RESPONSIVENESS OVERRIDES                      */
-/* Add to the very bottom of date-style.css                  */
-/* ========================================================= */
+/* --------------------------------------------------- */
+/* FIX: Header Layout (Desktop & Mobile)               */
+/* --------------------------------------------------- */
 
+/* DESKTOP DEFAULT: Keep them inline */
+.custom-mobile-controls {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.cal-header-select {
+    width: auto !important;
+    text-align: center;
+    font-size: 15px;
+    padding: 4px 8px;
+}
+
+/* MOBILE OVERRIDES: Force a 2x2 grid */
 @media (max-width: 768px) {
-    /* --- 1. HEADER COMPACTION --- */
     .calendar-header {
         flex-wrap: wrap !important;
-        padding: 0 5px;
     }
     
-    .cal-controls {
-        width: 100%;
-        order: 3; /* Drops the dropdowns below the < > arrows */
+    .custom-mobile-controls {
+        width: 100% !important;
+        order: 3 !important; /* Pushes the dropdowns below the < > buttons */
         display: grid !important; 
-        grid-template-columns: 1fr 1fr; /* Forces a perfect 2x2 grid */
-        gap: 6px !important;
-        margin-top: 10px;
+        grid-template-columns: 1fr 1fr !important; /* Perfect 2x2 grid */
+        gap: 8px !important;
+        margin-top: 15px !important;
     }
     
     .cal-header-select {
-        width: 100% !important;
-        height: 36px !important;
-        font-size: 13px !important;
-        padding: 2px !important;
+        width: 100% !important; /* Fill the grid box */
+        height: 38px !important;
+        font-size: 14px !important;
     }
     
-    .cal-divider { 
-        display: none !important; /* Hide the vertical pipe */
-    }
-
-    /* --- 2. CELL OVERLAP FIX --- */
-    #bs-cal-days .cal-day {
-        min-height: 85px !important; 
-        padding-top: 2px !important;
-        padding-bottom: 20px !important; /* CRITICAL: Creates a safe zone for the bottom text */
-        justify-content: flex-start;
-    }
-
-    /* --- 3. FONT SIZING & SPACING --- */
-    /* Shrink the massive main number */
-    .date-number {
-        font-size: 1.15rem !important; 
-        margin-top: auto; 
-        margin-bottom: auto;
-    }
-
-    /* Shrink event text and force it to truncate if it's too long */
-    .event-area {
-        min-height: auto !important;
-        margin-bottom: 0 !important;
-        margin-top: 2px !important;
-    }
-    
-    .event-label {
-        font-size: 0.5rem !important; 
-        line-height: 1.1 !important;
-        /* Prevent long event names from blowing out the cell height */
-        display: -webkit-box;
-        -webkit-line-clamp: 2; 
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    /* Tuck the bottom text tightly into the corners */
-    .tithi-label {
-        font-size: 0.5rem !important;
-        bottom: 2px !important;
-        left: 2px !important;
-    }
-    
-    .eng-date-small {
-        font-size: 0.55rem !important;
-        bottom: 2px !important;
-        right: 2px !important;
+    .cal-divider {
+        display: none !important; /* Hide the vertical | line */
     }
 }
