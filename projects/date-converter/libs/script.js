@@ -264,13 +264,16 @@ document.addEventListener("DOMContentLoaded", () => {
       const cont = document.getElementById("bs-cal-days");
       cont.innerHTML = "";
       
-      // --- NEW ANIMATION TRIGGER ---
-      cont.classList.remove('slide-in-next', 'slide-in-prev');
-      void cont.offsetWidth; // This tricks the browser into restarting the animation
-      if (window.calendarDirection === 'next') cont.classList.add('slide-in-next');
-      if (window.calendarDirection === 'prev') cont.classList.add('slide-in-prev');
-      window.calendarDirection = ''; // Reset it so dropdown changes don't animate
-      // -----------------------------
+      // --- FIXED ANIMATION TRIGGER (Targets the Grid, not the contents) ---
+      const gridBox = document.getElementById("bs-cal-grid");
+      if (gridBox) {
+          gridBox.classList.remove('slide-in-next', 'slide-in-prev');
+          void gridBox.offsetWidth; // Restart animation
+          if (window.calendarDirection === 'next') gridBox.classList.add('slide-in-next');
+          if (window.calendarDirection === 'prev') gridBox.classList.add('slide-in-prev');
+          window.calendarDirection = ''; 
+      }
+      // -------------------------------------------------------------------
 
       const isPro = document.querySelector(".pro-date-grid") !== null;
 
@@ -476,11 +479,11 @@ document.addEventListener("DOMContentLoaded", () => {
       adCalPrev.addEventListener("click", () => { calAdMonth--; if (calAdMonth < 0) { calAdMonth = 11; calAdYear--; } renderAdCalendar(); });
       document.getElementById("ad-cal-next").addEventListener("click", () => { calAdMonth++; if (calAdMonth > 11) { calAdMonth = 0; calAdYear++; } renderAdCalendar(); });
     }
-  }
 
-  // --- MODAL ENGINE ---
+    // ==========================================
+    // MODAL ENGINE
+    // ==========================================
     window.showDayDetails = (y, m, d) => {
-        // 1. Gather Data
         const adDate = convertBStoAD(y, m, d);
         const lunarDayData = currentYearLunarData[`${m}-${d}`];
         const tithi = lunarDayData ? lunarDayData.tithi : "";
@@ -494,7 +497,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (fixedAd) dailyEvents.push(fixedAd);
         }
 
-        // --- NEW: Moon Icon Generator ---
         const getMoonIcon = (tithiText) => {
             if (!tithiText) return "";
             if (tithiText.includes("पूर्णिमा")) return " 🌕";
@@ -504,7 +506,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return " 🌙"; 
         };
 
-        // 2. Populate Modal Header (Formatted: २०८२ चैत्र ३०, सोमबार)
         const weekdayNameBs = adDate ? nepWeekdays[adDate.weekdayIndex] : "";
         document.getElementById('modal-title').innerText = `${toDevanagari(y)} ${nepMonthsDevanagari[m]} ${toDevanagari(d)}, ${weekdayNameBs}`;
         
@@ -513,14 +514,12 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('modal-ad-date').innerText = `${engMonths[adDate.month]} ${adDate.day}, ${adDate.year}, ${weekdayNameAd}`;
         }
 
-        // 3. Populate Tithi (Just the Tithi and Moon Icon)
         if (tithi) {
             document.getElementById('modal-tithi').innerText = `${tithi}${getMoonIcon(tithi)}`;
         } else {
             document.getElementById('modal-tithi').innerText = "";
         }
 
-        // 4. Populate Events List
         const eventsList = document.getElementById('modal-events');
         eventsList.innerHTML = "";
         
@@ -532,67 +531,55 @@ document.addEventListener("DOMContentLoaded", () => {
                 eventsList.appendChild(li);
             });
         } else {
-             eventsList.innerHTML = "<li class='empty'>कुनै विशेष पर्व छैन</li>";
+             eventsList.innerHTML = "<li class='empty'>कुनै पर्व छैन</li>";
         }
 
-        // 5. Show Modal
         document.getElementById('day-modal').classList.remove('hidden');
     };
 
-    // 6. Close Modal Listeners
-    document.querySelector('.us-modal-close').addEventListener('click', () => {
-        document.getElementById('day-modal').classList.add('hidden');
-    });
-    
-    // Close if user clicks outside the modal box
-    document.getElementById('day-modal').addEventListener('click', (e) => {
-        if (e.target.id === 'day-modal') {
+    const modalCloseBtn = document.querySelector('.us-modal-close');
+    if (modalCloseBtn) {
+        modalCloseBtn.addEventListener('click', () => {
             document.getElementById('day-modal').classList.add('hidden');
+        });
+    }
+    
+    const dayModal = document.getElementById('day-modal');
+    if (dayModal) {
+        dayModal.addEventListener('click', (e) => {
+            if (e.target.id === 'day-modal') {
+                document.getElementById('day-modal').classList.add('hidden');
+            }
+        });
+    }
 
-    // --- UPGRADED MOBILE SWIPE NAVIGATION ---
+    // ==========================================
+    // RELIABLE MOBILE SWIPE NAVIGATION
+    // ==========================================
     let touchStartX = 0;
-    let touchStartY = 0;
     let touchEndX = 0;
-    let touchEndY = 0;
     
     const calendarGrid = document.getElementById('bs-cal-grid');
 
     if (calendarGrid) {
         calendarGrid.addEventListener('touchstart', (e) => {
             touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
         }, { passive: true });
 
         calendarGrid.addEventListener('touchend', (e) => {
             touchEndX = e.changedTouches[0].screenX;
-            touchEndY = e.changedTouches[0].screenY;
-            handleSmartSwipe();
-        }, { passive: true });
-    }
-
-    const handleSmartSwipe = () => {
-        const minSwipeDistance = 40; // Must swipe at least 40px left/right
-        const maxVerticalWander = 60; // Finger cannot wander more than 60px up/down
-        
-        const distanceX = touchEndX - touchStartX;
-        const distanceY = touchEndY - touchStartY;
-
-        // Check if it was a strong horizontal swipe AND a relatively straight line
-        if (Math.abs(distanceX) >= minSwipeDistance && Math.abs(distanceY) <= maxVerticalWander) {
             
-            if (distanceX < 0) {
-                // Swiped Left (Negative X distance) -> Next Month
+            // If you dragged 40px left or right, it clicks the button
+            if (touchEndX < touchStartX - 40) {
                 const nextBtn = document.getElementById('bs-cal-next');
                 if (nextBtn) nextBtn.click();
-            } else {
-                // Swiped Right (Positive X distance) -> Previous Month
+            }
+            if (touchEndX > touchStartX + 40) {
                 const prevBtn = document.getElementById('bs-cal-prev');
                 if (prevBtn) prevBtn.click();
             }
-        }
-    };
+        }, { passive: true });
+    }
 
-        }
-    });
-
-});
+  } 
+}); 
