@@ -263,6 +263,14 @@ document.addEventListener("DOMContentLoaded", () => {
       const totalDays = nepaliMonthDays[calBsYear][calBsMonth];
       const cont = document.getElementById("bs-cal-days");
       cont.innerHTML = "";
+      
+      // --- NEW ANIMATION TRIGGER ---
+      cont.classList.remove('slide-in-next', 'slide-in-prev');
+      void cont.offsetWidth; // This tricks the browser into restarting the animation
+      if (window.calendarDirection === 'next') cont.classList.add('slide-in-next');
+      if (window.calendarDirection === 'prev') cont.classList.add('slide-in-prev');
+      window.calendarDirection = ''; // Reset it so dropdown changes don't animate
+      // -----------------------------
 
       const isPro = document.querySelector(".pro-date-grid") !== null;
 
@@ -441,6 +449,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 3. Next / Prev Buttons
     document.getElementById("bs-cal-prev").addEventListener("click", async () => {
+      window.calendarDirection = 'prev'; // <-- ADD THIS LINE
       calBsMonth--;
       if (calBsMonth < 0) { calBsMonth = 11; calBsYear--; await loadLunarData(calBsYear); }
       if (calBsYear >= minBsYear) {
@@ -450,6 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     
     document.getElementById("bs-cal-next").addEventListener("click", async () => {
+      window.calendarDirection = 'next'; // <-- ADD THIS LINE
       calBsMonth++;
       if (calBsMonth > 11) { calBsMonth = 0; calBsYear++; await loadLunarData(calBsYear); }
       if (calBsYear <= maxBsYear) {

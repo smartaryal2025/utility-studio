@@ -404,11 +404,6 @@
     }
 }
 
-/* Stop the browser from stealing horizontal swipes for page navigation */
-#bs-cal-grid {
-    touch-action: pan-y; 
-}
-
 /* ========================================================= */
 /* MODAL POPUP STYLES                                        */
 /* ========================================================= */
@@ -455,4 +450,28 @@
     /* Re-center the numbers nicely since the extra text is gone */
     #bs-cal-days .cal-day .date-number { font-size: 1.6rem !important; }
     #bs-cal-days .cal-day .eng-date-small { bottom: 6px !important; right: 6px !important; font-size: 11px !important; }
+}
+
+/* ========================================================= */
+/* SMOOTH SLIDE ANIMATIONS                                   */
+/* ========================================================= */
+/* Stop the browser from stealing horizontal swipes for page navigation */
+#bs-cal-grid {
+    touch-action: pan-y; 
+}
+
+.slide-in-next {
+    animation: slideNext 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+.slide-in-prev {
+    animation: slidePrev 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes slideNext {
+    0% { transform: translateX(50px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes slidePrev {
+    0% { transform: translateX(-50px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
 }
