@@ -1352,7 +1352,7 @@
     "events": []
   },
   "11-4": {
-    "tithi": "",
+    "tithi": "चतुर्दशी",
     "events": [
       { "name": "घोडेजात्रा (उपत्यका बिदा)", "isHoliday": false }
     ]
@@ -1392,7 +1392,7 @@
     ]
   },
   "11-13": {
-    "tithi": "",
+    "tithi": "नवमी",
     "events": [
       { "name": "राम नवमी", "isHoliday": true }
     ]
