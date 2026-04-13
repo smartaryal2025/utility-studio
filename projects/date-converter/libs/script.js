@@ -554,31 +554,69 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ==========================================
-    // RELIABLE MOBILE SWIPE NAVIGATION
+    // 1-TO-1 NATIVE DRAG & SWIPE ENGINE
     // ==========================================
-    let touchStartX = 0;
-    let touchEndX = 0;
+    let startX = 0;
+    let currentMovedX = 0;
+    let isDragging = false;
     
     const calendarGrid = document.getElementById('bs-cal-grid');
 
     if (calendarGrid) {
+        // 1. Finger Touches Down
         calendarGrid.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            
+            // Remove CSS transitions so it sticks perfectly to the finger instantly
+            calendarGrid.style.transition = 'none';
         }, { passive: true });
 
-        calendarGrid.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
+        // 2. Finger Drags Across Screen
+        calendarGrid.addEventListener('touchmove', (e) => {
+            if (!isDragging) return;
             
-            // If you dragged 40px left or right, it clicks the button
-            if (touchEndX < touchStartX - 40) {
+            // Calculate exact distance dragged
+            currentMovedX = e.touches[0].clientX - startX;
+            
+            // Physically drag the grid with the finger
+            calendarGrid.style.transform = `translateX(${currentMovedX}px)`;
+        }, { passive: true });
+
+        // 3. Finger Lifts Up
+        calendarGrid.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            
+            const commitThreshold = 60; // Must drag 60px to trigger month change
+
+            if (currentMovedX < -commitThreshold) {
+                // Dragged Left (Commit to Next)
+                resetDragStyles();
                 const nextBtn = document.getElementById('bs-cal-next');
-                if (nextBtn) nextBtn.click();
-            }
-            if (touchEndX > touchStartX + 40) {
+                if (nextBtn) nextBtn.click(); // This will trigger your CSS slide-in animation!
+                
+            } else if (currentMovedX > commitThreshold) {
+                // Dragged Right (Commit to Previous)
+                resetDragStyles();
                 const prevBtn = document.getElementById('bs-cal-prev');
                 if (prevBtn) prevBtn.click();
+                
+            } else {
+                // Half-Swipe / Cancel (Did not cross threshold)
+                // Re-add a smooth transition and snap it back to 0
+                calendarGrid.style.transition = 'transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)';
+                calendarGrid.style.transform = 'translateX(0px)';
             }
+            
+            currentMovedX = 0; // Reset for next touch
         }, { passive: true });
+        
+        // Helper to clear drag styles before the next/prev render takes over
+        const resetDragStyles = () => {
+            calendarGrid.style.transition = '';
+            calendarGrid.style.transform = '';
+        };
     }
 
   } 
