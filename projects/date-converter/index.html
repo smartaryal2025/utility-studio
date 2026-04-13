@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo.png">
     <link rel="manifest" href="../../manifest.json">
 
-    <link rel="stylesheet" id="master-style" href="../../assets/master.css">
+    <link rel="stylesheet" href="../../assets/master.css">
     <script src="../../assets/theme.js"></script>
 
     <link rel="stylesheet" href="libs/date-style.css">
@@ -187,15 +187,22 @@
             <div class="right-column">
                 <main class="card-container" style="height: 100%; display: flex; flex-direction: column;">
                     
-                    <div class="calendar-header" style="margin-bottom: 25px;">
-                        <button id="bs-cal-prev" class="btn-icon cal-nav-btn" style="width: 45px; height: 45px; font-size: 18px;">&lt;</button>
-                        <div class="cal-controls" style="gap: 15px;">
-                            <select id="cal-bs-month-select" class="cal-header-select" style="min-width: 140px; text-align: center; font-size: 16px;"></select>
-                            <select id="cal-bs-year-select" class="cal-header-select" style="min-width: 110px; text-align: center; font-size: 16px;"></select>
+                    <div class="calendar-header" style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                        <button id="bs-cal-prev" class="btn-icon cal-nav-btn" style="width: 40px; height: 40px; font-size: 18px; flex-shrink: 0;">&lt;</button>
+                        
+                        <div class="cal-controls" style="display: flex; flex-wrap: nowrap; justify-content: center; align-items: center; gap: 8px;">
+                            <select id="cal-bs-month-select" class="cal-header-select" style="width: auto; text-align: center; font-size: 15px; padding: 4px 8px;"></select>
+                            <select id="cal-bs-year-select" class="cal-header-select" style="width: auto; text-align: center; font-size: 15px; padding: 4px 8px;"></select>
+                            
+                            <span class="cal-divider" style="color: var(--border-color); font-weight: bold; margin: 0 5px;">|</span>
+                            
+                            <select id="cal-ad-month-select" class="cal-header-select" style="width: auto; text-align: center; font-size: 15px; padding: 4px 8px;"></select>
+                            <select id="cal-ad-year-select" class="cal-header-select" style="width: auto; text-align: center; font-size: 15px; padding: 4px 8px;"></select>
                         </div>
-                        <button id="bs-cal-next" class="btn-icon cal-nav-btn" style="width: 45px; height: 45px; font-size: 18px;">&gt;</button>
+                    
+                        <button id="bs-cal-next" class="btn-icon cal-nav-btn" style="width: 40px; height: 40px; font-size: 18px; flex-shrink: 0;">&gt;</button>
                     </div>
-
+                    
                     <div class="calendar-grid" id="bs-cal-grid" style="gap: 8px; flex-grow: 1;">
                         <div class="weekday" style="font-size: 14px;">आइत<br><span style="font-size: 10px; font-weight: normal;">SUN</span></div>
                         <div class="weekday" style="font-size: 14px;">सोम<br><span style="font-size: 10px; font-weight: normal;">MON</span></div>
@@ -209,13 +216,12 @@
                     </div>
                 </main>
             </div> </div> <div style="display: none;">
-            <select id="cal-ad-month-select"></select>
-            <select id="cal-ad-year-select"></select>
+            </div> <div style="display: none;">
             <button id="ad-cal-prev"></button>
             <button id="ad-cal-next"></button>
             <div id="ad-cal-grid"></div>
             <div id="ad-cal-days"></div>
-        </div> 
+        </div>
         
         <article class="seo-content" style="margin-top: 40px; padding: 25px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: var(--radius-lg); line-height: 1.6;">
             <h2 style="color: var(--text-primary); font-size: 20px; margin-bottom: 15px;">Accurate BS to AD Nepali Date Converter</h2>
@@ -253,7 +259,7 @@
         </footer>
 
     </div> <script src="libs/date.js"></script>
-	</div> <script src="libs/script.js"></script>
+    </div> <script src="libs/script.js"></script>
     <script>
         function copyWithDoubleTick(button, textToCopy) {
             navigator.clipboard.writeText(textToCopy).then(() => {
