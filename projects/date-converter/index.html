@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../../assets/master.css">
     <script src="../../assets/theme.js"></script>
 
-    <link rel="stylesheet" href="libs/date-style.css?v=2">
+    <link rel="stylesheet" href="libs/date-style.css">
 
     <script type="application/ld+json">
     {
@@ -44,7 +44,6 @@
             width: 100%;
         }
         @media (min-width: 1000px) {
-            /* FIX: Changed 400px to 350px to perfectly match other tools */
             .pro-date-grid { grid-template-columns: 350px 1fr; }
         }
 
@@ -52,37 +51,75 @@
         #bs-cal-days .cal-day {
             position: relative;
             min-height: 85px !important; 
-            font-size: 32px !important;  
-            font-weight: bold;
             display: flex;
+            flex-direction: column; /* FIX: Forces vertical stacking */
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start; /* FIX: Stops text from crushing into the middle */
             background: var(--surface-light);
             border-radius: var(--radius-md);
             border: 1px solid transparent;
             transition: var(--transition-smooth);
             cursor: pointer;
-            padding: 0 !important;
+            padding: 4px !important;
         }
         #bs-cal-days .cal-day:hover { border-color: var(--accent-primary); background: var(--surface-dark); }
         #bs-cal-days .cal-day.today { background: rgba(16, 185, 129, 0.15) !important; border-color: var(--color-success) !important; color: var(--color-success) !important; }
         
-        /* The Small English Date in the corner */
         .eng-date-small {
             position: absolute;
-            bottom: 6px;
-            right: 8px;
+            bottom: 4px;
+            right: 6px;
             font-size: 13px;
             color: var(--text-secondary);
-            font-weight: normal;
             font-family: monospace;
         }
-        /* Fade out previous/next month days so they aren't distracting */
+        
         #bs-cal-days .cal-day.muted {
-            opacity: 0.15 !important; /* Drops visibility down to 15% */
+            opacity: 0.15 !important;
             background: transparent !important;
-            pointer-events: none !important; /* Makes them unclickable */
+            pointer-events: none !important;
             border: none !important;
+        }
+
+        /* ========================================================= */
+        /* ABSOLUTE MOBILE RESPONSIVENESS (Bypasses all caches)      */
+        /* ========================================================= */
+        @media (max-width: 768px) {
+            /* 1. Header Grid Fix */
+            .cal-controls {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                width: 100% !important;
+                gap: 6px !important;
+                margin-top: 10px;
+            }
+            .cal-header-select {
+                width: 100% !important;
+                height: 38px !important;
+                font-size: 14px !important;
+            }
+            .cal-divider { display: none !important; }
+
+            /* 2. Overlap Fix */
+            #bs-cal-days .cal-day {
+                min-height: 85px !important;
+                padding-bottom: 22px !important; /* Safe zone for bottom text */
+            }
+            .date-number {
+                font-size: 1.15rem !important; /* Shrinks the main number */
+                margin-top: auto !important;
+                margin-bottom: auto !important;
+            }
+            .event-label {
+                font-size: 0.55rem !important;
+                line-height: 1.1 !important;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; /* Truncates long text */
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            .tithi-label { font-size: 0.55rem !important; bottom: 2px !important; left: 2px !important; }
+            .eng-date-small { font-size: 0.55rem !important; bottom: 2px !important; right: 2px !important; }
         }
     </style>
 </head>
@@ -187,21 +224,21 @@
             <div class="right-column">
                 <main class="card-container" style="height: 100%; display: flex; flex-direction: column;">
                     
-                    <div class="calendar-header" style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-   		        <button id="bs-cal-prev" class="btn-icon cal-nav-btn" style="width: 40px; height: 40px; font-size: 18px; flex-shrink: 0;">&lt;</button>
+<div class="calendar-header" style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+    <button id="bs-cal-prev" class="btn-icon cal-nav-btn" style="width: 40px; height: 40px; font-size: 18px; flex-shrink: 0;">&lt;</button>
     
-    			<div class="cal-controls custom-mobile-controls">
-       			    <select id="cal-bs-month-select" class="cal-header-select"></select>
-      			    <select id="cal-bs-year-select" class="cal-header-select"></select>
+    <div class="cal-controls" style="display: flex; align-items: center; gap: 8px;">
+        <select id="cal-bs-month-select" class="cal-header-select" style="padding: 4px 8px;"></select>
+        <select id="cal-bs-year-select" class="cal-header-select" style="padding: 4px 8px;"></select>
         
-       			    <span class="cal-divider" style="color: var(--border-color); font-weight: bold; margin: 0 5px;">|</span>
+        <span class="cal-divider" style="color: var(--border-color); font-weight: bold; margin: 0 5px;">|</span>
         
-     			   <select id="cal-ad-month-select" class="cal-header-select"></select>
-    			   <select id="cal-ad-year-select" class="cal-header-select"></select>
-  		       </div>
+        <select id="cal-ad-month-select" class="cal-header-select" style="padding: 4px 8px;"></select>
+        <select id="cal-ad-year-select" class="cal-header-select" style="padding: 4px 8px;"></select>
+    </div>
 
- 		       <button id="bs-cal-next" class="btn-icon cal-nav-btn" style="width: 40px; height: 40px; font-size: 18px; flex-shrink: 0;">&gt;</button>
-		    </div>
+    <button id="bs-cal-next" class="btn-icon cal-nav-btn" style="width: 40px; height: 40px; font-size: 18px; flex-shrink: 0;">&gt;</button>
+</div>
                     
                     <div class="calendar-grid" id="bs-cal-grid" style="gap: 8px; flex-grow: 1;">
                         <div class="weekday" style="font-size: 14px;">आइत<br><span style="font-size: 10px; font-weight: normal;">SUN</span></div>
