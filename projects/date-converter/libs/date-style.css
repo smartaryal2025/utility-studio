@@ -403,3 +403,51 @@
         display: none !important; /* Hide the vertical | line */
     }
 }
+
+/* ========================================================= */
+/* MODAL POPUP STYLES                                        */
+/* ========================================================= */
+.us-modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(3px);
+    z-index: 9999; display: flex; justify-content: center; align-items: center;
+    opacity: 1; transition: opacity 0.2s ease;
+}
+.us-modal.hidden { opacity: 0; pointer-events: none; }
+
+.us-modal-content {
+    background: var(--surface-light); border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg); width: 90%; max-width: 350px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5); transform: translateY(0); transition: transform 0.2s ease;
+}
+.us-modal.hidden .us-modal-content { transform: translateY(20px); }
+
+.modal-header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 15px 20px; border-bottom: 1px solid var(--border-color);
+}
+.modal-header h3 { margin: 0; font-size: 18px; color: var(--accent-primary); }
+.us-modal-close { font-size: 24px; cursor: pointer; color: var(--text-secondary); line-height: 1; }
+.us-modal-close:hover { color: #ef4444; }
+
+.modal-body { padding: 20px; text-align: left; }
+.modal-events-list { list-style: none; padding: 0; margin: 0; }
+.modal-events-list li {
+    padding: 10px; margin-bottom: 8px; border-radius: 6px;
+    background: var(--surface-dark); font-size: 14px;
+}
+.modal-events-list li.holiday { color: #ef4444; font-weight: bold; border-left: 3px solid #ef4444; }
+.modal-events-list li.observance { color: #38bdf8; border-left: 3px solid #38bdf8; }
+.modal-events-list li.empty { color: var(--text-secondary); background: transparent; padding: 0; }
+
+/* ========================================================= */
+/* HIDE EVENTS ONLY ON SMALL PORTRAIT PHONES                 */
+/* ========================================================= */
+@media (max-width: 500px) and (orientation: portrait) {
+    #bs-cal-days .cal-day .event-area { display: none !important; }
+    #bs-cal-days .cal-day .tithi-label { display: none !important; }
+    
+    /* Re-center the numbers nicely since the extra text is gone */
+    #bs-cal-days .cal-day .date-number { font-size: 1.6rem !important; }
+    #bs-cal-days .cal-day .eng-date-small { bottom: 6px !important; right: 6px !important; font-size: 11px !important; }
+}

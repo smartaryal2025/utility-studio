@@ -321,14 +321,14 @@ document.addEventListener("DOMContentLoaded", () => {
         });
         eventHtml += `</div>`;
 
-        const tithiHtml = tithi ? `<span class="tithi-label">${tithi}</span>` : "";
+    const tithiHtml = tithi ? `<span class="tithi-label">${tithi}</span>` : "";
 
         if (isPro) {
           let engLabel = adDate ? adDate.day : "";
           if (adDate && adDate.day === 1) engLabel = engMonths[adDate.month].substring(0, 3) + " " + adDate.day;
           
           cont.innerHTML += `
-            <div class="${classList}">
+            <div class="${classList}" onclick="window.showDayDetails(${calBsYear}, ${calBsMonth}, ${i})">
                 ${eventHtml}
                 <span class="date-number">${toDevanagari(i)}</span>
                 ${tithiHtml}
@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`;
         } else {
           cont.innerHTML += `
-            <div class="${classList}">
+            <div class="${classList}" onclick="window.showDayDetails(${calBsYear}, ${calBsMonth}, ${i})">
                 ${eventHtml}
                 <span class="date-number">${toDevanagari(i)}</span>
                 ${tithiHtml}
@@ -465,4 +465,62 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById("ad-cal-next").addEventListener("click", () => { calAdMonth++; if (calAdMonth > 11) { calAdMonth = 0; calAdYear++; } renderAdCalendar(); });
     }
   }
+
+  // --- MODAL ENGINE ---
+    window.showDayDetails = (y, m, d) => {
+        // 1. Gather Data
+        const adDate = convertBStoAD(y, m, d);
+        const lunarDayData = currentYearLunarData[`${m}-${d}`];
+        const tithi = lunarDayData ? lunarDayData.tithi : "";
+        
+        let dailyEvents = [];
+        if (lunarDayData && lunarDayData.events) dailyEvents.push(...lunarDayData.events);
+        const fixedBs = getFixedEvent(m, d);
+        if (fixedBs) dailyEvents.push(fixedBs);
+        if (adDate) {
+            const fixedAd = getAdFixedEvent(adDate.month, adDate.day);
+            if (fixedAd) dailyEvents.push(fixedAd);
+        }
+
+        // 2. Populate Modal Header
+        document.getElementById('modal-title').innerText = `${toDevanagari(y)} ${nepMonthsDevanagari[m]} ${toDevanagari(d)}`;
+        
+        if(adDate) {
+            document.getElementById('modal-ad-date').innerText = `${engMonths[adDate.month]} ${adDate.day}, ${adDate.year}`;
+        }
+
+        // 3. Populate Tithi
+        document.getElementById('modal-tithi').innerText = tithi ? `तिथि: ${tithi}` : "";
+
+        // 4. Populate Events List
+        const eventsList = document.getElementById('modal-events');
+        eventsList.innerHTML = "";
+        
+        if (dailyEvents.length > 0) {
+            dailyEvents.forEach(e => {
+                const li = document.createElement('li');
+                li.innerText = e.name;
+                li.className = e.isHoliday ? 'holiday' : 'observance';
+                eventsList.appendChild(li);
+            });
+        } else {
+             eventsList.innerHTML = "<li class='empty'>कुनै विशेष पर्व वा बिदा छैन (No events)</li>";
+        }
+
+        // 5. Show Modal
+        document.getElementById('day-modal').classList.remove('hidden');
+    };
+
+    // 6. Close Modal Listeners
+    document.querySelector('.us-modal-close').addEventListener('click', () => {
+        document.getElementById('day-modal').classList.add('hidden');
+    });
+    
+    // Close if user clicks outside the modal box
+    document.getElementById('day-modal').addEventListener('click', (e) => {
+        if (e.target.id === 'day-modal') {
+            document.getElementById('day-modal').classList.add('hidden');
+        }
+    });
+
 });
