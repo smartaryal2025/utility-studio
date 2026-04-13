@@ -538,34 +538,47 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('day-modal').addEventListener('click', (e) => {
         if (e.target.id === 'day-modal') {
             document.getElementById('day-modal').classList.add('hidden');
-        
-        // --- MOBILE SWIPE NAVIGATION ---
+
+    // --- UPGRADED MOBILE SWIPE NAVIGATION ---
     let touchStartX = 0;
+    let touchStartY = 0;
     let touchEndX = 0;
+    let touchEndY = 0;
     
-    // Attach listeners to the entire calendar grid area
     const calendarGrid = document.getElementById('bs-cal-grid');
 
-    calendarGrid.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
+    if (calendarGrid) {
+        calendarGrid.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: true });
 
-    calendarGrid.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
+        calendarGrid.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSmartSwipe();
+        }, { passive: true });
+    }
 
-    const handleSwipe = () => {
-        const swipeThreshold = 50; // Minimum pixel distance to count as a deliberate swipe
+    const handleSmartSwipe = () => {
+        const minSwipeDistance = 40; // Must swipe at least 40px left/right
+        const maxVerticalWander = 60; // Finger cannot wander more than 60px up/down
         
-        // Swiped Left (Finger moved from right to left) -> Go to Next Month
-        if (touchEndX < touchStartX - swipeThreshold) {
-            document.getElementById('bs-cal-next').click();
-        }
-        
-        // Swiped Right (Finger moved from left to right) -> Go to Previous Month
-        if (touchEndX > touchStartX + swipeThreshold) {
-            document.getElementById('bs-cal-prev').click();
+        const distanceX = touchEndX - touchStartX;
+        const distanceY = touchEndY - touchStartY;
+
+        // Check if it was a strong horizontal swipe AND a relatively straight line
+        if (Math.abs(distanceX) >= minSwipeDistance && Math.abs(distanceY) <= maxVerticalWander) {
+            
+            if (distanceX < 0) {
+                // Swiped Left (Negative X distance) -> Next Month
+                const nextBtn = document.getElementById('bs-cal-next');
+                if (nextBtn) nextBtn.click();
+            } else {
+                // Swiped Right (Positive X distance) -> Previous Month
+                const prevBtn = document.getElementById('bs-cal-prev');
+                if (prevBtn) prevBtn.click();
+            }
         }
     };
 

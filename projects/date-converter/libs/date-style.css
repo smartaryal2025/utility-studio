@@ -404,6 +404,11 @@
     }
 }
 
+/* Stop the browser from stealing horizontal swipes for page navigation */
+#bs-cal-grid {
+    touch-action: pan-y; 
+}
+
 /* ========================================================= */
 /* MODAL POPUP STYLES                                        */
 /* ========================================================= */
