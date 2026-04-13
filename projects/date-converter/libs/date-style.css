@@ -231,20 +231,21 @@
     width: 100%;
     min-height: 28px;
     margin-bottom: auto;
+    margin-top: 6px; /* <-- THE FIX: Pushes the events down from the top border */
 }
 
 .event-label {
-    font-size: 0.65rem;
-    line-height: 1.2;
+    font-size: 0.75rem;
+    line-height: 1.4;
     text-align: center;
     white-space: normal;
     word-wrap: break-word;
-    color: #ef4444 !important;
+    color: #ef4444 !important; /* Default Red for Holidays */
     margin-bottom: 2px;
 }
 
 .event-label.observance {
-    color: #38bdf8 !important; 
+    color: #38bdf8 !important; /* Blue for non Holidays */
 }
 
 .date-number {
@@ -302,4 +303,57 @@
     display: inline-block !important; 
     vertical-align: middle !important; 
     margin: 0 15px 0 0 !important; 
+}
+
+/* --------------------------------------------------- */
+/* FIX: Today + Holiday Color Conflict                 */
+/* Keep the green box, but force date numbers to red   */
+/* --------------------------------------------------- */
+#bs-cal-days .cal-day.today.holiday {
+    color: #ff2d20 !important;
+}
+
+#bs-cal-days .cal-day.today.holiday .tithi-label,
+#bs-cal-days .cal-day.today.holiday .eng-date-small {
+    color: #ff2d20 !important;
+}
+
+/* --------------------------------------------------- */
+/* FIX: Mobile Calendar Layout & Scaling               */
+/* --------------------------------------------------- */
+@media (max-width: 768px) {
+    /* 1. Force a safe box size so it doesn't squish flat */
+    #bs-cal-days .cal-day {
+        min-height: 85px !important; 
+        padding: 2px !important;
+    }
+
+    /* 2. Shrink the event area so it takes up less vertical space */
+    .event-area {
+        min-height: 16px;
+        margin-top: 2px;
+        margin-bottom: 2px; /* Overrides the 'auto' margin so it stops pushing the number down */
+    }
+    .event-label {
+        font-size: 0.5rem; 
+        line-height: 1.1;
+    }
+
+    /* 3. Shrink the massive main date number so it fits the narrow column */
+    .date-number {
+        font-size: 1.2rem;
+        margin-bottom: 14px; /* Creates an invisible buffer zone so it never touches the bottom text */
+    }
+
+    /* 4. Shrink and tuck the bottom corner texts */
+    .tithi-label {
+        font-size: 0.5rem;
+        bottom: 2px;
+        left: 2px;
+    }
+    .eng-date-small {
+        font-size: 0.55rem;
+        bottom: 2px;
+        right: 2px;
+    }
 }
