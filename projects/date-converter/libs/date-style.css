@@ -475,3 +475,16 @@
     0% { transform: translateX(-50px); opacity: 0; }
     100% { transform: translateX(0); opacity: 1; }
 }
+
+/* ========================================================= */
+/* FIX: Tablet Portrait Tab Text Overflow                    */
+/* ========================================================= */
+@media (max-width: 950px) {
+    .tabs .tab-btn {
+        white-space: normal !important; /* Overrides the global button nowrap */
+        word-wrap: break-word !important;
+        font-size: 13px !important; /* Shrinks the text slightly */
+        padding: 10px 5px !important; /* Reduces side padding to give more room */
+        line-height: 1.3 !important;
+    }
+}
