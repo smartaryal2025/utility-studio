@@ -6,11 +6,11 @@
     <title>PDF Toolkit Pro | Utility Studio</title>
     <meta name="description" content="Free, secure, and offline-capable PDF Toolkit. Merge, compress, split, organize, and edit PDFs directly in your browser.">
     
-    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo-192.png">
     <link rel="manifest" href="../../manifest.json">
 
-    <link rel="stylesheet" id="master-style" href="../../assets/master.css">
+    <link rel="stylesheet" href="../../assets/master.css">
     <script src="../../assets/theme.js"></script>
 
     <link rel="stylesheet" href="libs/pdf-style.css">
@@ -24,8 +24,8 @@
         .resize-handle-sw, .resize-handle-s {
             position: absolute;
             width: 12px; height: 12px;
-            background: #38bdf8;
-            border: 2px solid #fff;
+            background: var(--accent-primary);
+            border: 2px solid var(--surface-dark);
             z-index: 12;
             border-radius: 2px;
             box-shadow: 0 1px 3px rgba(0,0,0,0.5);
@@ -62,6 +62,12 @@
         </div>
     </div>
 
+    <button onclick="toggleTheme()" title="Toggle Light/Dark Mode" style="position: fixed; top: 20px; right: 20px; z-index: 999999; width: 45px; height: 45px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--surface-dark); color: var(--accent-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: all 0.2s ease;">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path id="theme-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+    </button>
+    
     <div class="app-container">
         <nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 10px;">
             <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
@@ -80,7 +86,7 @@
                     <input type="text" id="merge-filename" placeholder="merged.pdf" style="flex-grow:1;">
                     <button id="merge-btn" disabled>Merge</button>
                 </div>
-                <span id="merge-status" class="status-text" style="color: #4ade80;"></span>
+                <span id="merge-status" class="status-text" style="color: var(--color-success);"></span>
             </section>
 
             <section id="compress-section">
@@ -98,7 +104,7 @@
                     <input type="text" id="comp-filename" placeholder="compressed.pdf" style="flex-grow:1;">
                     <button id="compress-btn" disabled>Compress</button>
                 </div>
-                <span id="compress-status" class="status-text" style="color: #4ade80;"></span>
+                <span id="compress-status" class="status-text" style="color: var(--color-success);"></span>
             </section>
 
             <section id="split-section">
@@ -113,7 +119,7 @@
                     <div id="split-buckets-container" style="margin-top: 15px;"></div>
                     <button id="add-bucket-btn" class="btn-secondary" style="width:100%; margin-bottom:10px;">+ Add Output Bucket</button>
                     <button id="split-btn" style="width: 100%;">Save All Outputs</button>
-                    <span id="split-status" class="status-text" style="color: #4ade80;"></span>
+                    <span id="split-status" class="status-text" style="color: var(--color-success);"></span>
                 </div>
             </section>
 
@@ -129,7 +135,7 @@
                     <input type="text" id="org-filename" placeholder="organized.pdf" style="flex-grow:1;">
                     <button id="organize-btn">Export</button>
                 </div>
-                <span id="organize-status" class="status-text" style="color: #4ade80;"></span>
+                <span id="organize-status" class="status-text" style="color: var(--color-success);"></span>
             </section>
 
             <section id="pdf-to-img-section">
@@ -147,7 +153,7 @@
                     </select>
                     <button id="pdf-to-img-btn" disabled>Extract Images</button>
                 </div>
-                <span id="pdf-to-img-status" class="status-text" style="color: #4ade80;"></span>
+                <span id="pdf-to-img-status" class="status-text" style="color: var(--color-success);"></span>
             </section>
 
             <section id="img-to-pdf-section">
@@ -159,7 +165,7 @@
                     <input type="text" id="img-to-pdf-filename" placeholder="images.pdf" style="flex-grow:1;">
                     <button id="img-to-pdf-btn" disabled>Convert to PDF</button>
                 </div>
-                <span id="img-to-pdf-status" class="status-text" style="color: #4ade80;"></span>
+                <span id="img-to-pdf-status" class="status-text" style="color: var(--color-success);"></span>
             </section>
 
             <section id="edit-section" style="grid-column: 1 / -1;">
@@ -177,7 +183,7 @@
                     
                     <div class="word-toolbar" id="toolbar">
                         <button class="tool-btn active" data-tool="select" data-subtool="select" title="Select & Move Object"><span>↖</span> Select</button>
-                        <div style="border-left: 1px solid #334155; height: 30px; margin: 0 5px;"></div>
+                        <div style="border-left: 1px solid var(--border-color); height: 30px; margin: 0 5px;"></div>
                         
                         <button class="tool-btn" data-tool="crop" data-subtool="crop" title="Crop PDF Margin"><span>◩</span> Crop</button>
 
@@ -185,7 +191,7 @@
                         <button class="tool-btn" data-tool="highlight" data-subtool="highlight"><span>🟨</span> Highlight</button>
                         
                         <div style="display:flex; flex-direction:column; align-items:center; gap:2px; margin-left: 5px;">
-                            <span style="font-size:12px; color:#e2e8f0;">Shapes</span>
+                            <span style="font-size:12px; color: var(--text-primary);">Shapes</span>
                             <select id="shape-selector" class="tool-select" data-tool="shape" style="padding: 2px; margin:0; width:90px; font-size:11px; cursor:pointer;">
                                 <option value="rect">🟦 Rectangle</option>
                                 <option value="ellipse">⭕ Circle</option>
@@ -194,7 +200,7 @@
                         </div>
 
                         <div style="display:flex; flex-direction:column; align-items:center; gap:2px; margin-left: 5px;">
-                            <span style="font-size:12px; color:#e2e8f0;">Forms</span>
+                            <span style="font-size:12px; color: var(--text-primary);">Forms</span>
                             <select id="form-selector" class="tool-select" data-tool="form" style="padding: 2px; margin:0; width:95px; font-size:11px; cursor:pointer;">
                                 <option value="formtext">🔤 Text Box</option>
                                 <option value="checkbox">☑ Checkbox</option>
@@ -204,7 +210,7 @@
                         </div>
                         
                         <div style="display:flex; flex-direction:column; align-items:center; gap:2px; margin-left: 10px;">
-                            <label for="edit-image-upload" style="cursor:pointer; color:#e2e8f0; font-size:12px; display:flex; flex-direction:column; align-items:center;">
+                            <label for="edit-image-upload" style="cursor:pointer; color: var(--text-primary); font-size:12px; display:flex; flex-direction:column; align-items:center;">
                                 <span>🖼️</span> Image
                             </label>
                             <input type="file" id="edit-image-upload" accept="image/png, image/jpeg" style="display:none;">
@@ -212,30 +218,30 @@
 
                         <div class="format-bar" id="text-format-bar">
                             <div style="display:flex; flex-direction:column; align-items:center;">
-                                <span style="font-size: 10px; color:#94a3b8; line-height: 1;">Text</span>
+                                <span style="font-size: 10px; color: var(--text-secondary); line-height: 1;">Text</span>
                                 <input type="color" id="elem-text-color" value="#000000" style="width: 28px; height: 25px; padding:0; cursor:pointer;" title="Text Color">
                             </div>
                             <div style="display:flex; flex-direction:column; align-items:center;">
-                                <span style="font-size: 10px; color:#94a3b8; line-height: 1;">Line</span>
+                                <span style="font-size: 10px; color: var(--text-secondary); line-height: 1;">Line</span>
                                 <input type="color" id="elem-border-color" value="#000000" style="width: 28px; height: 25px; padding:0; cursor:pointer;" title="Line/Border Color">
                             </div>
                             <div style="display:flex; flex-direction:column; align-items:center;">
-                                <span style="font-size: 10px; color:#94a3b8; line-height: 1;">Fill</span>
+                                <span style="font-size: 10px; color: var(--text-secondary); line-height: 1;">Fill</span>
                                 <input type="color" id="elem-fill-color" value="#ffffff" style="width: 28px; height: 25px; padding:0; cursor:pointer;" title="Fill Color">
                             </div>
                             
-                            <label style="font-size: 11px; color:#e2e8f0; display:flex; align-items:center; gap:4px; margin-left:4px; cursor:pointer;">
+                            <label style="font-size: 11px; color: var(--text-primary); display:flex; align-items:center; gap:4px; margin-left:4px; cursor:pointer;">
                                 <input type="checkbox" id="elem-no-fill" checked style="margin:0;"> No Fill
                             </label>
 
-                            <div style="border-left: 1px solid #334155; height: 30px; margin: 0 5px;"></div>
+                            <div style="border-left: 1px solid var(--border-color); height: 30px; margin: 0 5px;"></div>
                             
                             <input type="number" id="elem-size" value="16" style="width: 50px; height:28px;" title="Font Size">
                             <button id="text-bold" class="btn-secondary" style="padding: 4px 8px; font-weight:bold; height:28px;">B</button>
                         </div>
                         
-                        <div class="format-bar" id="crop-format-bar" style="display:none; align-items:center; margin-left: 10px; border-left: 1px solid #334155; padding-left: 10px;">
-                            <label style="font-size: 12px; color:#38bdf8; display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:bold;">
+                        <div class="format-bar" id="crop-format-bar" style="display:none; align-items:center; margin-left: 10px; border-left: 1px solid var(--border-color); padding-left: 10px;">
+                            <label style="font-size: 12px; color: var(--accent-primary); display:flex; align-items:center; gap:4px; cursor:pointer; font-weight:bold;">
                                 <input type="checkbox" id="crop-all-pages-check" style="margin:0; width: 16px; height: 16px;"> Apply Crop to ALL Pages
                             </label>
                         </div>
@@ -243,7 +249,7 @@
                     
                     <div style="display:flex; justify-content:center; align-items:center; gap:15px; margin-bottom: 10px;">
                         <button id="prev-page" class="btn-secondary">◀</button>
-                        <span id="edit-page-info" style="color: #94a3b8; font-weight:bold;">Page 1</span>
+                        <span id="edit-page-info" style="color: var(--text-secondary); font-weight:bold;">Page 1</span>
                         <button id="next-page" class="btn-secondary">▶</button>
                         <button id="rotate-page-btn" class="btn-secondary" style="margin-left: 15px;" title="Rotate Current Page">↻ Rotate Page</button>
                     </div>
@@ -257,7 +263,7 @@
 
                     <div class="action-row" style="justify-content: center; max-width: 600px; margin: 20px auto 0;">
                         <input type="text" id="edit-filename" placeholder="edited.pdf" style="flex-grow:1;">
-                        <button id="preview-print-btn" class="btn-secondary" style="background: #1e293b; color: white;">🖨️ Print</button>
+                        <button id="preview-print-btn" class="btn-secondary" style="background: var(--surface-light); color: var(--text-primary);">🖨️ Print</button>
                         <button id="save-edit-btn" class="btn-success">💾 Save</button>
                     </div>
                     <div style="text-align: center; min-height: 20px;"><span id="edit-status" class="status-text"></span></div>
@@ -299,7 +305,7 @@
             <p style="margin: 0;">&copy; 2026 Utility Studio. All tools process data locally in your browser.</p>
         </footer>
     </div>
-    
+
     <script src="libs/script.js"></script>
 </body>
 </html>
