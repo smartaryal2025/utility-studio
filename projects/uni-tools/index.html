@@ -16,11 +16,11 @@
     <meta property="og:url" content="https://kishoraryal.com.np/projects/uni-tools/">
     <meta property="og:type" content="website">
 
-    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo.png">
-    <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo-192.png">
     <link rel="manifest" href="../../manifest.json">
 
-    <link rel="stylesheet" id="master-style" href="../../assets/master.css">
+    <link rel="stylesheet" href="../../assets/master.css">
     <script src="../../assets/theme.js"></script>
 
     <link rel="stylesheet" href="libs/uni-style.css">
@@ -58,6 +58,13 @@
             </div>
         </div>
     </div>
+
+    <button onclick="toggleTheme()" title="Toggle Light/Dark Mode" style="position: fixed; top: 20px; right: 20px; z-index: 999999; width: 45px; height: 45px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--surface-dark); color: var(--accent-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: all 0.2s ease;">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path id="theme-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+    </button>
+
     <div class="app-container">
 	<nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 10px;">
 	    <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
@@ -88,9 +95,7 @@
                             <button class="btn-secondary" onclick="document.getElementById('file-upload').click()" style="width: auto !important; min-width: 220px; margin-top: 5px; align-self: center;">📁 Choose File</button>
                             <input type="file" id="file-upload" accept=".txt,.doc,.docx" style="display: none;">
                             
-                            <div id="file-name-display" style="font-size: 12px; color: #94a3b8; margin-top: 8px; text-align: center; width: 100%;">
-                                No file selected
-                            </div>
+                            <div id="file-name-display" style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: center; width: 100%;">
                         </div>
                     </div>
                 </section>
@@ -104,9 +109,9 @@
                     </div>
                     <textarea id="input-text" placeholder="Type or paste your text here..."></textarea>
                     
-                    <div style="border-top: 1px solid #334155; padding-top: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
                         <button id="convert-btn">Convert Text</button>
-                        <span id="error-msg" class="hidden" style="color: #ef4444; font-size: 13px;">Input cannot be empty.</span>
+                        <span id="error-msg" class="hidden" style="color: var(--color-error); font-size: 13px;">Input cannot be empty.</span>
                     </div>
                 </section>
 
@@ -117,7 +122,7 @@
                     </div>
                     <textarea id="output-text" readonly placeholder="Converted text will appear here..."></textarea>
                     
-                    <div style="border-top: 1px solid #334155; padding-top: 15px; margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
                         <button id="copy-btn" class="btn-secondary">Copy</button>
                         <button id="download-txt-btn" class="btn-secondary">Download .txt</button>
                         <button id="download-doc-btn" class="btn-secondary">Download .doc</button>
@@ -159,6 +164,7 @@
             </div>
         <p style="margin: 0;">&copy; 2026 Utility Studio. All tools process data locally in your browser.</p>
     </footer>
+
     </div>
     <script>
         function copyWithDoubleTick(button, textToCopy) {
