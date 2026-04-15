@@ -477,14 +477,16 @@
 }
 
 /* ========================================================= */
-/* FIX: Tablet Portrait Tab Text Overflow                    */
+/* FIX: Tab Text Overflow in 350px Column (Landscape/Desktop)*/
 /* ========================================================= */
-@media (max-width: 950px) {
-    .tabs .tab-btn {
-        white-space: normal !important; /* Overrides the global button nowrap */
-        word-wrap: break-word !important;
-        font-size: 13px !important; /* Shrinks the text slightly */
-        padding: 10px 5px !important; /* Reduces side padding to give more room */
-        line-height: 1.3 !important;
-    }
+.tabs .tab-btn {
+    white-space: normal !important; /* Allows the text to stack onto two lines */
+    word-wrap: break-word !important;
+    font-size: 13px !important;     /* Slightly smaller to fit cleanly */
+    padding: 8px 4px !important;    /* Reduces side padding so text has more room */
+    line-height: 1.3 !important;    /* Keeps the stacked text close together */
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
 }
