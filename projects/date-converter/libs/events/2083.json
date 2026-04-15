@@ -10,12 +10,7 @@
   },
   "0-2": {
     "tithi": "वैशाख कृष्ण त्रयोदशी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-3": {
     "tithi": "वैशाख कृष्ण चतुर्दशी",
@@ -36,84 +31,39 @@
   },
   "0-5": {
     "tithi": "वैशाख शुक्ल प्रतिपदा",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-6": {
     "tithi": "वैशाख शुक्ल द्वितीया",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-7": {
     "tithi": "वैशाख शुक्ल तृतीया",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-8": {
     "tithi": "वैशाख शुक्ल चतुर्थी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-9": {
     "tithi": "वैशाख शुक्ल पञ्चमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-10": {
     "tithi": "वैशाख शुक्ल सप्तमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-11": {
     "tithi": "वैशाख शुक्ल अष्टमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-12": {
     "tithi": "वैशाख शुक्ल नवमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-13": {
     "tithi": "वैशाख शुक्ल दशमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-14": {
     "tithi": "वैशाख शुक्ल एकादशी",
@@ -126,30 +76,15 @@
   },
   "0-15": {
     "tithi": "वैशाख शुक्ल द्वादशी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-16": {
     "tithi": "वैशाख शुक्ल त्रयोदशी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-17": {
     "tithi": "वैशाख शुक्ल चतुर्दशी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-18": {
     "tithi": "वैशाख शुक्ल पूर्णिमा",
@@ -166,12 +101,7 @@
   },
   "0-20": {
     "tithi": "ज्येष्ठ कृष्ण द्वितीया",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-21": {
     "tithi": "ज्येष्ठ कृष्ण तृतीया",
@@ -179,12 +109,7 @@
   },
   "0-22": {
     "tithi": "ज्येष्ठ कृष्ण चतुर्थी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-23": {
     "tithi": "ज्येष्ठ कृष्ण चतुर्थी",
@@ -192,30 +117,15 @@
   },
   "0-24": {
     "tithi": "ज्येष्ठ कृष्ण पञ्चमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-25": {
     "tithi": "ज्येष्ठ कृष्ण षष्ठी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-26": {
     "tithi": "ज्येष्ठ कृष्ण सप्तमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-27": {
     "tithi": "ज्येष्ठ कृष्ण अष्टमी",
@@ -223,21 +133,11 @@
   },
   "0-28": {
     "tithi": "ज्येष्ठ कृष्ण नवमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-29": {
     "tithi": "ज्येष्ठ कृष्ण दशमी",
-    "events": [
-      {
-        "name": "",
-        "isHoliday": false
-      }
-    ]
+    "events": []
   },
   "0-30": {
     "tithi": "ज्येष्ठ कृष्ण एकादशी",
@@ -564,7 +464,11 @@
     "tithi": "आषाढ शुक्ल एकादशी",
     "events": [
       {
-        "name": "हरिशयनी एकादशी व्रत (तुलसी रोप्ने)",
+        "name": "हरिशयनी एकादशी व्रत",
+        "isHoliday": false
+      },
+      {
+        "name": "तुलसी रोप्ने दिन",
         "isHoliday": false
       }
     ]
@@ -884,7 +788,11 @@
     "tithi": "आश्विन कृष्ण प्रतिपदा",
     "events": [
       {
-        "name": "सोह्रश्राद्ध प्रारम्भ (प्रतिपदा श्राद्ध)",
+        "name": "सोह्रश्राद्ध प्रारम्भ",
+        "isHoliday": false
+      },
+      {
+        "name": "प्रतिपदा श्राद्ध",
         "isHoliday": false
       }
     ]
@@ -1019,6 +927,10 @@
       {
         "name": "औंसी श्राद्ध",
         "isHoliday": false
+      },
+      {
+        "name": "सोह्र श्राद्ध समाप्ती",
+        "isHoliday": false
       }
     ]
   },
@@ -1026,7 +938,11 @@
     "tithi": "आश्विन शुक्ल प्रतिपदा",
     "events": [
       {
-        "name": "घटस्थापना, नवरात्र प्रारम्भ",
+        "name": "नवरात्र प्रारम्भ",
+        "isHoliday": true
+      },
+      {
+        "name": "घटस्थापना",
         "isHoliday": true
       }
     ]
@@ -1092,6 +1008,10 @@
     "events": [
       {
         "name": "विजया दशमी",
+        "isHoliday": true
+      },
+      {
+        "name": "नवरात्र समाप्ती",
         "isHoliday": true
       }
     ]
@@ -1197,7 +1117,11 @@
     "tithi": "कार्तिक कृष्ण चतुर्दशी",
     "events": [
       {
-        "name": "कुकुर तिहार, लक्ष्मी पूजा",
+        "name": "कुकुर तिहार",
+        "isHoliday": true
+      },
+      {
+        "name": "लक्ष्मी पूजा",
         "isHoliday": true
       }
     ]
@@ -1215,7 +1139,11 @@
     "tithi": "कार्तिक शुक्ल प्रतिपदा",
     "events": [
       {
-        "name": "गोवर्धन पूजा, म्ह पूजा",
+        "name": "गोवर्धन पूजा",
+        "isHoliday": true
+      },
+      {
+        "name": "म्ह पूजा",
         "isHoliday": true
       }
     ]
@@ -1224,7 +1152,11 @@
     "tithi": "कार्तिक शुक्ल द्वितीया",
     "events": [
       {
-        "name": "भाइटीका, कीजा पूजा",
+        "name": "भाइटीका",
+        "isHoliday": true
+      },
+      {
+        "name": "कीजा पूजा",
         "isHoliday": true
       }
     ]
@@ -1340,10 +1272,6 @@
     "tithi": "मार्ग कृष्ण एकादशी",
     "events": [
       {
-        "name": "उँधौली पर्व",
-        "isHoliday": false
-      },
-      {
         "name": "उत्पतिका एकादशी व्रत",
         "isHoliday": false
       }
@@ -1434,8 +1362,12 @@
     "tithi": "मार्ग शुक्ल पुर्णिमा",
     "events": [
       {
-        "name": "धान्य पूर्णिमा, यःमरि पुन्हि, उधौली पर्व",
-        "isHoliday": true
+        "name": "धान्य पूर्णिमा",
+        "isHoliday": false
+      },
+      {
+        "name": "यःमरि पुन्हि, ज्यापु दिवस",
+        "isHoliday": false
       }
     ]
   },
@@ -1665,7 +1597,11 @@
     "tithi": "माघ शुक्ल पञ्चमी",
     "events": [
       {
-        "name": "सरस्वती पूजा, वसन्त पञ्चमी",
+        "name": "वसन्त पञ्चमी",
+        "isHoliday": true
+      },
+      {
+        "name": "सरस्वती पूजा",
         "isHoliday": true
       }
     ]
@@ -1777,7 +1713,11 @@
     "tithi": "फाल्गुण कृष्ण त्रयोदशी",
     "events": [
       {
-        "name": "महाशिवरात्री, नेपाली सेना दिवस",
+        "name": "महाशिवरात्री",
+        "isHoliday": true
+      },
+      {
+        "name": "नेपाली सेना दिवस",
         "isHoliday": true
       }
     ]
