@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v5.6';
+const CACHE_NAME = 'utility-studio-v5.7';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
@@ -18,9 +18,7 @@ const CORE_ASSETS = [
     '/assets/logo-512.png',
     '/assets/theme.js',
     '/assets/master.css',
-    '/assets/master-light.css',
     '/assets/hub.css',
-    '/assets/hub-light.css',
 
     // Articles & Guides
     '/articles/index.html',
@@ -74,11 +72,6 @@ const CORE_ASSETS = [
     '/projects/uni-tools/libs/script.js',
     '/projects/uni-tools/libs/uni-style.css',
 
-    // Unit Converter
-    '/projects/unit-converter/index.html',
-    '/projects/unit-converter/libs/script.js',
-    '/projects/unit-converter/libs/unit-style.css',
-
     // Video Tools
     '/projects/video-tools/index.html',
     '/projects/video-tools/libs/814.ffmpeg.js',
@@ -89,7 +82,53 @@ const CORE_ASSETS = [
     '/projects/video-tools/libs/index.js',
     '/projects/video-tools/libs/util.js',
     '/projects/video-tools/libs/video-style.css',
-    '/projects/video-tools/libs/script.js'
+    '/projects/video-tools/libs/script.js',
+
+    // ---------------------------------------------
+    // Unit Converter (Flutter Web App Assets)
+    // ---------------------------------------------
+    '/projects/unit-converter/index.html',
+    '/projects/unit-converter/flutter.js',
+    '/projects/unit-converter/main.dart.js',
+    '/projects/unit-converter/manifest.json',
+    '/projects/unit-converter/version.json',
+    '/projects/unit-converter/favicon.png',
+    
+    // Flutter Asset Manifests
+    '/projects/unit-converter/assets/AssetManifest.bin',
+    '/projects/unit-converter/assets/AssetManifest.bin.json',
+    '/projects/unit-converter/assets/AssetManifest.json',
+    '/projects/unit-converter/assets/FontManifest.json',
+    '/projects/unit-converter/assets/NOTICES',
+    '/projects/unit-converter/assets/fonts/MaterialIcons-Regular.otf',
+    '/projects/unit-converter/assets/packages/cupertino_icons/assets/CupertinoIcons.ttf',
+    '/projects/unit-converter/assets/shaders/ink_sparkle.frag',
+    
+    // Flutter Image SVGs
+    '/projects/unit-converter/assets/assets/Area.svg',
+    '/projects/unit-converter/assets/assets/Date.svg',
+    '/projects/unit-converter/assets/assets/DigitalStorage.svg',
+    '/projects/unit-converter/assets/assets/Length.svg',
+    '/projects/unit-converter/assets/assets/Speed.svg',
+    '/projects/unit-converter/assets/assets/Temperature.svg',
+    '/projects/unit-converter/assets/assets/Time.svg',
+    '/projects/unit-converter/assets/assets/Volume.svg',
+    '/projects/unit-converter/assets/assets/Weight.svg',
+    
+    // CanvasKit (WASM Engine for Flutter)
+    '/projects/unit-converter/canvaskit/canvaskit.js',
+    '/projects/unit-converter/canvaskit/canvaskit.wasm',
+    '/projects/unit-converter/canvaskit/skwasm.js',
+    '/projects/unit-converter/canvaskit/skwasm.wasm',
+    '/projects/unit-converter/canvaskit/skwasm.worker.js',
+    '/projects/unit-converter/canvaskit/chromium/canvaskit.js',
+    '/projects/unit-converter/canvaskit/chromium/canvaskit.wasm',
+    
+    // Flutter Icons
+    '/projects/unit-converter/icons/Icon-192.png',
+    '/projects/unit-converter/icons/Icon-512.png',
+    '/projects/unit-converter/icons/Icon-maskable-192.png',
+    '/projects/unit-converter/icons/Icon-maskable-512.png'
 ];
 
 // Install Event - Caches all core assets
