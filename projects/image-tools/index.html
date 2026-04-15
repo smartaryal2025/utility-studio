@@ -10,7 +10,7 @@
     <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo-192.png">
     <link rel="manifest" href="../../manifest.json">
 
-    <link rel="stylesheet" id="master-style" href="../../assets/master.css">
+    <link rel="stylesheet" href="../../assets/master.css">
     <script src="../../assets/theme.js"></script>
 
     <link rel="stylesheet" href="libs/cropper.min.css">
@@ -161,12 +161,19 @@
             </div>
         </div>
     </div>
+
+    <button onclick="toggleTheme()" title="Toggle Light/Dark Mode" style="position: fixed; top: 20px; right: 20px; z-index: 999999; width: 45px; height: 45px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--surface-dark); color: var(--accent-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: all 0.2s ease;">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path id="theme-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+    </button>
+
     <div class="app-container">
-	<nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 10px;">
-	    <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
-	    <span style="color: var(--text-secondary); font-size: 13px; margin: 0 5px;">/</span> 
-	    <span style="color: var(--text-secondary); font-size: 13px;" aria-current="page">Image Studio</span>
-	</nav>
+    <nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
+        <span style="color: var(--text-secondary); font-size: 13px; margin: 0 5px;">/</span> 
+        <span style="color: var(--text-secondary); font-size: 13px;" aria-current="page">Image Studio</span>
+    </nav>
         <h1 class="app-header">Image & Photo Tool</h1>
 
         <div class="tools-grid">
@@ -176,7 +183,7 @@
                 <button class="btn-secondary" onclick="document.getElementById('file-input').click()" style="width: auto !important; min-width: 200px; padding: 10px 30px !important; display: inline-flex !important; margin: 0 auto 15px 0 !important; align-self: flex-start;">📁 Choose Files</button>
                 <input type="file" id="file-input" accept="image/png, image/jpeg, image/webp, image/gif, image/svg+xml" multiple style="display: none;">
                 
-                <div style="font-size: 13px; margin-bottom: 10px; color: #94a3b8; font-weight: bold;">Gallery (Drag to Reorder)</div>
+                <div style="font-size: 13px; margin-bottom: 10px; color: var(--text-secondary); font-weight: bold;">Gallery (Drag to Reorder)</div>
                 
                 <div style="display: flex; gap: 5px; margin-bottom: 10px; align-items: center;">
                     <button id="btn-merge-vert" class="btn-secondary" style="flex: 1; padding: 4px; font-size: 12px;" title="Select checkboxes below to merge">⬇ Merge Vert.</button>
@@ -220,7 +227,7 @@
                         <div style="display: flex; align-items: center; gap: 4px; border-right: 1px solid var(--border-color); padding-right: 8px;">
                             <button id="btn-undo" class="btn-secondary" disabled title="Undo Action" style="padding: 3px 8px; font-size: 12px;">↩</button>
                             <button id="btn-toggle-crop" class="btn-secondary" disabled style="padding: 3px 8px; font-size: 12px;">◩ Crop</button>
-                            <button id="btn-cancel-crop" class="btn-secondary" style="display: none; padding: 3px 8px; color: #ef4444; font-size: 12px;">✖</button>
+                            <button id="btn-cancel-crop" class="btn-secondary" style="display: none; padding: 3px 8px; color: var(--color-error); font-size: 12px;">✖</button>
                         </div>
 
                         <div style="display: flex; align-items: center; gap: 4px; border-right: 1px solid var(--border-color); padding-right: 8px;">
@@ -251,7 +258,7 @@
                     </div>
                     
                     <div id="editor-canvas-container">
-                        <span id="placeholder-text" style="color: #94a3b8; margin: auto;">Select an image from the gallery</span>
+                        <span id="placeholder-text" style="color: var(--text-secondary); margin: auto;">Select an image from the gallery</span>
                         <div id="canvas-wrapper">
                             <img id="main-image" draggable="false" ondragstart="return false;">
                             <canvas id="draw-canvas"></canvas>
@@ -267,23 +274,23 @@
                     </div>
 
                     <div class="control-panel" style="margin-bottom: 0;">
-                        <div class="control-group" style="border-right: 1px solid #334155; padding-right: 15px; display: flex; flex-direction: column; justify-content: center;">
+                        <div class="control-group" style="border-right: 1px solid var(--border-color); padding-right: 15px; display: flex; flex-direction: column; justify-content: center;">
                             <div style="display: flex; justify-content: space-between; margin-bottom: 4px; align-items: center; width: 100%;">
                                 <span class="control-label" style="margin-bottom: 0;">Dimensions:</span>
-                                <label style="font-size: 11px; color: #38bdf8; cursor: pointer; display: flex; align-items: center; gap: 4px;" title="Ignore aspect ratio and force exact width/height">
+                                <label style="font-size: 11px; color: var(--accent-primary); cursor: pointer; display: flex; align-items: center; gap: 4px;" title="Ignore aspect ratio and force exact width/height">
                                     <input type="checkbox" id="force-exact-size" style="margin: 0; width: 13px; height: 13px;"> Force Exact
                                 </label>
                             </div>
                             <div style="display: flex; align-items: center;">
                                 <input type="number" id="resize-width" placeholder="W (px)" style="width: 70px; padding: 3px;">
-                                <span style="color: #64748b; margin: 0 4px;">x</span>
+                                <span style="color: var(--text-secondary); margin: 0 4px;">x</span>
                                 <input type="number" id="resize-height" placeholder="H (px)" style="width: 70px; padding: 3px;">
                             </div>
                         </div>
                         
-                        <div class="control-group" style="border-right: 1px solid #334155; padding-right: 15px;">
-                            <span class="control-label" style="color: #10b981;">Target Size:</span>
-                            <input type="number" id="target-kb" placeholder="Max KB" style="width: 80px; padding: 3px; border-color: #10b981;" title="Leave blank to use manual slider below">
+                        <div class="control-group" style="border-right: 1px solid var(--border-color); padding-right: 15px;">
+                            <span class="control-label" style="color: var(--color-success);">Target Size:</span>
+                            <input type="number" id="target-kb" placeholder="Max KB" style="width: 80px; padding: 3px; border-color: var(--color-success);" title="Leave blank to use manual slider below">
                         </div>
 
                         <div class="control-group" id="manual-quality-group" style="flex: 1; min-width: 120px;">
@@ -311,15 +318,15 @@
                             </select>
                         </div>
                         
-                        <div class="control-group" style="border-right: 1px solid #334155; padding-right: 15px;">
-                            <label style="color: #38bdf8; font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <div class="control-group" style="border-right: 1px solid var(--border-color); padding-right: 15px;">
+                            <label style="color: var(--accent-primary); font-size: 13px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px;">
                                 <input type="checkbox" id="apply-bulk-edits" checked style="width: 14px; height: 14px;">
                                 Apply Edits to ALL
                             </label>
                         </div>
 
                         <div class="control-group">
-                            <button id="btn-preview-print" class="btn-secondary" style="background: #1e293b; color: white; padding: 4px 10px;" disabled>🖨️ Print</button>
+                            <button id="btn-preview-print" class="btn-secondary" style="background: var(--surface-light); color: var(--text-primary); padding: 4px 10px;" disabled>🖨️ Print</button>
                             <button id="btn-download-single" class="btn-secondary" style="padding: 4px 10px;" disabled>💾 Save</button>
                             <button id="btn-download-zip" class="btn-success" style="padding: 4px 10px;" disabled>📦 Export All</button>
                         </div>
@@ -328,22 +335,22 @@
 
             </div>
         </div>
-	<article class="seo-content" style="margin-top: 40px; padding: 25px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: var(--radius-lg); line-height: 1.6;">
-   	 <h2 style="color: var(--text-primary); font-size: 20px; margin-bottom: 15px;">Bulk Image Resizer, Compressor & Magic Eraser</h2>
-  	  <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 15px;">
-   	     A professional-grade, browser-based image editor. Use the Image Studio to compress file sizes, apply watermarks, remove backgrounds, and execute bulk resizing operations across multiple photos simultaneously. 
-   	 </p>
-   	 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
-     	   <div>
-         	   <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">🪄 Magic Eraser & Backgrounds</h3>
-          	  <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Utilize tolerance-based background removal and manual brushing to isolate subjects and apply custom backgrounds securely.</p>
-       	 </div>
-       	 <div>
-         	   <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">📦 Bulk ZIP Export</h3>
-         	   <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Apply text or logo watermarks to a batch of images and download the optimized, compressed files in a single ZIP archive.</p>
-       	 </div>
-    	</div>
-	</article>
+    <article class="seo-content" style="margin-top: 40px; padding: 25px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: var(--radius-lg); line-height: 1.6;">
+     <h2 style="color: var(--text-primary); font-size: 20px; margin-bottom: 15px;">Bulk Image Resizer, Compressor & Magic Eraser</h2>
+      <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 15px;">
+         A professional-grade, browser-based image editor. Use the Image Studio to compress file sizes, apply watermarks, remove backgrounds, and execute bulk resizing operations across multiple photos simultaneously. 
+     </p>
+     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px;">
+           <div>
+               <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">🪄 Magic Eraser & Backgrounds</h3>
+              <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Utilize tolerance-based background removal and manual brushing to isolate subjects and apply custom backgrounds securely.</p>
+         </div>
+         <div>
+               <h3 style="color: var(--text-primary); font-size: 16px; margin-bottom: 8px;">📦 Bulk ZIP Export</h3>
+               <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">Apply text or logo watermarks to a batch of images and download the optimized, compressed files in a single ZIP archive.</p>
+         </div>
+        </div>
+    </article>
 
         <section class="seo-context-block" style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color);">
             <h3 style="color: var(--text-primary); font-size: 1.1rem; margin-bottom: 10px;">Why use a zero-upload image editor?</h3>
@@ -352,7 +359,7 @@
             </p>
         </section>
 
-	<footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13px;">
+    <footer style="margin-top: 50px; padding: 20px; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 13px;">
             <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 10px; flex-wrap: wrap;">
                 <a href="../../index.html" style="color: var(--text-secondary); text-decoration: none;">Home</a>
                 <a href="../../about.html" style="color: var(--text-secondary); text-decoration: none;">About the Developer</a>
@@ -363,6 +370,7 @@
             <p style="margin: 0;">&copy; 2026 Utility Studio. All tools process data locally in your browser.</p>
         </footer>
     </div>
+
     <script src="libs/cropper.min.js"></script>
     <script src="libs/jszip.min.js"></script>
     <script src="../pdf-tools/libs/Sortable.min.js"></script>
