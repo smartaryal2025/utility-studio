@@ -289,9 +289,19 @@ button:disabled, .btn-upload-label.disabled { background: var(--border-color); c
     .button-group { flex-direction: column; }
     .scan-header > div:last-child, .scan-actions { margin-left: 0; }
     button, .btn-secondary, .btn-primary, .btn-success, .btn-danger, .tab-btn { min-height: 48px !important; height: auto !important; padding: 10px 15px !important; white-space: normal !important; }
-    .toggle-container { display: flex !important; flex-direction: column !important; gap: 12px !important; padding: 12px 10px !important; width: 100%; box-sizing: border-box; }
-    .toggle-container label { font-size: 14px !important; white-space: normal !important; }
-}
+    .toggle-container { 
+        display: flex !important;
+        flex-direction: row !important; /* Changed from column to row */
+        justify-content: center !important; /* Centers them nicely */
+        gap: 25px !important; /* Adds good spacing between the two options */
+        padding: 12px 10px !important; 
+        width: 100%; 
+        box-sizing: border-box;
+    }
+    ..toggle-container label { 
+        font-size: 14px !important;
+        white-space: nowrap !important;
+    }
 
 /* =========================================================
    5. GLOBAL FLOATING NAVIGATION MENU
