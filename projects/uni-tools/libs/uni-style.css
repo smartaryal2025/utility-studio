@@ -6,8 +6,13 @@
 }
 
 .preeti-text {
-    font-family: 'Preeti', sans-serif !important;
-    font-size: 24px !important;
+    font-family: 'Preeti', 'Kishor', sans-serif !important;
+    font-size: 26px !important;
+}
+
+.unicode-text {
+    font-family: 'Noto Sans Devanagari', 'Nirmala UI', 'Ishan', 'Mangal', sans-serif !important;
+    font-size: 20px !important;
 }
 
 /* Forces the placeholder to stay readable in English */

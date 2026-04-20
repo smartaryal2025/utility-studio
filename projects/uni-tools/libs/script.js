@@ -158,7 +158,9 @@ function switchMode(toPreetiToUnicode) {
         outputBadge.textContent = "Unicode";
         
         inputText.classList.add('preeti-text');
+        inputText.classList.remove('unicode-text'); // Remove Unicode class
         outputText.classList.remove('preeti-text');
+        outputText.classList.add('unicode-text');   // Add Unicode class
     } else {
         btnU2P.classList.add('active');
         btnP2U.classList.remove('active');
@@ -166,7 +168,9 @@ function switchMode(toPreetiToUnicode) {
         outputBadge.textContent = "Preeti";
         
         inputText.classList.remove('preeti-text');
+        inputText.classList.add('unicode-text');    // Add Unicode class
         outputText.classList.add('preeti-text');
+        outputText.classList.remove('unicode-text'); // Remove Unicode class
     }
     
     const temp = inputText.value;
