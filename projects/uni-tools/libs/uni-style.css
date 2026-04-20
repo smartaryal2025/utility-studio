@@ -1,3 +1,21 @@
+@font-face {
+    font-family: 'Preeti';
+    src: url('Kishor.ttf') format('truetype'); 
+    font-weight: normal;
+    font-style: normal;
+}
+
+.preeti-text {
+    font-family: 'Preeti', sans-serif !important;
+    font-size: 24px !important;
+}
+
+/* Forces the placeholder to stay readable in English */
+.preeti-text::placeholder {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+    font-size: 16px !important;
+}
+
 .mode-btn { 
     width: 100%; 
     justify-content: center; 
@@ -11,8 +29,15 @@
     font-weight: bold; 
 }
 
+/* Sizing only, leaving the theme colors to your master.css */
 .app-container:has(.mode-btn) textarea { 
     min-height: 250px !important; 
     font-size: 16px; 
     line-height: 1.5; 
+}
+
+/* Applies your attractive accent color specifically to the output text */
+#output-text {
+    color: var(--accent-primary) !important;
+    font-weight: 500;
 }
