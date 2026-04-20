@@ -107,10 +107,10 @@
                         <h2>Input</h2>
                         <span class="badge" id="input-badge">Preeti</span>
                     </div>
-                    <textarea id="input-text" placeholder="Type or paste your text here..."></textarea>
+                    <textarea id="input-text" spellcheck="false" placeholder="Type or paste your text here..."></textarea>
                     
                     <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
-                        <button id="convert-btn">Convert Text</button>
+                   <!-- <button id="convert-btn">Convert Text</button> -->
                         <span id="error-msg" class="hidden" style="color: var(--color-error); font-size: 13px;">Input cannot be empty.</span>
                     </div>
                 </section>
@@ -120,7 +120,7 @@
                         <h2>Output</h2>
                         <span class="badge" id="output-badge">Unicode</span>
                     </div>
-                    <textarea id="output-text" readonly placeholder="Converted text will appear here..."></textarea>
+                    <textarea id="output-text" spellcheck="false" readonly placeholder="Converted text will appear here..."></textarea>
                     
                     <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
                         <button id="copy-btn" class="btn-secondary">Copy</button>
