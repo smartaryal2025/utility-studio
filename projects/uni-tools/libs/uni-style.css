@@ -34,9 +34,10 @@
     font-weight: bold; 
 }
 
-/* Universal Textarea Rules - STRICT HEIGHT LOCK */
+/* 1. Base Textarea Rules - RESTORED RESIZING */
 .app-container:has(.mode-btn) textarea { 
-    height: 280px !important; /* FORCES both boxes to be exactly this size, ignoring buttons */
+    min-height: 280px !important; /* Sets the starting size */
+    flex-shrink: 0 !important; /* Forbids the browser from squishing the box */
     box-sizing: border-box !important; 
     font-size: 16px; 
     line-height: 1.5; 
@@ -44,11 +45,19 @@
     overflow-wrap: anywhere !important; 
     word-break: break-word !important; 
     overflow-x: hidden !important; 
-    overflow-y: auto !important; /* Returns to standard, clean auto-scrolling */
-    resize: none !important; /* Stops the user or browser from breaking the symmetry */
+    resize: vertical !important; /* Brings the drag handle back! */
 }
 
-/* Ensures placeholders perfectly match */
+/* 2. Dynamically handle the vertical scrollbar */
+.app-container:has(.mode-btn) textarea:placeholder-shown {
+    overflow-y: hidden !important; /* Box is empty -> Hide track completely */
+}
+
+.app-container:has(.mode-btn) textarea:not(:placeholder-shown) {
+    overflow-y: auto !important; /* Box has text -> Allow scrolling only if it overflows */
+}
+
+/* 3. Ensures placeholders perfectly match */
 .app-container:has(.mode-btn) textarea::placeholder {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
     font-size: 16px !important;
