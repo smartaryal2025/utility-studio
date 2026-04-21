@@ -39,6 +39,9 @@
     min-height: 250px !important; 
     font-size: 16px; 
     line-height: 1.5; 
+    white-space: pre-wrap !important; 
+    word-wrap: break-word !important; 
+    overflow-x: hidden !important; 
 }
 
 /* Applies your attractive accent color specifically to the output text */
