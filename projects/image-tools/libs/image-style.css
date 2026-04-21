@@ -82,3 +82,46 @@ input[type="range"] { padding: 0 !important; margin: 0 !important; box-sizing: b
     #right-workspace.fullscreen-mode #main-image,
     #right-workspace.fullscreen-mode #draw-canvas { max-height: 55vh !important; }
 }
+
+
+/* =========================================================================
+   MENU ALIGNMENT LOCK: Overrides Cropper.js box-sizing so the menu 
+   aligns perfectly and stays exactly 45px tall like other pages.
+   ========================================================================= */
+.us-global-menu {
+    height: 45px !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+}
+
+.us-home-btn {
+    height: 45px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.us-home-btn svg {
+    display: block !important;
+    margin: auto !important;
+    padding: 0 !important;
+}
+
+.us-dropdown {
+    height: 45px !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+button.us-dropbtn {
+    height: 45px !important;
+    min-height: 45px !important;
+    display: flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+    padding: 0 15px !important;
+    margin: 0 !important;
+}
