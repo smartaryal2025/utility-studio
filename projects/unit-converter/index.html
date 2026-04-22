@@ -47,19 +47,20 @@
       max-width: 900px !important;
     }
 
-    /* Massive height override for both PC and Mobile */
+    /* Final Inline Configuration for Flutter Container */
     #flutter-target {
         width: 100% !important;
-        height: 70vh !important;       /* Takes up almost the entire screen height */
-        min-height: 720px !important;  /* Massive 800px baseline so PC never feels cramped */
-        max-height: none !important;   /* Destroys any hidden CSS ceilings squishing the box */
+        height: 70vh !important;
+        min-height: 720px !important;
+        max-height: none !important;
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
         background: var(--surface-dark);
         overflow: hidden;
         position: relative;
         box-shadow: var(--shadow-soft);
-        touch-action: none;            /* Keeps the mobile scroll fix intact */
+        margin: 20px 0;
+        touch-action: none;
     }
 
     .loader {
