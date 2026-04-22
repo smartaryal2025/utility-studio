@@ -7,19 +7,13 @@
 
 .preeti-text {
     font-family: 'Preeti', 'Kishor', sans-serif !important;
-    font-size: 26px !important;
+    font-size: 24px !important;
 }
 
 .unicode-text {
     font-family: 'Noto Sans Devanagari', 'Nirmala UI', 'Ishan', 'Mangal', sans-serif !important;
-    font-size: 20px !important;
-}
-
-/* Forces the placeholder to stay readable in English */
-/*.preeti-text::placeholder {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
     font-size: 18px !important;
-} */
+}
 
 .mode-btn { 
     width: 100%; 
@@ -34,38 +28,23 @@
     font-weight: bold; 
 }
 
-/* 1. Base Textarea Rules - RESTORED RESIZING */
 .app-container:has(.mode-btn) textarea { 
-    min-height: 280px !important; /* Sets the starting size */
-    flex-shrink: 0 !important; /* Forbids the browser from squishing the box */
-    box-sizing: border-box !important; 
+    min-height: 250px !important; 
     font-size: 16px; 
     line-height: 1.5; 
     white-space: pre-wrap !important; 
-    overflow-wrap: anywhere !important; 
     word-break: break-word !important; 
-    overflow-x: hidden !important; 
-    resize: vertical !important; /* Brings the drag handle back! */
 }
 
-/* 2. Dynamically handle the vertical scrollbar */
 .app-container:has(.mode-btn) textarea:placeholder-shown {
-    overflow-y: hidden !important; /* Box is empty -> Hide track completely */
+    overflow-y: hidden !important; 
 }
 
 .app-container:has(.mode-btn) textarea:not(:placeholder-shown) {
-    overflow-y: auto !important; /* Box has text -> Allow scrolling only if it overflows */
+    overflow-y: auto !important; 
 }
 
-/* 3. Ensures placeholders perfectly match */
 .app-container:has(.mode-btn) textarea::placeholder {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
     font-size: 16px !important;
-    font-weight: normal !important;
-}
-
-/* Applies your attractive accent color specifically to the output text */
-#output-text {
-    color: var(--accent-primary) !important;
-    font-weight: 500;
 }
