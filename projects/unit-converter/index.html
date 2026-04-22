@@ -47,20 +47,19 @@
       max-width: 900px !important;
     }
 
-    /* Fixed mobile height for the Flutter container */
+    /* Massive height override for both PC and Mobile */
     #flutter-target {
-        width: 100%;
-        height: 70vh;
-        min-height: 500px;
+        width: 100% !important;
+        height: 70vh !important;       /* Takes up almost the entire screen height */
+        min-height: 720px !important;  /* Massive 800px baseline so PC never feels cramped */
+        max-height: none !important;   /* Destroys any hidden CSS ceilings squishing the box */
         border: 1px solid var(--border-color);
         border-radius: var(--radius-lg);
         background: var(--surface-dark);
         overflow: hidden;
         position: relative;
         box-shadow: var(--shadow-soft);
-        
-        /* THE FIX: Forces the browser to pass touch drags to Flutter instead of scrolling the page */
-        touch-action: none; 
+        touch-action: none;            /* Keeps the mobile scroll fix intact */
     }
 
     .loader {
