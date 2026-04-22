@@ -58,6 +58,9 @@
         overflow: hidden;
         position: relative;
         box-shadow: var(--shadow-soft);
+        
+        /* THE FIX: Forces the browser to pass touch drags to Flutter instead of scrolling the page */
+        touch-action: none; 
     }
 
     .loader {
