@@ -39,6 +39,37 @@
         .resize-handle-e { top: calc(50% - 6px); right: -6px; cursor: e-resize; }
         .resize-handle-w { top: calc(50% - 6px); left: -6px; cursor: w-resize; }
         
+        .rotate-handle {
+            position: absolute;
+            top: -30px; left: calc(50% - 6px);
+            width: 12px; height: 12px;
+            background: #facc15;
+            border: 2px solid var(--surface-dark);
+            border-radius: 50%;
+            /* NEW: Custom SVG Rotate Cursor! */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path></svg>') 9 9, crosshair !important;
+            z-index: 12;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+        }
+        /* Force I-beam cursor when editing text or using the Text tool */
+        .overlay-text:focus, .overlay-formtext:focus,
+        body[data-active-tool="text"] .overlay-text { 
+            cursor: text !important; 
+        }
+        /* Default to move cursor only when the select tool is active and not focused */
+        body[data-active-tool="select"] .live-overlay:not(:focus):hover { 
+            cursor: move; 
+        }
+        /* Connects the dot to the shape */
+        .rotate-handle::after {
+            content: ''; position: absolute;
+            top: 10px; left: 3px;
+            width: 2px; height: 18px;
+            background: var(--surface-dark);
+        }
+        .live-overlay.selected .rotate-handle { display: block; }
+        .live-overlay:not(.selected) .rotate-handle { display: none; }
+
         .live-overlay.selected div[class*="resize-handle"] { display: block; }
         .live-overlay:not(.selected) div[class*="resize-handle"] { display: none; }
     </style>
@@ -236,8 +267,15 @@
 
                             <div style="border-left: 1px solid var(--border-color); height: 30px; margin: 0 5px;"></div>
                             
-                            <input type="number" id="elem-size" value="16" style="width: 50px; height:28px;" title="Font Size">
+                            <input type="number" id="elem-size" value="16" style="width: 65px; height:28px;" title="Font Size">
                             <button id="text-bold" class="btn-secondary" style="padding: 4px 8px; font-weight:bold; height:28px;">B</button>
+                            <button id="text-italic" class="btn-secondary" style="padding: 4px 8px; font-style:italic; font-family:serif; height:28px;">I</button>
+                            
+                            <div style="border-left: 1px solid var(--border-color); height: 30px; margin: 0 5px;"></div>
+                            <div style="display:flex; flex-direction:column; align-items:center;">
+                                <span style="font-size: 10px; color: var(--text-secondary); line-height: 1;">Rotate (°)</span>
+                                <input type="number" id="elem-rotate" value="0" style="width: 70px; height:28px;" title="Rotation Angle">
+                            </div>
                         </div>
                         
                         <div class="format-bar" id="crop-format-bar" style="display:none; align-items:center; margin-left: 10px; border-left: 1px solid var(--border-color); padding-left: 10px;">
