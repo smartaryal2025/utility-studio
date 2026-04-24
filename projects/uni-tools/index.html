@@ -66,11 +66,11 @@
     </button>
 
     <div class="app-container">
-	<nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 10px;">
-	    <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
-	    <span style="color: var(--text-secondary); font-size: 13px; margin: 0 5px;">/</span> 
-	    <span style="color: var(--text-secondary); font-size: 13px;" aria-current="page">Unicode Tools</span>
-	</nav>
+    <nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 10px;">
+        <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
+        <span style="color: var(--text-secondary); font-size: 13px; margin: 0 5px;">/</span> 
+        <span style="color: var(--text-secondary); font-size: 13px;" aria-current="page">Unicode Tools</span>
+    </nav>
         <h1 class="app-header">Unicode Tools</h1>
 
         <div class="tools-grid">
@@ -95,35 +95,40 @@
                             <button class="btn-secondary" onclick="document.getElementById('file-upload').click()" style="width: auto !important; min-width: 220px; margin-top: 5px; align-self: center;">📁 Choose File</button>
                             <input type="file" id="file-upload" accept=".txt,.doc,.docx" style="display: none;">
                             
-                            <div id="file-name-display" style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: center; width: 100%;">
+                            <div id="file-name-display" style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: center; width: 100%;"></div>
                         </div>
                     </div>
                 </section>
             </div>
 
             <div class="right-column">
-                <section>
+                <section style="display: flex; flex-direction: column; height: 100%;">
                     <div class="section-header">
                         <h2>Input</h2>
                         <span class="badge" id="input-badge">Preeti</span>
                     </div>
-                    <textarea id="input-text" spellcheck="false" placeholder="Type or paste your text here..."></textarea>
                     
-                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center;">
-                   <!-- <button id="convert-btn">Convert Text</button> -->
+                    <div style="flex-grow: 1; display: flex; flex-direction: column;">
+                        <textarea id="input-text" spellcheck="false" placeholder="Type or paste your text here..." style="flex-grow: 1;"></textarea>
+                    </div>
+                    
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0;">
                         <button id="clear-btn" class="btn-secondary">Clear Text</button>
                         <span id="error-msg" class="hidden" style="color: var(--color-error); font-size: 13px;">Input cannot be empty.</span>
                     </div>
                 </section>
 
-                <section>
+                <section style="display: flex; flex-direction: column; height: 100%;">
                     <div class="section-header">
                         <h2>Output</h2>
                         <span class="badge" id="output-badge">Unicode</span>
                     </div>
-                    <textarea id="output-text" spellcheck="false" readonly placeholder="Converted text will appear here..."></textarea>
                     
-                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
+                    <div style="flex-grow: 1; display: flex; flex-direction: column;">
+                        <textarea id="output-text" spellcheck="false" readonly placeholder="Converted text will appear here..." style="flex-grow: 1;"></textarea>
+                    </div>
+                    
+                    <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px; flex-shrink: 0;">
                         <button id="copy-btn" class="btn-secondary">Copy</button>
                         <button id="download-txt-btn" class="btn-secondary">Download .txt</button>
                         <button id="download-doc-btn" class="btn-secondary">Download .doc</button>
@@ -181,6 +186,7 @@
             if(unicodeText) copyWithDoubleTick(this, unicodeText);
         });
     </script>
+    <script src="libs/kishor.js"></script>
     <script src="libs/script.js"></script>
 </body>
 </html>
