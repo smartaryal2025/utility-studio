@@ -6,13 +6,13 @@
 }
 
 .preeti-text {
-    font-family: 'Preeti', 'Kishor', sans-serif !important;
-    font-size: 24px !important;
+    font-family: 'Kishor', 'Preeti', sans-serif !important;
+    font-size: 26px !important;
 }
 
 .unicode-text {
-    font-family: 'Noto Sans Devanagari', 'Nirmala UI', 'Ishan', 'Mangal', sans-serif !important;
-    font-size: 18px !important;
+    font-family: 'Noto Sans Devanagari', 'Nirmala UI', 'Ishan', sans-serif !important;
+    font-size: 20px !important;
 }
 
 .mode-btn { 
@@ -47,4 +47,11 @@
 .app-container:has(.mode-btn) textarea::placeholder {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
     font-size: 16px !important;
+}
+
+/* Colorful Output Styling */
+#output-text {
+    color: var(--accent-primary) !important;
+    font-weight: 500;
+    text-shadow: 0 0 1px rgba(56, 189, 248, 0.2); /* Subtle glow for the dark theme */
 }
