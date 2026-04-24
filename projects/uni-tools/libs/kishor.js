@@ -1,12 +1,98 @@
-/*!
- * Copyright (c) 2026 Kishor Aryal. All rights reserved.
- * Application: Utility Studio
- * Website: https://kishoraryal.com.np
- * * PROPRIETARY AND CONFIDENTIAL
- * This source code and associated documentation are proprietary to Kishor Aryal.
- * Unauthorized copying, reproduction, distribution, modification, or use of this 
- * file, via any medium, is strictly prohibited without express written permission.
- * * Violators will be prosecuted to the maximum extent possible under the law.
- */
+// ==========================================
+// 1. DICTIONARIES (KISHOR ENGINE ONLY)
+// ==========================================
 
-(function(_0x1a2b,_0x3c4d){eval(decodeURIComponent(escape(atob(_0x1a2b))));})("Y29uc3Qga2lzaG9yVG9Vbmljb2RlTWFwPXtGOiLgpIEiLCIrIjoi4KSCIixNOiLgpIMiLGM6IuCkhSIsY2Y6IuCkhiIsY0ZmOiLgpIbgpIEiLCJjK2YiOiLgpIbgpIIiLE86IuCkhyIsIk97Ijoi4KSIIixwOiLgpIkiLHBtOiLgpIoiLEM6IuCkiyIsIkNbIjoi4KWgIixQOiLgpI8iLCJQXSI6IuCkkCIsImPigJhmIjoi4KSRIiwiY2bigJgiOiLgpJEiLCJjXWYiOiLgpJMiLCJjZl0iOiLgpJMiLCJjfWYiOiLgpJQiLCJjZn0iOiLgpJQiLCJmXSI6IuCliyIsImZ9Ijoi4KWMIixmOiLgpL4iLEw6IuClgCIsIiciOiLgpYEiLCciJzoi4KWCIiwiWyI6IuClgyIsIl0iOiLgpYciLCJ9Ijoi4KWIIiwiZuKAmCI6IuCliSIsIlxcIjoi4KWNIiwiw5giOiLgpY3gpK8iLCJ8Ijoi4KWN4KSwIiwiOMOeIjoi4KSh4KS8IiwiOcOeIjoi4KSi4KS8Iiwiw54iOiLgpLwiLCLLnCI6IuCkvSIsIsKlIjoi4KSw4KWN4oCNIixzOiLgpJUiLCJz4oCYIjoi4KSV4KWFIixTOiLgpJXgpY0iLFFtOiLgpJXgpY3gpKQiLHFtOiLgpJXgpY3gpLAiLElmOiLgpJXgpY3gpLciLEk6IuCkleCljeCkt+CljSIsdjoi4KSWIixWOiLgpJbgpY0iLHU6IuCklyIsVToi4KSX4KWNIiwzOiLgpJgiLCLCoyI6IuCkmOCljSIsIsKqIjoi4KSZIiwiw40iOiLgpJngpY3gpJUiLCLDjiI6IuCkmeCljeCkliIsIsOLIjoi4KSZ4KWN4KSXIiwi4oC5Ijoi4KSZ4KWN4KSYIixyOiLgpJoiLFI6IuCkmuCljSIsNToi4KSbIiwiNcKrIjoi4KSb4KWN4KSwIixoOiLgpJwiLEg6IuCknOCljSIsMToi4KSc4KWN4KSeIiwiwqEiOiLgpJzgpY3gpJ7gpY0iLCLCtCI6IuCknSIsZW06IuCknSIsZUZtOiLgpJ3gpL7gpIEiLCJlK20iOiLgpJ3gpL7gpIIiLCJlJ20iOiLgpJ3gpYEiLCdlIm0nOiLgpJ3gpYIiLCJlW20iOiLgpJ3gpYMiLCJl4oCYbSI6IuCkneClhSIsImVdbSI6IuCkneClhyIsImV9bSI6IuCkneCliCIsIuKAsCI6IuCkneCljSIsImVcXG0iOiLgpJ3gpY0iLCJgIjoi4KSeIiwifiI6IuCknuCljSIsNjoi4KSfIiwiwqciOiLgpJ/gpY3gpJ8iLCLDnSI6IuCkn+CkoCIsIjbCqyI6IuCkn+CljeCksCIsNzoi4KSgIiwiwrYiOiLgpKDgpY3gpKAiLCI3wqsiOiLgpKDgpY3gpLAiLDg6IuCkoSIsIuKAoiI6IuCkoeCljeCkoSIsIsKwIjoi4KSh4KWN4KSiIiwiOMKrIjoi4KSh4KWN4KSwIiw5OiLgpKIiLCI5wqsiOiLgpKLgpY3gpLAiLDA6IuCko+CljSIsIjBmIjoi4KSjIix0OiLgpKQiLFQ6IuCkpOCljSIsUToi4KSk4KWN4KSkIixxOiLgpKTgpY3gpLAiLHk6IuCkpSIsWToi4KSl4KWNIixiOiLgpKYiLCLCoiI6IuCkpuCljeCkmCIsMjoi4KSm4KWN4KSmIiw0OiLgpKbgpY3gpKciLCLDnyI6IuCkpuCljeCkriIsQjoi4KSm4KWN4KSvIiwi4oC6Ijoi4KSm4KWN4KSwIiwiw6UiOiLgpKbgpY3gpLUiLHc6IuCkpyIsVzoi4KSn4KWNIixnOiLgpKgiLEc6IuCkqOCljSIsIsOMIjoi4KSo4KWN4KSoIixrOiLgpKoiLEs6IuCkquCljSIsa206IuCkqyIsa0ZtOiLgpKvgpIEiLCJrK20iOiLgpKvgpIIiLCJrJ20iOiLgpKvgpYEiLCdrIm0nOiLgpKvgpYIiLCJrW20iOiLgpKvgpYMiLCJr4oCYbSI6IuCkq+ClhSIsImtdbSI6IuCkq+ClhyIsImt9bSI6IuCkq+CliCIsIsuGIjoi4KSr4KWNIiwia1xcbSI6IuCkq+CljSIsImt8bSI6IuCkq+CljeCksCIsYToi4KSsIixBOiLgpKzgpY0iLGU6IuCkrSIsRToi4KSt4KWNIixkOiLgpK4iLEQ6IuCkruCljSIsbzoi4KSvIiwiLyI6IuCksCIsIj8iOiLgpLDgpYEiLCLCvyI6IuCksOClgiIsbjoi4KSyIiwiTsucIjoi4KSyIixOOiLgpLLgpY0iLGo6IuCktSIsSjoi4KS14KWNIix6OiLgpLYiLFo6IuCktuCljSIsIj4iOiLgpLbgpY3gpLAiLGk6IuCkt+CljSIsaWY6IuCktyIsIjsiOiLgpLgiLCI6Ijoi4KS44KWNIix4OiLgpLkiLCLDhSI6IuCkueClgyIsWDoi4KS54KWNIiwic3wiOiLgpJXgpY3gpLAiLCJ2fCI6IuCkluCljeCksCIsInV8Ijoi4KSX4KWN4KSwIiwiM3wiOiLgpJjgpY3gpLAiLCJ3fCI6IuCkp+CljeCksCIsInJ8Ijoi4KSa4KWN4KSwIiwiaHwiOiLgpJzgpY3gpLAiLCLCtHwiOiLgpJ3gpY3gpLAiLCJ5fCI6IuCkpeCljeCksCIsImd8Ijoi4KSo4KWN4KSwIiwia3wiOiLgpKrgpY3gpLAiLCJhfCI6IuCkrOCljeCksCIsImV8Ijoi4KSt4KWN4KSwIiwiZHwiOiLgpK7gpY3gpLAiLCJvfCI6IuCkr+CljeCksCIsIi98Ijoi4KSw4KWN4KSwIiwibnwiOiLgpLLgpY3gpLAiLCJqfCI6IuCkteCljeCksCIsImlmfCI6IuCkt+CljeCksCIsIjt8Ijoi4KS44KWN4KSwIiwieHwiOiLgpLngpY3gpLAiLCI9IjoiLiIsXzoiKSIsIsOWIjoiPSIsIsOZIjoiOyIsIuKApiI6IuKAmCIsIsOaIjoi4oCZIiwiw5siOiIhIiwiw5wiOiIlIiwiw6YiOiLigJwiLCLDhiI6IuKAnSIsIsKxIjoiKyIsIi0iOiIoIiwiPCI6Ij8iLCLDpyI6IuClkCIsIuKAkyI6Ii0iLCLDtyI6Ii8iLCIuIjoi4KWkIiwiLi4iOiLgpaUiLCIpIjoi4KWmIiwiISI6IuClpyIsIkAiOiLgpagiLCIjIjoi4KWpIiwkOiLgpaoiLCIlIjoi4KWrIiwiXiI6IuClrCIsIiYiOiLgpa0iLCIqIjoi4KWuIiwiKCI6IuClryIsIuKAniI6IuCkp+CljeCksCIsIuKAoCI6IiYiLCLigKEiOiIjIiwixaAiOiLDtyIsIsWSIjoi4KSdIiwixb0iOiLgpLbgpY3gpKgiLCLigJgiOiLgpYUiLCLFoSI6IiQiLCLFkyI6IuCkm+CljeCksCIsIsW+Ijoi4KSV4KWN4KSwIiwixbgiOiLgpJXgpY3gpKQiLCLCpCI6IuCkpOCljeCkpOCljSIsIsKmIjoi4KSk4KWN4KSw4KWNIiwiwqwiOiLgpJvgpY3gpLUiLCLCryI6IuCkueCljeCkryIsIsK4Ijoi4KS54KWN4KSuIiwiwrsiOiJAIiwiw4AiOiLgpLngpY3gpLAiLCLDgSI6IuCkueCljeCksiIsIsOCIjoi4KS54KWN4KSoIiwiw4MiOiLgpLngpY3gpLUiLCLDhCI6IuCkueCljeCkoyIsIsOHIjoi4KSV4KWN4KSyIiwiw4giOiLgpJjgpY3gpKgiLCLDiSI6IuCkpuCljeCklyIsIsOKIjoi4KSm4KWN4KStIiwiw48iOiLgpLfgpY3gpJ8iLCLDkCI6IuCkpuCljeCkrCIsIsORIjoi4KS34KWN4KSgIiwiw5MiOiLgpKMiLCLDlCI6IuCkqyIsIsOVIjoi4KSV4KWN4KS3Iiwiw6AiOiLgpLbgpY3gpJoiLCLDoSI6IuCktuCljeCktSIsIsOiIjoi4KSe4KWN4KSaIiwiw6MiOiLgpJ7gpY3gpJwiLCLDpCI6IuCkuOCljeCkpOCljeCksCIsIsOoIjoi4bOuIiwiw6kiOiLhs6kiLCLDqiI6IuCkhiIsIsOrIjoi4KW6Iiwiw6wiOiLgpLciLCLDrSI6IuCkiCIsIsOuIjoi4KSKIiwiw68iOiLgpJAiLCLDsSI6IuCktuCljeCksOCljSIsIsO0Ijoi4KSTIiwiw7UiOiLgpJQiLCLDtiI6IuClhCIsIsO4Ijoi4KSv4KWNIiwiw7kiOiLhs68iLCLDuiI6IuClpSIsIsO7Ijoi4KWQIiwiw7wiOiLgpL0iLCLDvSI6IuKdgSIsIsO/Ijoi5Y2QIiwiblsiOiLgpIwiLCJuw7YiOiLgpaEifSx1bmljb2RlVG9LaXNob3JNYXA9eyLgpJEiOiJjZuKAmCIsIuCklCI6ImNmfSIsIuCkkyI6ImNmXSIsIuCkhiI6ImNmIiwi4KSFIjoiYyIsIuCkiCI6Ik97Iiwi4KSHIjoiTyIsIuCkiiI6InBtIiwi4KSJIjoicCIsIuCkiyI6IkMiLCLgpJAiOiJQXSIsIuCkjyI6IlAiLCLgpYkiOiJm4oCYIiwi4KWCIjonIicsIuClgSI6IiciLCLgpIIiOiIrIiwi4KS+IjoiZiIsIuClgyI6IlsiLCLgpY0iOiJcXCIsIuClhyI6Il0iLCLgpYgiOiJ9Iiwi4KSBIjoiRiIsIuClgCI6IkwiLCLgpIMiOiJNIiwi4KWLIjoiZl0iLCLgpYwiOiJmfSIsIuCksOCljeKAjeCkryI6IsKlbyIsIuCksOCljeKAjSI6IsKlIiwi4KS8Ijoiw54iLCLDlyI6IsOXIiwi4KWlIjoiLi4iLCLDtyI6Ii8iLCLgpaQiOiIuIiwi4KSV4KWNIjoiUyIsIuCklSI6InMiLCLgpJbgpY0iOiJWIiwi4KSWIjoidiIsIuCkl+CljSI6IlUiLCLgpJciOiJ1Iiwi4KSY4KWNIjoiwqMiLCLgpJgiOiIzIiwi4KSZIjoiwqoiLCLgpJrgpY0iOiJSIiwi4KSaIjoiciIsIuCkmyI6IjUiLCLgpJzgpY0iOiJIIiwi4KScIjoiaCIsIuCkneCljSI6IuKAsCIsIuCknSI6IsK0Iiwi4KSe4KWNIjoifiIsIuCkniI6ImAiLCLgpJ8iOiI2Iiwi4KSgIjoiNyIsIuCkoSI6IjgiLCLgpKIiOiI5Iiwi4KSj4KWNIjoiMCIsIuCkoyI6IjBmIiwi4KSk4KWNIjoiVCIsIuCkpCI6InQiLCLgpKXgpY0iOiJZIiwi4KSlIjoieSIsIuCkpiI6ImIiLCLgpKfgpY0iOiJXIiwi4KSnIjoidyIsIuCkqOCljSI6IkciLCLgpKgiOiJnIiwi4KSq4KWNIjoiSyIsIuCkqiI6ImsiLCLgpKvgpY0iOiLLhiIsIuCkrOCljSI6IkEiLCLgpKwiOiJhIiwi4KSt4KWNIjoiRSIsIuCkrSI6ImUiLCLgpK7gpY0iOiJEIiwi4KSuIjoiZCIsIuCkryI6Im8iLCLgpLAiOiIvIiwi4KSy4KWNIjoiTiIsIuCksiI6Im4iLCLgpLXgpY0iOiJKIiwi4KS1IjoiaiIsIuCktuCljSI6IloiLCLgpLYiOiJ6Iiwi4KS34KWNIjoiaSIsIuCktyI6ImlmIiwi4KS44KWNIjoiOiIsIuCkuCI6IjsiLCLgpLngpY0iOiJYIiwi4KS5IjoieCIsIuCljeCkryI6IsOYIiwi4KSr4KWN4KSwIjoia3xtIiwi4KSrIjoia20iLCLgpJXgpY3gpKQiOiJRbSIsIuCkleCljeCksCI6InFtIiwi4KSc4KWN4KSe4KWNIjoiwqEiLCLgpKbgpY3gpJgiOiLCoiIsIuCknOCljeCkniI6IjEiLCLgpKbgpY3gpKYiOiIyIiwi4KSm4KWN4KSnIjoiNCIsIuCktuCljeCksCI6Ij4iLCLgpLDgpYEiOiI/Iiwi4KSm4KWN4KSvIjoiQiIsIuCkleCljeCkt+CljSI6IkkiLCLgpJXgpY3gpLciOiJJZiIsIuCkpOCljeCkpCI6IlEiLCLgpKbgpY3gpK4iOiLDnyIsIuCkpOCljeCksCI6InEiLCLgpJngpY3gpJgiOiLigLkiLCLgpKHgpY3gpKEiOiLigKIiLCLgpKbgpY3gpLAiOiLigLoiLCLgpJ/gpY3gpJ8iOiLCpyIsIuCkoeCljeCkoiI6IsKwIiwi4KSg4KWN4KSgIjoiwrYiLCLgpLDgpYIiOiLCvyIsIuCkueClgyI6IsOFIiwi4KSZ4KWN4KSXIjoiw4siLCLgpKjgpY3gpKgiOiLDjCIsIuCkmeCljeCklSI6IsONIiwi4KSZ4KWN4KSWIjoiw44iLCLgpJ/gpKAiOiLDnSIsIuCkpuCljeCktSI6IsOlIiwi4KSf4KWN4KSwIjoiNsKrIiwi4KSg4KWN4KSwIjoiN8KrIiwi4KSh4KWN4KSwIjoiOMKrIiwi4KSi4KWN4KSwIjoiOcKrIiwi4KWN4KSwIjoifCIsIuCkoeCkvCI6IjjDniIsIuCkouCkvCI6IjnDniIsIuCkueCljeCktSI6IlhqIiwi4KS54KWN4KSoIjoiWGciLCLgpLngpY3gpKMiOiJYMGYiLCLgpL0iOiLLnCIsIuCloCI6IkNbIiwi4KSk4KWN4KSw4KWN4KSvIjoicVxcbyIsIuCkmeCljeCkluCljeCksCI6IsKqXFx2fCIsIuCkmeCljeCkl+CljeCksCI6IsKqXFx1fCIsIuCkmeCljeCkmOCljeCksCI6IsKqXFwzfCIsIuCkmeCljeCkluCljSI6IsKqXFx2XFwiLCLgpJngpY3gpJfgpY0iOiLCqlxcdVxcIiwi4KSZ4KWN4KSY4KWNIjoiwqpcXDNcXCIsIuCkl+CljeCksCI6InV8Iiwi4KSY4KWN4KSwIjoiM3wiLCLgpJrgpY3gpLAiOiJyfCIsIuCknOCljeCksCI6Imh8Iiwi4KSd4KWN4KSwIjoiwrR8Iiwi4KSl4KWN4KSwIjoieXwiLCLgpKjgpY3gpLAiOiJnfCIsIuCkquCljeCksCI6Imt8Iiwi4KSs4KWN4KSwIjoiYXwiLCLgpK3gpY3gpLAiOiJlfCIsIuCkruCljeCksCI6ImR8Iiwi4KSv4KWN4KSwIjoib3wiLCLgpLDgpY3gpLAiOiIvfCIsIuCksuCljeCksCI6Im58Iiwi4KS14KWN4KSwIjoianwiLCLgpLfgpY3gpLAiOiJpZnwiLCLgpLjgpY3gpLAiOiI7fCIsIuCkueCljeCksCI6Inh8Iiwi4KWmIjoiKSIsIuClpyI6IiEiLCLgpagiOiJAIiwi4KWpIjoiIyIsIuClqiI6IiQiLCLgpasiOiIlIiwi4KWsIjoiXiIsIuClrSI6IiYiLCLgpa4iOiIqIiwi4KWvIjoiKCIsIuKAkyI6Ii0iLCItIjoi4oCTIiwiKCI6Ii0iLCIpIjoiXyIsIuKAmCI6IuKApiIsIuKAmSI6IsOaIiwi4oCcIjoiw6YiLCLigJ0iOiLDhiIsIiEiOiLDmyIsIiUiOiLDnCIsIj0iOiLDliIsIjsiOiLDmSIsIj8iOiI8Iiwi4KWQIjoiw6ciLCIvIjoiw7ciLCIrIjoiwrEiLCI6IjoiTSIsIuCkp+CljeCksCI6IuKAniIsIiYiOiLigKAiLCIjIjoi4oChIiwiw7ciOiLFoCIsIuCknSI6IsWSIiwi4KS24KWN4KSoIjoixb0iLCLgpYUiOiLigJgiLCQ6IsWhIiwi4KSb4KWN4KSwIjoixZMiLCLgpJXgpY3gpLAiOiLFviIsIuCkleCljeCkpCI6IsW4Iiwi4KSb4KWN4KS1IjoiwqwiLCLgpLngpY3gpK8iOiLCryIsIuCkueCljeCkriI6IsK4IiwiQCI6IsK7Iiwi4KS54KWN4KSwIjoiw4AiLCLgpLngpY3gpLIiOiLDgSIsIuCkueCljeCkqCI6IsOCIiwi4KS54KWN4KS1Ijoiw4MiLCLgpLngpY3gpKMiOiLDhCIsIuCkleCljeCksiI6IsOHIiwi4KSY4KWN4KSoIjoiw4giLCLgpKbgpY3gpJciOiLDiSIsIuCkpuCljeCkrSI6IsOKIiwi4KS34KWN4KSfIjoiw48iLCLgpKbgpY3gpKwiOiLDkCIsIuCkt+CljeCkoCI6IsORIiwi4KSjIjoiw5MiLCLgpKsiOiLDlCIsIuCkleCljeCktyI6IsOVIiwi4KS24KWN4KSaIjoiw6AiLCLgpLbgpY3gpLUiOiLDoSIsIuCknuCljeCkmiI6IsOiIiwi4KSe4KWN4KScIjoiw6MiLCLgpLjgpY3gpKTgpY3gpLAiOiLDpCIsIuGzriI6IsOoIiwi4bOpIjoiw6kiLCLgpIYiOiLDqiIsIuCluiI6IsOrIiwi4KS3Ijoiw6wiLCLgpIgiOiLDrSIsIuCkiiI6IsOuIiwi4KSQIjoiw68iLCLgpJMiOiLDtCIsIuCklCI6IsO1Iiwi4KWEIjoiw7YiLCLhs68iOiLDuSIsIuClpSI6IsO6Iiwi4KWQIjoiw7siLCLgpL0iOiLDvCIsIuKdgSI6IsO9Iiwi5Y2QIjoiw78iLCLgpIwiOiJuWyIsIuCloSI6Im7DtiJ9O2Z1bmN0aW9uIGVzY2FwZVJlZ0V4cEtpc2hvcihlKXtyZXR1cm4gZS5yZXBsYWNlKC9bLiorP14ke30oKXxbXF1cXF0vZywiXFwkJiIpfWNvbnN0IGsydVJlZ2V4PW5ldyBSZWdFeHAoT2JqZWN0LmtleXMoa2lzaG9yVG9Vbmljb2RlTWFwKS5zb3J0KChlLGMpPT5jLmxlbmd0aC1lLmxlbmd0aCkubWFwKGVzY2FwZVJlZ0V4cEtpc2hvcikuam9pbigifCIpLCJnIiksdTJrUmVnZXg9bmV3IFJlZ0V4cChPYmplY3Qua2V5cyh1bmljb2RlVG9LaXNob3JNYXApLnNvcnQoKGUsYyk9PmMubGVuZ3RoLWUubGVuZ3RoKS5tYXAoZXNjYXBlUmVnRXhwS2lzaG9yKS5qb2luKCJ8IiksImciKTtmdW5jdGlvbiBraXNob3JUb1VuaWNvZGUoZSl7bGV0IGM9ZTtjPWMucmVwbGFjZSgvayhbJyJcXVx9XFtce1xcXEYr4oCYTGZdKyltL2csImttJDEiKSxjPWMucmVwbGFjZSgvZShbJyJcXVx9XFtce1xcXEYr4oCYTGZdKyltL2csImVtJDEiKSxjPWMucmVwbGFjZShrMnVSZWdleCxlPT5raXNob3JUb1VuaWNvZGVNYXBbZV0pLGM9Yy5yZXBsYWNlKC8oXnxccyngpIMvZywiJDE6Iik7bGV0IHI9Yy5pbmRleE9mKCJsIik7Zm9yKDstMSE9PXI7KXtsZXQgZT1jLmNoYXJBdChyKzEpO2M9Yy5yZXBsYWNlKCJsIitlLGUrIuCkvyIpLHI9Yy5pbmRleE9mKCJsIil9cmV0dXJuIGM9Yy5yZXBsYWNlKC/gpL/gpY0oLikvZywi4KWNJDHgpL8iKSxjPWMucmVwbGFjZSgv4KS/4KSC4KWNKC4pL2csIuCljSQx4KS/4KSCIiksYz1jLnJlcGxhY2UoLyguKShb4KS+4KS/4KWA4KWB4KWC4KWD4KWH4KWI4KWL4KWM4KSC4KSD4KSB4KWFXSopey9nLCLgpLDgpY0kMSQyIiksYz1jLnJlcGxhY2UoL+CkvuClhy9nLCLgpYsiKSxjPWMucmVwbGFjZSgv4KS+4KWIL2csIuCljCIpLGN9ZnVuY3Rpb24gdW5pY29kZVRvS2lzaG9yKGUpe2xldCBjPWU7cmV0dXJuIGM9Yy5yZXBsYWNlKC/gpKTgpY3gpKTgpY0oPz1cc3xbLiw7IT/gpaTgpaUpXF19IiddfCQpL2csIlFcXCIpLGM9Yy5yZXBsYWNlKC/gpKTgpY3gpKTgpY0vZywiwqQiKSxjPWMucmVwbGFjZSgv4KSk4KWN4KSw4KWNKD89XHN8Wy4sOyE/4KWk4KWlKVxdfSInXXwkKS9nLCJxXFwiKSxjPWMucmVwbGFjZSgv4KSk4KWN4KSw4KWNL2csIsKmIiksYz1jLnJlcGxhY2UoL+CktuCljeCksOCljSg/PVxzfFsuLDshP+ClpOClpSlcXX0iJ118JCkvZywiPlxcIiksYz1jLnJlcGxhY2UoL+CktuCljeCksOCljS9nLCLDsSIpLGM9Yy5yZXBsYWNlKC/gpK/gpY0oPz1cc3xbLiw7IT/gpaTgpaUpXF19IiddfCQpL2csIm9cXCIpLGM9Yy5yZXBsYWNlKC/gpK/gpY0vZywiw7giKSxjPWMucmVwbGFjZSgvKC4p4KWNKD89XHN8Wy4sOyE/4KWk4KWlKVxdfSInXXwkKS9nLCIkMVxcIiksYz1jLnJlcGxhY2UoLygoPzouW+CljV0pKi4p4KS/L2csImwkMSIpLGM9Yy5yZXBsYWNlKC8oXnxbXuCljV0p4KSw4KWNKD8hXHUyMDBEKSgoPzouW+CljV0pKi4pKFvgpL7gpL/gpYDgpYHgpYLgpYPgpYfgpYjgpYvgpYzgpILgpIPgpIHgpYVdPykvZywiJDEkMiQzeyIpLGM9Yy5yZXBsYWNlKHUya1JlZ2V4LGU9PnVuaWNvZGVUb0tpc2hvck1hcFtlXSksYz1jLnJlcGxhY2UoL3NcKC9nLCJzIiksY30=");
+const kishorToUnicodeMap = {
+    // Base Vowels & Modifiers
+    "F": "ँ", "+": "ं", "M": "ः", "c": "अ", "cf": "आ", "cFf": "आँ", "c+f": "आं", "O": "इ", "O{": "ई", "p": "उ", "pm": "ऊ", "C": "ऋ", "C[": "ॠ", "P": "ए", "P]": "ऐ", "c‘f": "ऑ", "cf‘": "ऑ", "c]f": "ओ", "cf]": "ओ", "c}f": "औ", "cf}": "औ", "f]": "ो", "f}": "ौ", "f": "ा", "L": "ी", "'": "ु", "\"": "ू", "[": "ृ", "]": "े", "}": "ै", "f‘": "ॉ", "\\": "्", "Ø": "्य", "|": "्र", "8Þ": "ड़", "9Þ": "ढ़", "Þ": "़", "˜": "ऽ", "¥": "र्‍",
+    
+    // Base Consonants & Clusters
+    "s": "क", "s‘": "कॅ", "S": "क्", "Qm": "क्त", "qm": "क्र", "If": "क्ष", "I": "क्ष्", "v": "ख", "V": "ख्", "u": "ग", "U": "ग्", "3": "घ", "£": "घ्", "ª": "ङ", "Í": "ङ्क", "Î": "ङ्ख", "Ë": "ङ्ग", "‹": "ङ्घ", "r": "च", "R": "च्", "5": "छ", "5«": "छ्र", "h": "ज", "H": "ज्", "1": "ज्ञ", "¡": "ज्ञ्", "´": "झ", "em": "झ", "eFm": "झाँ", "e+m": "झां", "e'm": "झु", "e\"m": "झू", "e[m": "झृ", "e‘m": "झॅ", "e]m": "झे", "e}m": "झै", "‰": "झ्", "e\\m": "झ्", "`": "ञ", "~": "ञ्", "6": "ट", "§": "ट्ट", "Ý": "टठ", "6«": "ट्र", "7": "ठ", "¶": "ठ्ठ", "7«": "ठ्र", "8": "ड", "•": "ड्ड", "°": "ड्ढ", "8«": "ड्र", "9": "ढ", "9«": "ढ्र", "0": "ण्", "0f": "ण", "t": "त", "T": "त्", "Q": "त्त", "q": "त्र", "y": "थ", "Y": "थ्", "b": "द", "¢": "द्घ", "2": "द्द", "4": "द्ध", "ß": "द्म", "B": "द्य", "›": "द्र", "å": "द्व", "w": "ध", "W": "ध्", "g": "न", "G": "न्", "Ì": "न्न", "k": "प", "K": "प्", "km": "फ", "kFm": "फँ", "k+m": "फं", "k'm": "फु", "k\"m": "फू", "k[m": "फृ", "k‘m": "फॅ", "k]m": "फे", "k}m": "फै", "ˆ": "फ्", "k\\m": "फ्", "k|m": "फ्र", "a": "ब", "A": "ब्", "e": "भ", "E": "भ्", "d": "म", "D": "म्", "o": "य", "/": "र", "?": "रु", "¿": "रू", "n": "ल", "N˜": "ल", "N": "ल्", "j": "व", "J": "व्", "z": "श", "Z": "श्", ">": "श्र", "i": "ष्", "if": "ष", ";": "स", ":": "स्", "x": "ह", "Å": "हृ", "X": "ह्",
+    
+    // Consonant + Ra Combos
+    "s|": "क्र", "v|": "ख्र", "u|": "ग्र", "3|": "घ्र", "w|": "ध्र", "r|": "च्र", "h|": "ज्र", "´|": "झ्र", "y|": "थ्र", "g|": "न्र", "k|": "प्र", "a|": "ब्र", "e|": "भ्र", "d|": "म्र", "o|": "य्र", "/|": "र्र", "n|": "ल्र", "j|": "व्र", "if|": "ष्र", ";|": "स्र", "x|": "ह्र",
+    
+    // Punctuation & Numbers
+    "=": ".", "_": ")", "Ö": "=", "Ù": ";", "…": "‘", "Ú": "’", "Û": "!", "Ü": "%", "æ": "“", "Æ": "”", "±": "+", "-": "(", "<": "?", "ç": "ॐ", "–": "-", "÷": "/", ".": "।", "..": "॥", ")": "०", "!": "१", "@": "२", "#": "३", "$": "४", "%": "५", "^": "६", "&": "७", "*": "८", "(": "९",
+
+    // Kishor Specific Overrides
+    "„": "ध्र", "†": "&", "‡": "#", "Š": "÷", "Œ": "झ", "Ž": "श्न", "‘": "ॅ", "š": "$", "œ": "छ्र", "ž": "क्र", "Ÿ": "क्त", "¤": "त्त्", "¦": "त्र्", "¬": "छ्व", "¯": "ह्य", "¸": "ह्म", "»": "@", "À": "ह्र", "Á": "ह्ल", "Â": "ह्न", "Ã": "ह्व", "Ä": "ह्ण", "Ç": "क्ल", "È": "घ्न", "É": "द्ग", "Ê": "द्भ", "Ï": "ष्ट", "Ð": "द्ब", "Ñ": "ष्ठ", "Ó": "ण", "Ô": "फ", "Õ": "क्ष", "à": "श्च", "á": "श्व", "â": "ञ्च", "ã": "ञ्ज", "ä": "स्त्र", "è": "ᳮ", "é": "ᳩ", "ê": "आ", "ë": "ॺ", "ì": "ष", "í": "ई", "î": "ऊ", "ï": "ऐ", "ñ": "श्र्", "ô": "ओ", "õ": "औ", "ö": "ॄ", "ø": "य्", "ù": "ᳯ", "ú": "॥", "û": "ॐ", "ü": "ऽ", "ý": "❁", "ÿ": "卐", "n[": "ऌ", "nö": "ॡ"
+};
+
+const unicodeToKishorMap = {
+    // Base Vowels & Modifiers
+    "ऑ": "cf‘", "औ": "cf}", "ओ": "cf]", "आ": "cf", "अ": "c", "ई": "O{", "इ": "O", "ऊ": "pm", "उ": "p", "ऋ": "C", "ऐ": "P]", "ए": "P", "ॉ": "f‘", "ू": "\"", "ु": "'", "ं": "+", "ा": "f", "ृ": "[", "्": "\\", "े": "]", "ै": "}", "ँ": "F", "ी": "L", "ः": "M", "ो": "f]", "ौ": "f}", "र्‍य": "¥o", "र्‍": "¥", "़": "Þ", "×": "×", "॥": "..", "÷": "/", "।": ".",
+    
+    // Base Consonants
+    "क्": "S", "क": "s", "ख्": "V", "ख": "v", "ग्": "U", "ग": "u", "घ्": "£", "घ": "3", "ङ": "ª", "च्": "R", "च": "r", "छ": "5", "ज्": "H", "ज": "h", "झ्": "‰", "झ": "´", "ञ्": "~", "ञ": "`", "ट": "6", "ठ": "7", "ड": "8", "ढ": "9", "ण्": "0", "ण": "0f", "त्": "T", "त": "t", "थ्": "Y", "थ": "y", "द": "b", "ध्": "W", "ध": "w", "न्": "G", "न": "g", "प्": "K", "प": "k", "फ्": "ˆ", "ब्": "A", "ब": "a", "भ्": "E", "भ": "e", "म्": "D", "म": "d", "य": "o", "र": "/", "ल्": "N", "ल": "n", "व्": "J", "व": "j", "श्": "Z", "श": "z", "ष्": "i", "ष": "if", "स्": ":", "स": ";", "ह्": "X", "ह": "x", "्य": "Ø",
+    
+    // Special Clusters
+    "फ्र": "k|m", "फ": "km", "क्त": "Qm", "क्र": "qm", "ज्ञ्": "¡", "द्घ": "¢", "ज्ञ": "1", "द्द": "2", "द्ध": "4", "श्र": ">", "रु": "?", "द्य": "B", "क्ष्": "I", "क्ष": "If", "त्त": "Q", "द्म": "ß", "त्र": "q", "ङ्घ": "‹", "ड्ड": "•", "द्र": "›", "ट्ट": "§", "ड्ढ": "°", "ठ्ठ": "¶", "रू": "¿", "हृ": "Å", "ङ्ग": "Ë", "न्न": "Ì", "ङ्क": "Í", "ङ्ख": "Î", "टठ": "Ý", "द्व": "å", "ट्र": "6«", "ठ्र": "7«", "ड्र": "8«", "ढ्र": "9«", "्र": "|", "ड़": "8Þ", "ढ़": "9Þ", "ह्व": "Xj", "ह्न": "Xg", "ह्ण": "X0f", "ऽ": "˜", "ॠ": "C[", "त्र्य": "q\\o",
+    "ङ्ख्र": "ª\\v|", "ङ्ग्र": "ª\\u|", "ङ्घ्र": "ª\\3|", "ङ्ख्": "ª\\v\\", "ङ्ग्": "ª\\u\\", "ङ्घ्": "ª\\3\\",
+    
+    // Consonant + Ra Combos
+    "ग्र": "u|", "घ्र": "3|", "च्र": "r|", "ज्र": "h|", "झ्र": "´|", "थ्र": "y|", "न्र": "g|", "प्र": "k|", "ब्र": "a|", "भ्र": "e|", "म्र": "d|", "य्र": "o|", "र्र": "/|", "ल्र": "n|", "व्र": "j|", "ष्र": "if|", "स्र": ";|", "ह्र": "x|",
+    
+    // Numbers & Punctuation
+    "०": ")", "१": "!", "२": "@", "३": "#", "४": "$", "५": "%", "६": "^", "७": "&", "८": "*", "९": "(", "–": "-", "-": "–", "(": "-", ")": "_", "‘": "…", "’": "Ú", "“": "æ", "”": "Æ", "!": "Û", "%": "Ü", "=": "Ö", ";": "Ù", "?": "<", "ॐ": "ç", "/": "÷", "+": "±", ":": "M",
+
+    // Kishor Specific Overrides
+    "ध्र": "„", "&": "†", "#": "‡", "÷": "Š", "झ": "Œ", "श्न": "Ž", "ॅ": "‘", "$": "š", "छ्र": "œ", "क्र": "ž", "क्त": "Ÿ", "छ्व": "¬", "ह्य": "¯", "ह्म": "¸", "@": "»", "ह्र": "À", "ह्ल": "Á", "ह्न": "Â", "ह्व": "Ã", "ह्ण": "Ä", "क्ल": "Ç", "घ्न": "È", "द्ग": "É", "द्भ": "Ê", "ष्ट": "Ï", "द्ब": "Ð", "ष्ठ": "Ñ", "ण": "Ó", "फ": "Ô", "क्ष": "Õ", "श्च": "à", "श्व": "á", "ञ्च": "â", "ञ्ज": "ã", "स्त्र": "ä", "ᳮ": "è", "ᳩ": "é", "आ": "ê", "ॺ": "ë", "ष": "ì", "ई": "í", "ऊ": "î", "ऐ": "ï", "ओ": "ô", "औ": "õ", "ॄ": "ö", "ᳯ": "ù", "॥": "ú", "ॐ": "û", "ऽ": "ü", "❁": "ý", "卐": "ÿ", "ऌ": "n[", "ॡ": "nö"
+};
+
+// ==========================================
+// 2. CONVERSION ALGORITHMS
+// ==========================================
+
+function escapeRegExpKishor(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+const k2uRegex = new RegExp(Object.keys(kishorToUnicodeMap).sort((a, b) => b.length - a.length).map(escapeRegExpKishor).join('|'), 'g');
+const u2kRegex = new RegExp(Object.keys(unicodeToKishorMap).sort((a, b) => b.length - a.length).map(escapeRegExpKishor).join('|'), 'g');
+
+function kishorToUnicode(text) {
+    let result = text;
+
+    result = result.replace(/k(['"\]\}\[\{\\\F+‘Lf]+)m/g, "km$1");
+    result = result.replace(/e(['"\]\}\[\{\\\F+‘Lf]+)m/g, "em$1");
+    result = result.replace(k2uRegex, match => kishorToUnicodeMap[match]);
+    result = result.replace(/(^|\s)ः/g, "$1:");
+
+    let positionOfI = result.indexOf('l');
+    while (positionOfI !== -1) {
+        let charRight = result.charAt(positionOfI + 1);
+        result = result.replace('l' + charRight, charRight + 'ि');
+        positionOfI = result.indexOf('l');
+    }
+
+    result = result.replace(/ि्(.)/g, "्$1ि");
+    result = result.replace(/िं्(.)/g, "्$1िं");
+    result = result.replace(/(.)([ािीुूृेैोौंःँॅ]*){/g, "र्$1$2");
+    result = result.replace(/ाे/g, "ो");
+    result = result.replace(/ाै/g, "ौ");
+    
+    return result;
+}
+
+function unicodeToKishor(text) {
+    let result = text;
+
+    // Contextual Rules
+    result = result.replace(/त्त्(?=\s|[.,;!?।॥)\]}"']|$)/g, "Q\\");
+    result = result.replace(/त्त्/g, "¤");
+    result = result.replace(/त्र्(?=\s|[.,;!?।॥)\]}"']|$)/g, "q\\");
+    result = result.replace(/त्र्/g, "¦");
+    result = result.replace(/श्र्(?=\s|[.,;!?।॥)\]}"']|$)/g, ">\\");
+    result = result.replace(/श्र्/g, "ñ");
+    result = result.replace(/य्(?=\s|[.,;!?।॥)\]}"']|$)/g, "o\\");
+    result = result.replace(/य्/g, "ø");
+
+    result = result.replace(/(.)्(?=\s|[.,;!?।॥)\]}"']|$)/g, "$1\\");
+    result = result.replace(/((?:.[्])*.)ि/g, "l$1");
+    result = result.replace(/(^|[^्])र्(?!\u200D)((?:.[्])*.)([ािीुूृेैोौंःँॅ]?)/g, "$1$2$3{");
+    result = result.replace(u2kRegex, match => unicodeToKishorMap[match]);
+    result = result.replace(/s\(/g, "s"); 
+    
+    return result;
+}

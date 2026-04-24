@@ -1,12 +1,378 @@
-/*!
- * Copyright (c) 2026 Kishor Aryal. All rights reserved.
- * Application: Utility Studio
- * Website: https://kishoraryal.com.np
- * * PROPRIETARY AND CONFIDENTIAL
- * This source code and associated documentation are proprietary to Kishor Aryal.
- * Unauthorized copying, reproduction, distribution, modification, or use of this 
- * file, via any medium, is strictly prohibited without express written permission.
- * * Violators will be prosecuted to the maximum extent possible under the law.
- */
+let isPreetiToUnicode = true;
+let isKishorEngineActive = false;
+const appHeader = document.querySelector('.app-header');
 
-(function(_0x1a2b,_0x3c4d){eval(decodeURIComponent(escape(atob(_0x1a2b))));})("bGV0IGlzUHJlZXRpVG9Vbmljb2RlPSEwLGlzS2lzaG9yRW5naW5lQWN0aXZlPSExO2NvbnN0IGFwcEhlYWRlcj1kb2N1bWVudC5xdWVyeVNlbGVjdG9yKCIuYXBwLWhlYWRlciIpLGJ0blAyVT1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgibW9kZS1wMnUiKSxidG5VMlA9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIm1vZGUtdTJwIiksaW5wdXRCYWRnZT1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiaW5wdXQtYmFkZ2UiKSxvdXRwdXRCYWRnZT1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgib3V0cHV0LWJhZGdlIiksY2xlYXJCdG49ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImNsZWFyLWJ0biIpLGlucHV0VGV4dD1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiaW5wdXQtdGV4dCIpLG91dHB1dFRleHQ9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIm91dHB1dC10ZXh0IiksZmlsZVVwbG9hZD1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZmlsZS11cGxvYWQiKSxmaWxlTmFtZURpc3BsYXk9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImZpbGUtbmFtZS1kaXNwbGF5IiksY29weUJ0bj1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY29weS1idG4iKSxkb3dubG9hZEJ0bj1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZG93bmxvYWQtYnRuIiksZXJyb3JNc2c9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImVycm9yLW1zZyIpLHRvYXN0PWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ0b2FzdCIpO2RvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoImtleWRvd24iLGU9PntlLmN0cmxLZXkmJmUuc2hpZnRLZXkmJiJrIj09PWUua2V5LnRvTG93ZXJDYXNlKCkmJihlLnByZXZlbnREZWZhdWx0KCksdG9nZ2xlS2lzaG9yRW5naW5lKCkpfSk7bGV0IHRhcFRpbWVyLHRhcENvdW50PTA7ZnVuY3Rpb24gdG9nZ2xlS2lzaG9yRW5naW5lKCl7aXNLaXNob3JFbmdpbmVBY3RpdmU9IWlzS2lzaG9yRW5naW5lQWN0aXZlLGlzS2lzaG9yRW5naW5lQWN0aXZlPyhhcHBIZWFkZXIudGV4dENvbnRlbnQ9Iktpc2hvciBFbmdpbmUgQWN0aXZhdGVkIixhcHBIZWFkZXIuc3R5bGUuY29sb3I9IiMxMGI5ODEiLGJ0blAyVS50ZXh0Q29udGVudD0iS2lzaG9yIOKelCBVbmljb2RlIixidG5VMlAudGV4dENvbnRlbnQ9IlVuaWNvZGUg4p6UIEtpc2hvciIsc2hvd1RvYXN0KCJLaXNob3IgRW5naW5lIEFjdGl2YXRlZCEiKSk6KGFwcEhlYWRlci50ZXh0Q29udGVudD0iVW5pY29kZSBUb29scyIsYXBwSGVhZGVyLnN0eWxlLmNvbG9yPSIiLGJ0blAyVS50ZXh0Q29udGVudD0iUHJlZXRpIOKelCBVbmljb2RlIixidG5VMlAudGV4dENvbnRlbnQ9IlVuaWNvZGUg4p6UIFByZWV0aSIsc2hvd1RvYXN0KCJTdGFuZGFyZCBFbmdpbmUgUmVzdG9yZWQiKSksc3dpdGNoTW9kZShpc1ByZWV0aVRvVW5pY29kZSksdHJpZ2dlckNvbnZlcnNpb24oKX1hcHBIZWFkZXIuc3R5bGUudXNlclNlbGVjdD0ibm9uZSIsYXBwSGVhZGVyLnN0eWxlLmN1cnNvcj0icG9pbnRlciIsYXBwSGVhZGVyLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwoKT0+e3RhcENvdW50KyssY2xlYXJUaW1lb3V0KHRhcFRpbWVyKSx0YXBUaW1lcj1zZXRUaW1lb3V0KCgpPT57dGFwQ291bnQ9MH0sMTUwMCksdGFwQ291bnQ+PTUmJih0b2dnbGVLaXNob3JFbmdpbmUoKSx0YXBDb3VudD0wKX0pO2NvbnN0IHByZWV0aVRvVW5pY29kZU1hcD17IuKAkyI6Ii0iLCLDtyI6Ii8iLEY6IuCkgSIsIisiOiLgpIIiLE06IuCkgyIsYzoi4KSFIixjZjoi4KSGIixjRmY6IuCkhuCkgSIsImMrZiI6IuCkhuCkgiIsTzoi4KSHIiwiT3siOiLgpIgiLHA6IuCkiSIscG06IuCkiiIsQzoi4KSLIixQOiLgpI8iLCJQXSI6IuCkkCIsImPigJhmIjoi4KSRIiwiY2bigJgiOiLgpJEiLCJjXWYiOiLgpJMiLCJjZl0iOiLgpJMiLCJjfWYiOiLgpJQiLCJjZn0iOiLgpJQiLHM6IuCklSIsInPigJgiOiLgpJXgpYUiLFM6IuCkleCljSIsUW06IuCkleCljeCkpCIscW06IuCkleCljeCksCIsSWY6IuCkleCljeCktyIsSToi4KSV4KWN4KS34KWNIix2OiLgpJYiLFY6IuCkluCljSIsdToi4KSXIixVOiLgpJfgpY0iLDM6IuCkmCIsIsKjIjoi4KSY4KWNIiwiwqoiOiLgpJkiLCLDjSI6IuCkmeCljeCklSIsIsOOIjoi4KSZ4KWN4KSWIiwiw4siOiLgpJngpY3gpJciLCLigLkiOiLgpJngpY3gpJgiLHI6IuCkmiIsUjoi4KSa4KWNIiw1OiLgpJsiLCI1wqsiOiLgpJvgpY3gpLAiLGg6IuCknCIsSDoi4KSc4KWNIiwxOiLgpJzgpY3gpJ4iLCLCoSI6IuCknOCljeCknuCljSIsIsK0Ijoi4KSdIixlbToi4KSdIixlRm06IuCkneCkvuCkgSIsImUrbSI6IuCkneCkvuCkgiIsImUnbSI6IuCkneClgSIsJ2UibSc6IuCkneClgiIsImVbbSI6IuCkneClgyIsImXigJhtIjoi4KSd4KWFIiwiZV1tIjoi4KSd4KWHIiwiZX1tIjoi4KSd4KWIIiwi4oCwIjoi4KSd4KWNIiwiZVxcbSI6IuCkneCljSIsImAiOiLgpJ4iLCJ+Ijoi4KSe4KWNIiw2OiLgpJ8iLCLCpyI6IuCkn+CljeCknyIsIsOdIjoi4KSf4KSgIiwiNsKrIjoi4KSf4KWN4KSwIiw3OiLgpKAiLCLCtiI6IuCkoOCljeCkoCIsIjfCqyI6IuCkoOCljeCksCIsODoi4KShIiwi4oCiIjoi4KSh4KWN4KShIiwiwrAiOiLgpKHgpY3gpKIiLCI4wqsiOiLgpKHgpY3gpLAiLDk6IuCkoiIsIjnCqyI6IuCkouCljeCksCIsMDoi4KSj4KWNIiwiMGYiOiLgpKMiLHQ6IuCkpCIsVDoi4KSk4KWNIixROiLgpKTgpY3gpKQiLHE6IuCkpOCljeCksCIseToi4KSlIixZOiLgpKXgpY0iLGI6IuCkpiIsIsKiIjoi4KSm4KWN4KSYIiwyOiLgpKbgpY3gpKYiLDQ6IuCkpuCljeCkpyIsIsOfIjoi4KSm4KWN4KSuIixCOiLgpKbgpY3gpK8iLCLigLoiOiLgpKbgpY3gpLAiLCLDpSI6IuCkpuCljeCktSIsdzoi4KSnIixXOiLgpKfgpY0iLCLigJ4iOiLgpKfgpY3gpLAiLGc6IuCkqCIsRzoi4KSo4KWNIiwiw4wiOiLgpKjgpY3gpKgiLGs6IuCkqiIsSzoi4KSq4KWNIixrbToi4KSrIixrRm06IuCkq+CkgSIsImsrbSI6IuCkq+CkgiIsImsnbSI6IuCkq+ClgSIsJ2sibSc6IuCkq+ClgiIsImtbbSI6IuCkq+ClgyIsImvigJhtIjoi4KSr4KWFIiwia11tIjoi4KSr4KWHIiwia31tIjoi4KSr4KWIIiwiy4YiOiLgpKvgpY0iLCJrXFxtIjoi4KSr4KWNIiwia3xtIjoi4KSr4KWN4KSwIixhOiLgpKwiLEE6IuCkrOCljSIsZToi4KStIixFOiLgpK3gpY0iLGQ6IuCkriIsRDoi4KSu4KWNIixvOiLgpK8iLCIvIjoi4KSwIiwiPyI6IuCksOClgSIsIsK/Ijoi4KSw4KWCIiwiwqUiOiLgpLDgpY3igI0iLG46IuCksiIsIk7LnCI6IuCksiIsTjoi4KSy4KWNIixqOiLgpLUiLEo6IuCkteCljSIsejoi4KS2IixaOiLgpLbgpY0iLCI+Ijoi4KS24KWN4KSwIixpOiLgpLfgpY0iLGlmOiLgpLciLCI7Ijoi4KS4IiwiOiI6IuCkuOCljSIseDoi4KS5Iiwiw4UiOiLgpLngpYMiLFg6IuCkueCljSIsIsucIjoi4KS9IixmOiLgpL4iLEw6IuClgCIsIiciOiLgpYEiLCciJzoi4KWCIiwiWyI6IuClgyIsIl0iOiLgpYciLCJ9Ijoi4KWIIiwiZuKAmCI6IuCliSIsIlxcIjoi4KWNIiwiw5giOiLgpY3gpK8iLCJ8Ijoi4KWN4KSwIiwiOMOeIjoi4KSh4KS8IiwiOcOeIjoi4KSi4KS8Iiwiw54iOiLgpLwiLCJzfCI6IuCkleCljeCksCIsInZ8Ijoi4KSW4KWN4KSwIiwidXwiOiLgpJfgpY3gpLAiLCIzfCI6IuCkmOCljeCksCIsInd8Ijoi4KSn4KWN4KSwIiwicnwiOiLgpJrgpY3gpLAiLCJofCI6IuCknOCljeCksCIsIsK0fCI6IuCkneCljeCksCIsInl8Ijoi4KSl4KWN4KSwIiwiZ3wiOiLgpKjgpY3gpLAiLCJrfCI6IuCkquCljeCksCIsImF8Ijoi4KSs4KWN4KSwIiwiZXwiOiLgpK3gpY3gpLAiLCJkfCI6IuCkruCljeCksCIsIm98Ijoi4KSv4KWN4KSwIiwiL3wiOiLgpLDgpY3gpLAiLCJufCI6IuCksuCljeCksCIsImp8Ijoi4KS14KWN4KSwIiwiaWZ8Ijoi4KS34KWN4KSwIiwiO3wiOiLgpLjgpY3gpLAiLCJ4fCI6IuCkueCljeCksCIsIkNbIjoi4KWgIiwiZl0iOiLgpYsiLCJmfSI6IuCljCIsIj0iOiIuIixfOiIpIiwiw5YiOiI9Iiwiw5kiOiI7Iiwi4oCmIjoi4oCYIiwiw5oiOiLigJkiLCLDmyI6IiEiLCLDnCI6IiUiLCLDpiI6IuKAnCIsIsOGIjoi4oCdIiwiwrEiOiIrIiwiLSI6IigiLCI8IjoiPyIsIsOnIjoi4KWQIiwiLiI6IuClpCIsIi4uIjoi4KWlIiwiKSI6IuClpiIsIiEiOiLgpaciLCJAIjoi4KWoIiwiIyI6IuClqSIsJDoi4KWqIiwiJSI6IuClqyIsIl4iOiLgpawiLCImIjoi4KWtIiwiKiI6IuClriIsIigiOiLgpa8ifSx1bmljb2RlVG9QcmVldGlNYXA9eyLgpLwiOiLDniIsIsOXIjoiw5ciLCLgpaUiOiIuLiIsIsO3IjoiLyIsIuClpCI6Ii4iLCLgpaYiOiIpIiwi4KWnIjoiISIsIuClqCI6IkAiLCLgpakiOiIjIiwi4KWqIjoiJCIsIuClqyI6IiUiLCLgpawiOiJeIiwi4KWtIjoiJiIsIuClriI6IioiLCLgpa8iOiIoIiwi4KSr4KWN4KSwIjoia3xtIiwi4KSrIjoia20iLCLgpJXgpY3gpKQiOiJRbSIsIuCkleCljeCksCI6InFtIiwi4KSc4KWN4KSe4KWNIjoiwqEiLCLgpKbgpY3gpJgiOiLCoiIsIuCknOCljeCkniI6IjEiLCLgpKbgpY3gpKYiOiIyIiwi4KSm4KWN4KSnIjoiNCIsIuCktuCljeCksCI6Ij4iLCLgpLDgpYEiOiI/Iiwi4KSm4KWN4KSvIjoiQiIsIuCkleCljeCkt+CljSI6IkkiLCLgpJXgpY3gpLciOiJJZiIsIuCkpOCljeCkpCI6IlEiLCLgpKbgpY3gpK4iOiLDnyIsIuCkpOCljeCksCI6InEiLCLgpKfgpY3gpLAiOiLigJ4iLCLgpJngpY3gpJgiOiLigLkiLCLgpKHgpY3gpKEiOiLigKIiLCLgpKbgpY3gpLAiOiLigLoiLCLgpJ/gpY3gpJ8iOiLCpyIsIuCkoeCljeCkoiI6IsKwIiwi4KSg4KWN4KSgIjoiwrYiLCLgpLDgpYIiOiLCvyIsIuCkueClgyI6IsOFIiwi4KSZ4KWN4KSXIjoiw4siLCLgpKjgpY3gpKgiOiLDjCIsIuCkmeCljeCklSI6IsONIiwi4KSZ4KWN4KSWIjoiw44iLCLgpJ/gpKAiOiLDnSIsIuCkpuCljeCktSI6IsOlIiwi4KSf4KWN4KSwIjoiNsKrIiwi4KSg4KWN4KSwIjoiN8KrIiwi4KSh4KWN4KSwIjoiOMKrIiwi4KSi4KWN4KSwIjoiOcKrIiwi4KWN4KSwIjoifCIsIuCkoeCkvCI6IjjDniIsIuCkouCkvCI6IjnDniIsIuCkmeCljeCkluCljeCksCI6IsKqXFx2fCIsIuCkmeCljeCkl+CljeCksCI6IsKqXFx1fCIsIuCkmeCljeCkmOCljeCksCI6IsKqXFwzfCIsIuCkmeCljeCkluCljSI6IsKqXFx2XFwiLCLgpJngpY3gpJfgpY0iOiLCqlxcdVxcIiwi4KSZ4KWN4KSY4KWNIjoiwqpcXDNcXCIsIuCkpOCljeCksOCljeCkryI6InFcXG8iLCLgpJXgpY0iOiJTIiwi4KSVIjoicyIsIuCkluCljSI6IlYiLCLgpJYiOiJ2Iiwi4KSX4KWNIjoiVSIsIuCklyI6InUiLCLgpJjgpY0iOiLCoyIsIuCkmCI6IjMiLCLgpJkiOiLCqiIsIuCkmuCljSI6IlIiLCLgpJoiOiJyIiwi4KSbIjoiNSIsIuCknOCljSI6IkgiLCLgpJwiOiJoIiwi4KSd4KWNIjoi4oCwIiwi4KSdIjoiwrQiLCLgpJ7gpY0iOiJ+Iiwi4KSeIjoiYCIsIuCknyI6IjYiLCLgpKAiOiI3Iiwi4KShIjoiOCIsIuCkoiI6IjkiLCLgpKPgpY0iOiIwIiwi4KSjIjoiMGYiLCLgpKTgpY0iOiJUIiwi4KSkIjoidCIsIuCkpeCljSI6IlkiLCLgpKUiOiJ5Iiwi4KSmIjoiYiIsIuCkp+CljSI6IlciLCLgpKciOiJ3Iiwi4KSo4KWNIjoiRyIsIuCkqCI6ImciLCLgpKrgpY0iOiJLIiwi4KSqIjoiayIsIuCkq+CljSI6IsuGIiwi4KSs4KWNIjoiQSIsIuCkrCI6ImEiLCLgpK3gpY0iOiJFIiwi4KStIjoiZSIsIuCkruCljSI6IkQiLCLgpK4iOiJkIiwi4KSvIjoibyIsIuCksCI6Ii8iLCLgpLLgpY0iOiJOIiwi4KSyIjoibiIsIuCkteCljSI6IkoiLCLgpLUiOiJqIiwi4KS24KWNIjoiWiIsIuCktiI6InoiLCLgpLfgpY0iOiJpIiwi4KS3IjoiaWYiLCLgpLjgpY0iOiI6Iiwi4KS4IjoiOyIsIuCkueCljSI6IlgiLCLgpLkiOiJ4Iiwi4KWN4KSvIjoiw5giLCLgpJEiOiJjZuKAmCIsIuCklCI6ImNmfSIsIuCkkyI6ImNmXSIsIuCkhiI6ImNmIiwi4KSFIjoiYyIsIuCkiCI6Ik97Iiwi4KSHIjoiTyIsIuCkiiI6InBtIiwi4KSJIjoicCIsIuCkiyI6IkMiLCLgpJAiOiJQXSIsIuCkjyI6IlAiLCLgpYkiOiJm4oCYIiwi4KWCIjonIicsIuClgSI6IiciLCLgpIIiOiIrIiwi4KS+IjoiZiIsIuClgyI6IlsiLCLgpY0iOiJcXCIsIuClhyI6Il0iLCLgpYgiOiJ9Iiwi4KSBIjoiRiIsIuClgCI6IkwiLCLgpIMiOiJNIiwi4KWLIjoiZl0iLCLgpYwiOiJmfSIsIuCksOCljeKAjeCkryI6IsKlbyIsIuCksOCljeKAjSI6IsKlIiwi4KSX4KWN4KSwIjoidXwiLCLgpJjgpY3gpLAiOiIzfCIsIuCkmuCljeCksCI6InJ8Iiwi4KSc4KWN4KSwIjoiaHwiLCLgpJ3gpY3gpLAiOiLCtHwiLCLgpKXgpY3gpLAiOiJ5fCIsIuCkqOCljeCksCI6Imd8Iiwi4KSq4KWN4KSwIjoia3wiLCLgpKzgpY3gpLAiOiJhfCIsIuCkreCljeCksCI6ImV8Iiwi4KSu4KWN4KSwIjoiZHwiLCLgpK/gpY3gpLAiOiJvfCIsIuCksOCljeCksCI6Ii98Iiwi4KSy4KWN4KSwIjoibnwiLCLgpLXgpY3gpLAiOiJqfCIsIuCkt+CljeCksCI6ImlmfCIsIuCkuOCljeCksCI6Ijt8Iiwi4KS54KWN4KSwIjoieHwiLCLgpLngpY3gpLUiOiJYaiIsIuCkueCljeCkqCI6IlhnIiwi4KS54KWN4KSjIjoiWDBmIiwi4KS9Ijoiy5wiLCLgpaAiOiJDWyIsIuKAkyI6Ii0iLCItIjoi4oCTIiwiKCI6Ii0iLCIpIjoiXyIsIuKAmCI6IuKApiIsIuKAmSI6IsOaIiwi4oCcIjoiw6YiLCLigJ0iOiLDhiIsIiEiOiLDmyIsIiUiOiLDnCIsIj0iOiLDliIsIjsiOiLDmSIsIj8iOiI8Iiwi4KWQIjoiw6ciLCIvIjoiw7ciLCIrIjoiwrEiLCI6IjoiTSJ9O2Z1bmN0aW9uIGVzY2FwZVJlZ0V4cChlKXtyZXR1cm4gZS5yZXBsYWNlKC9bLiorP14ke30oKXxbXF1cXF0vZywiXFwkJiIpfWNvbnN0IHAydVJlZ2V4PW5ldyBSZWdFeHAoT2JqZWN0LmtleXMocHJlZXRpVG9Vbmljb2RlTWFwKS5zb3J0KChlLHQpPT50Lmxlbmd0aC1lLmxlbmd0aCkubWFwKGVzY2FwZVJlZ0V4cCkuam9pbigifCIpLCJnIiksdTJwUmVnZXg9bmV3IFJlZ0V4cChPYmplY3Qua2V5cyh1bmljb2RlVG9QcmVldGlNYXApLnNvcnQoKGUsdCk9PnQubGVuZ3RoLWUubGVuZ3RoKS5tYXAoZXNjYXBlUmVnRXhwKS5qb2luKCJ8IiksImciKTtmdW5jdGlvbiBwcmVldGlUb1VuaWNvZGUoZSl7bGV0IHQ9ZTt0PXQucmVwbGFjZSgvayhbJyJcXVx9XFtce1xcXEYr4oCYTGZdKyltL2csImttJDEiKSx0PXQucmVwbGFjZSgvZShbJyJcXVx9XFtce1xcXEYr4oCYTGZdKyltL2csImVtJDEiKSx0PXQucmVwbGFjZShwMnVSZWdleCxlPT5wcmVldGlUb1VuaWNvZGVNYXBbZV0pLHQ9dC5yZXBsYWNlKC8oXnxccyngpIMvZywiJDE6Iik7bGV0IG89dC5pbmRleE9mKCJsIik7Zm9yKDstMSE9PW87KXtsZXQgZT10LmNoYXJBdChvKzEpO3Q9dC5yZXBsYWNlKCJsIitlLGUrIuCkvyIpLG89dC5pbmRleE9mKCJsIil9cmV0dXJuIHQ9dC5yZXBsYWNlKC/gpL/gpY0oLikvZywi4KWNJDHgpL8iKSx0PXQucmVwbGFjZSgv4KS/4KSC4KWNKC4pL2csIuCljSQx4KS/4KSCIiksdD10LnJlcGxhY2UoLyguKShb4KS+4KS/4KWA4KWB4KWC4KWD4KWH4KWI4KWL4KWM4KSC4KSD4KSB4KWFXSopey9nLCLgpLDgpY0kMSQyIiksdD10LnJlcGxhY2UoL+CkvuClhy9nLCLgpYsiKSx0PXQucmVwbGFjZSgv4KS+4KWIL2csIuCljCIpLHR9ZnVuY3Rpb24gdW5pY29kZVRvUHJlZXRpKGUpe2xldCB0PWU7cmV0dXJuIHQ9dC5yZXBsYWNlKC8oLingpY0oPz1cc3xbLiw7IT/gpaTgpaUpXF19IiddfCQpL2csIiQxXFwiKSx0PXQucmVwbGFjZSgvKCg/Oi5b4KWNXSkqLingpL8vZywibCQxIiksdD10LnJlcGxhY2UoLyhefFte4KWNXSngpLDgpY0oPyFcdTIwMEQpKCg/Oi5b4KWNXSkqLikoW+CkvuCkv+ClgOClgeClguClg+Clh+CliOCli+CljOCkguCkg+CkgeClhV0/KS9nLCIkMSQyJDN7IiksdD10LnJlcGxhY2UodTJwUmVnZXgsZT0+dW5pY29kZVRvUHJlZXRpTWFwW2VdKSx0PXQucmVwbGFjZSgvc1woL2csInMiKSx0fWZ1bmN0aW9uIHN3aXRjaE1vZGUoZSl7aXNQcmVldGlUb1VuaWNvZGU9ZTtjb25zdCB0PWlzS2lzaG9yRW5naW5lQWN0aXZlPyJLaXNob3IiOiJQcmVldGkiO2lzUHJlZXRpVG9Vbmljb2RlPyhidG5QMlUuY2xhc3NMaXN0LmFkZCgiYWN0aXZlIiksYnRuVTJQLmNsYXNzTGlzdC5yZW1vdmUoImFjdGl2ZSIpLGlucHV0QmFkZ2UudGV4dENvbnRlbnQ9dCxvdXRwdXRCYWRnZS50ZXh0Q29udGVudD0iVW5pY29kZSIsaW5wdXRUZXh0LmNsYXNzTGlzdC5hZGQoInByZWV0aS10ZXh0IiksaW5wdXRUZXh0LmNsYXNzTGlzdC5yZW1vdmUoInVuaWNvZGUtdGV4dCIpLG91dHB1dFRleHQuY2xhc3NMaXN0LnJlbW92ZSgicHJlZXRpLXRleHQiKSxvdXRwdXRUZXh0LmNsYXNzTGlzdC5hZGQoInVuaWNvZGUtdGV4dCIpKTooYnRuVTJQLmNsYXNzTGlzdC5hZGQoImFjdGl2ZSIpLGJ0blAyVS5jbGFzc0xpc3QucmVtb3ZlKCJhY3RpdmUiKSxpbnB1dEJhZGdlLnRleHRDb250ZW50PSJVbmljb2RlIixvdXRwdXRCYWRnZS50ZXh0Q29udGVudD0iUHJlZXRpIixpbnB1dFRleHQuY2xhc3NMaXN0LnJlbW92ZSgicHJlZXRpLXRleHQiKSxpbnB1dFRleHQuY2xhc3NMaXN0LmFkZCgidW5pY29kZS10ZXh0Iiksb3V0cHV0VGV4dC5jbGFzc0xpc3QuYWRkKCJwcmVldGktdGV4dCIpLG91dHB1dFRleHQuY2xhc3NMaXN0LnJlbW92ZSgidW5pY29kZS10ZXh0IikpO2NvbnN0IG89aW5wdXRUZXh0LnZhbHVlO2lucHV0VGV4dC52YWx1ZT1vdXRwdXRUZXh0LnZhbHVlLG91dHB1dFRleHQudmFsdWU9byxlcnJvck1zZy5jbGFzc0xpc3QuYWRkKCJoaWRkZW4iKX1mdW5jdGlvbiB0cmlnZ2VyQ29udmVyc2lvbigpe2NvbnN0IGU9aW5wdXRUZXh0LnZhbHVlO2lmKCFlLnRyaW0oKSlyZXR1cm4gZXJyb3JNc2cuY2xhc3NMaXN0LnJlbW92ZSgiaGlkZGVuIiksdm9pZChvdXRwdXRUZXh0LnZhbHVlPSIiKTtlcnJvck1zZy5jbGFzc0xpc3QuYWRkKCJoaWRkZW4iKSxpc0tpc2hvckVuZ2luZUFjdGl2ZT8iZnVuY3Rpb24iPT10eXBlb2Yga2lzaG9yVG9Vbmljb2RlJiYiZnVuY3Rpb24iPT10eXBlb2YgdW5pY29kZVRvS2lzaG9yP291dHB1dFRleHQudmFsdWU9aXNQcmVldGlUb1VuaWNvZGU/a2lzaG9yVG9Vbmljb2RlKGUpOnVuaWNvZGVUb0tpc2hvcihlKTpvdXRwdXRUZXh0LnZhbHVlPSJTeXN0ZW0gRXJyb3I6IEZ1bmN0aW9ucyBraXNob3JUb1VuaWNvZGUoKSBvciB1bmljb2RlVG9LaXNob3IoKSBub3QgZm91bmQgaW4ga2lzaG9yLmpzIjpvdXRwdXRUZXh0LnZhbHVlPWlzUHJlZXRpVG9Vbmljb2RlP3ByZWV0aVRvVW5pY29kZShlKTp1bmljb2RlVG9QcmVldGkoZSl9YnRuUDJVLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwoKT0+c3dpdGNoTW9kZSghMCkpLGJ0blUyUC5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsKCk9PnN3aXRjaE1vZGUoITEpKSxjbGVhckJ0bi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsKCk9PntpbnB1dFRleHQudmFsdWU9IiIsb3V0cHV0VGV4dC52YWx1ZT0iIixlcnJvck1zZy5jbGFzc0xpc3QuYWRkKCJoaWRkZW4iKSxpbnB1dFRleHQuZm9jdXMoKX0pLGlucHV0VGV4dC5hZGRFdmVudExpc3RlbmVyKCJpbnB1dCIsdHJpZ2dlckNvbnZlcnNpb24pO2NvbnN0IGRvd25sb2FkVHh0QnRuPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkb3dubG9hZC10eHQtYnRuIiksZG93bmxvYWREb2NCdG49ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImRvd25sb2FkLWRvYy1idG4iKTtmdW5jdGlvbiBzaG93VG9hc3QoZSl7dG9hc3QudGV4dENvbnRlbnQ9ZSx0b2FzdC5jbGFzc0xpc3QucmVtb3ZlKCJoaWRkZW4iKSxzZXRUaW1lb3V0KCgpPT50b2FzdC5jbGFzc0xpc3QuYWRkKCJoaWRkZW4iKSwzZTMpfWZpbGVVcGxvYWQuYWRkRXZlbnRMaXN0ZW5lcigiY2hhbmdlIixlPT57Y29uc3QgdD1lLnRhcmdldC5maWxlc1swXTtpZighdClyZXR1cm47aWYoZmlsZU5hbWVEaXNwbGF5LnRleHRDb250ZW50PXQubmFtZSx0Lm5hbWUuZW5kc1dpdGgoIi5kb2MiKSlyZXR1cm4gdm9pZChpbnB1dFRleHQudmFsdWU9IlN5c3RlbSBOb3RlOiBMZWdhY3kgLmRvYyBiaW5hcnkgZmlsZXMgY2Fubm90IGJlIHJlYWQgaW4gdGhlIGJyb3dzZXIuIFBsZWFzZSByZXNhdmUgeW91ciBmaWxlIGFzIC5kb2N4IG9yIC50eHQsIG9yIHBhc3RlIHRoZSB0ZXh0IGRpcmVjdGx5LiIpO2lmKHQubmFtZS5lbmRzV2l0aCgiLmRvY3giKSl7Y29uc3Qgbz1uZXcgRmlsZVJlYWRlcjtyZXR1cm4gby5vbmxvYWQ9ZnVuY3Rpb24oZSl7Y29uc3QgdD1lLnRhcmdldC5yZXN1bHQ7bWFtbW90aC5leHRyYWN0UmF3VGV4dCh7YXJyYXlCdWZmZXI6dH0pLnRoZW4oZnVuY3Rpb24oZSl7aW5wdXRUZXh0LnZhbHVlPWUudmFsdWUsZXJyb3JNc2cuY2xhc3NMaXN0LmFkZCgiaGlkZGVuIiksdHJpZ2dlckNvbnZlcnNpb24oKX0pLmNhdGNoKGZ1bmN0aW9uKGUpe2lucHV0VGV4dC52YWx1ZT0iRXJyb3IgcGFyc2luZyAuZG9jeCBmaWxlOiAiK2UubWVzc2FnZX0pfSxvLnJlYWRBc0FycmF5QnVmZmVyKHQpLHZvaWQoZS50YXJnZXQudmFsdWU9IiIpfWNvbnN0IG89bmV3IEZpbGVSZWFkZXI7by5vbmxvYWQ9ZnVuY3Rpb24oZSl7aW5wdXRUZXh0LnZhbHVlPWUudGFyZ2V0LnJlc3VsdCxlcnJvck1zZy5jbGFzc0xpc3QuYWRkKCJoaWRkZW4iKSx0cmlnZ2VyQ29udmVyc2lvbigpfSxvLnJlYWRBc1RleHQodCksZS50YXJnZXQudmFsdWU9IiJ9KSxjb3B5QnRuLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwoKT0+e291dHB1dFRleHQudmFsdWUmJm5hdmlnYXRvci5jbGlwYm9hcmQud3JpdGVUZXh0KG91dHB1dFRleHQudmFsdWUpLnRoZW4oKCk9PntzaG93VG9hc3QoIkNvcGllZCB0byBjbGlwYm9hcmQhIil9KX0pLGRvd25sb2FkVHh0QnRuLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwoKT0+e2lmKCFvdXRwdXRUZXh0LnZhbHVlKXJldHVybjtjb25zdCBlPW5ldyBCbG9iKFtvdXRwdXRUZXh0LnZhbHVlXSx7dHlwZToidGV4dC9wbGFpbiJ9KSx0PXdpbmRvdy5VUkwuY3JlYXRlT2JqZWN0VVJMKGUpLG89ZG9jdW1lbnQuY3JlYXRlRWxlbWVudCgiYSIpO28uaHJlZj10LG8uZG93bmxvYWQ9aXNQcmVldGlUb1VuaWNvZGU/InVuaWNvZGVfb3V0cHV0LnR4dCI6InByZWV0aV9vdXRwdXQudHh0Iixkb2N1bWVudC5ib2R5LmFwcGVuZENoaWxkKG8pLG8uY2xpY2soKSx3aW5kb3cuVVJMLnJldm9rZU9iamVjdFVSTCh0KSxkb2N1bWVudC5ib2R5LnJlbW92ZUNoaWxkKG8pLHNob3dUb2FzdCgiVGV4dCBmaWxlIGRvd25sb2FkZWQhIil9KSxkb3dubG9hZERvY0J0bi5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsKCk9PntpZighb3V0cHV0VGV4dC52YWx1ZSlyZXR1cm47Y29uc3QgZT1vdXRwdXRUZXh0LnZhbHVlLnJlcGxhY2UoL1xuL2csIjxicj4iKSx0PW5ldyBCbG9iKFsiXHVmZWZmIixgXG4gICAgICAgIDxodG1sIHhtbG5zOm89J3VybjpzY2hlbWFzLW1pY3Jvc29mdC1jb206b2ZmaWNlOm9mZmljZScgeG1sbnM6dz0ndXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTpvZmZpY2U6d29yZCcgeG1sbnM9J2h0dHA6Ly93d3cudzMub3JnL1RSL1JFQy1odG1sNDAnPlxuICAgICAgICA8aGVhZD5cbiAgICAgICAgICAgIDxtZXRhIGNoYXJzZXQ9J3V0Zi04Jz5cbiAgICAgICAgICAgIDx0aXRsZT5FeHBvcnRlZCBEb2N1bWVudDwvdGl0bGU+XG4gICAgICAgIDwvaGVhZD5cbiAgICAgICAgPGJvZHk+XG4gICAgICAgICAgICAke2V9XG4gICAgICAgIDwvYm9keT5cbiAgICAgICAgPC9odG1sPlxuICAgIGBdLHt0eXBlOiJhcHBsaWNhdGlvbi9tc3dvcmQifSksbz13aW5kb3cuVVJMLmNyZWF0ZU9iamVjdFVSTCh0KSxuPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImEiKTtuLmhyZWY9byxuLmRvd25sb2FkPWlzUHJlZXRpVG9Vbmljb2RlPyJ1bmljb2RlX291dHB1dC5kb2MiOiJwcmVldGlfb3V0cHV0LmRvYyIsZG9jdW1lbnQuYm9keS5hcHBlbmRDaGlsZChuKSxuLmNsaWNrKCksd2luZG93LlVSTC5yZXZva2VPYmplY3RVUkwobyksZG9jdW1lbnQuYm9keS5yZW1vdmVDaGlsZChuKSxzaG93VG9hc3QoIldvcmQgZG9jdW1lbnQgZG93bmxvYWRlZCEiKX0pLGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoIkRPTUNvbnRlbnRMb2FkZWQiLCgpPT57c3dpdGNoTW9kZShpc1ByZWV0aVRvVW5pY29kZSl9KTs=");
+// --- DOM Elements ---
+const btnP2U = document.getElementById('mode-p2u');
+const btnU2P = document.getElementById('mode-u2p');
+const inputBadge = document.getElementById('input-badge');
+const outputBadge = document.getElementById('output-badge');
+const clearBtn = document.getElementById('clear-btn');
+const inputText = document.getElementById('input-text');
+const outputText = document.getElementById('output-text');
+const fileUpload = document.getElementById('file-upload');
+const fileNameDisplay = document.getElementById('file-name-display');
+const copyBtn = document.getElementById('copy-btn');
+const downloadBtn = document.getElementById('download-btn');
+const errorMsg = document.getElementById('error-msg');
+const toast = document.getElementById('toast');
+
+// ==========================================
+// ★ HIDDEN EASTER EGG: KISHOR ENGINE ★
+// ==========================================
+
+// 1. Keyboard Trigger (For PC)
+document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === 'k') {
+        e.preventDefault(); 
+        toggleKishorEngine();
+    }
+});
+
+// 2. Mobile/Tablet Touch Trigger (Tap Title 5 Times)
+let tapCount = 0;
+let tapTimer;
+
+// Prevent the text from highlighting when you tap it quickly on a phone
+appHeader.style.userSelect = "none"; 
+appHeader.style.cursor = "pointer";
+
+appHeader.addEventListener('click', () => {
+    tapCount++;
+    
+    // Reset the count if they stop tapping for 1.5 seconds
+    clearTimeout(tapTimer);
+    tapTimer = setTimeout(() => {
+        tapCount = 0;
+    }, 1500);
+
+    // If they hit 5 quick taps, activate the engine!
+    if (tapCount >= 5) {
+        toggleKishorEngine();
+        tapCount = 0; // Reset after successful activation
+    }
+});
+
+function toggleKishorEngine() {
+    isKishorEngineActive = !isKishorEngineActive;
+
+    if (isKishorEngineActive) {
+        appHeader.textContent = "Kishor Engine Activated";
+        appHeader.style.color = "#10b981"; // Bright Green
+        btnP2U.textContent = "Kishor ➔ Unicode";
+        btnU2P.textContent = "Unicode ➔ Kishor";
+        showToast("Kishor Engine Activated!");
+    } else {
+        appHeader.textContent = "Unicode Tools";
+        appHeader.style.color = ""; // THE FIX: Remove inline style to restore original CSS theme
+        btnP2U.textContent = "Preeti ➔ Unicode";
+        btnU2P.textContent = "Unicode ➔ Preeti";
+        showToast("Standard Engine Restored");
+    }
+
+    // Refresh UI badges and recalculate the text
+    switchMode(isPreetiToUnicode);
+    triggerConversion();
+}
+
+// ==========================================
+// 1. DICTIONARIES (Strictly mapped & updated for all edge cases)
+// ==========================================
+
+const preetiToUnicodeMap = {
+    "–": "-", "÷": "/", "F": "ँ", "+": "ं", "M": "ः", "c": "अ", "cf": "आ", "cFf": "आँ", "c+f": "आं", "O": "इ", "O{": "ई", "p": "उ", "pm": "ऊ", "C": "ऋ", "P": "ए", "P]": "ऐ", "c‘f": "ऑ", "cf‘": "ऑ", "c]f": "ओ", "cf]": "ओ", "c}f": "औ", "cf}": "औ",
+    "s": "क", "s‘": "कॅ", "S": "क्", "Qm": "क्त", "qm": "क्र", "If": "क्ष", "I": "क्ष्", "v": "ख", "V": "ख्", "u": "ग", "U": "ग्", "3": "घ", "£": "घ्",
+    "ª": "ङ", "Í": "ङ्क", "Î": "ङ्ख", "Ë": "ङ्ग", "‹": "ङ्घ", "r": "च", "R": "च्", "5": "छ", "5«": "छ्र", "h": "ज", "H": "ज्", "1": "ज्ञ", "¡": "ज्ञ्",
+    "´": "झ", "em": "झ", "eFm": "झाँ", "e+m": "झां", "e'm": "झु", "e\"m": "झू", "e[m": "झृ", "e‘m": "झॅ", "e]m": "झे", "e}m": "झै", "‰": "झ्", "e\\m": "झ्",
+    "`": "ञ", "~": "ञ्", "6": "ट", "§": "ट्ट", "Ý": "टठ", "6«": "ट्र", "7": "ठ", "¶": "ठ्ठ", "7«": "ठ्र", "8": "ड", "•": "ड्ड", "°": "ड्ढ", "8«": "ड्र", "9": "ढ", "9«": "ढ्र",
+    "0": "ण्", "0f": "ण", "t": "त", "T": "त्", "Q": "त्त", "q": "त्र", "y": "थ", "Y": "थ्",
+    "b": "द", "¢": "द्घ", "2": "द्द", "4": "द्ध", "ß": "द्म", "B": "द्य", "›": "द्र", "å": "द्व", "w": "ध", "W": "ध्", "„": "ध्र", "g": "न", "G": "न्", "Ì": "न्न",
+    "k": "प", "K": "प्", "km": "फ", "kFm": "फँ", "k+m": "फं", "k'm": "फु", "k\"m": "फू", "k[m": "फृ", "k‘m": "फॅ", "k]m": "फे", "k}m": "फै", "ˆ": "फ्", "k\\m": "फ्", "k|m": "फ्र",
+    "a": "ब", "A": "ब्", "e": "भ", "E": "भ्", "d": "म", "D": "म्", "o": "य", "/": "र", "?": "रु", "¿": "रू", "¥": "र्‍",
+    "n": "ल", "N˜": "ल", "N": "ल्", "j": "व", "J": "व्", "z": "श", "Z": "श्", ">": "श्र", "i": "ष्", "if": "ष", ";": "स", ":": "स्", "x": "ह", "Å": "हृ", "X": "ह्",
+    "˜": "ऽ", "f": "ा", "L": "ी", "'": "ु", "\"": "ू", "[": "ृ", "]": "े", "}": "ै", "f‘": "ॉ", "\\": "्", "Ø": "्य", "|": "्र", "8Þ": "ड़", "9Þ": "ढ़", "Þ": "़",
+    
+    // Explicit Consonant + Ra Combos
+    "s|": "क्र", "v|": "ख्र", "u|": "ग्र", "3|": "घ्र", "w|": "ध्र", "r|": "च्र", "h|": "ज्र", "´|": "झ्र", "y|": "थ्र", "g|": "न्र", "k|": "प्र", "a|": "ब्र", "e|": "भ्र", "d|": "म्र", "o|": "य्र", "/|": "र्र", "n|": "ल्र", "j|": "व्र", "if|": "ष्र", ";|": "स्र", "x|": "ह्र",
+    
+    // Restored Missing Preeti target
+    "C[": "ॠ",
+    
+    // Multi-character Vowel fixes (O-kar and Au-kar)
+    "f]": "ो", "f}": "ौ",
+    
+    // Global Punctuation from VBA
+    "=": ".", "_": ")", "Ö": "=", "Ù": ";", "…": "‘", "Ú": "’", "Û": "!", "Ü": "%", "æ": "“", "Æ": "”", "±": "+", "-": "(", "<": "?", "ç": "ॐ",
+    
+    // Numbers
+    ".": "।", "..": "॥", ")": "०", "!": "१", "@": "२", "#": "३", "$": "४", "%": "५", "^": "६", "&": "७", "*": "८", "(": "९"
+};
+
+const unicodeToPreetiMap = {
+    "़": "Þ", "×": "×", "॥": "..", "÷": "/", "।": ".",
+    "०": ")", "१": "!", "२": "@", "३": "#", "४": "$", "५": "%", "६": "^", "७": "&", "८": "*", "९": "(",
+    "फ्र": "k|m", "फ": "km", "क्त": "Qm", "क्र": "qm", "ज्ञ्": "¡", "द्घ": "¢", "ज्ञ": "1", "द्द": "2", "द्ध": "4", "श्र": ">", "रु": "?", "द्य": "B", "क्ष्": "I", "क्ष": "If", "त्त": "Q", "द्म": "ß", "त्र": "q", "ध्र": "„", "ङ्घ": "‹", "ड्ड": "•", "द्र": "›", "ट्ट": "§", "ड्ढ": "°", "ठ्ठ": "¶", "रू": "¿", "हृ": "Å", "ङ्ग": "Ë", "न्न": "Ì", "ङ्क": "Í", "ङ्ख": "Î", "टठ": "Ý", "द्व": "å", "ट्र": "6«", "ठ्र": "7«", "ड्र": "8«", "ढ्र": "9«", "्र": "|", "ड़": "8Þ", "ढ़": "9Þ",
+    
+    // Separated Half-Ng Character Mappings & Ra-combos (Prevents joining)
+    "ङ्ख्र": "ª\\v|", "ङ्ग्र": "ª\\u|", "ङ्घ्र": "ª\\3|",
+    "ङ्ख्": "ª\\v\\", "ङ्ग्": "ª\\u\\", "ङ्घ्": "ª\\3\\",
+    
+    // Fix for specific complex half-clusters (Prevents aggressive splitting)
+    "त्र्य": "q\\o",
+    
+    // Full base alphabet mappings
+    "क्": "S", "क": "s", "ख्": "V", "ख": "v", "ग्": "U", "ग": "u", "घ्": "£", "घ": "3", "ङ": "ª", "च्": "R", "च": "r", "छ": "5", "ज्": "H", "ज": "h", "झ्": "‰", "झ": "´", "ञ्": "~", "ञ": "`", "ट": "6", "ठ": "7", "ड": "8", "ढ": "9", "ण्": "0", "ण": "0f", "त्": "T", "त": "t", "थ्": "Y", "थ": "y", "द": "b", "ध्": "W", "ध": "w", "न्": "G", "न": "g", "प्": "K", "प": "k", "फ्": "ˆ", "ब्": "A", "ब": "a", "भ्": "E", "भ": "e", "म्": "D", "म": "d", "य": "o", "र": "/", "ल्": "N", "ल": "n", "व्": "J", "व": "j", "श्": "Z", "श": "z", "ष्": "i", "ष": "if", "स्": ":", "स": ";", "ह्": "X", "ह": "x", "्य": "Ø",
+    "ऑ": "cf‘", "औ": "cf}", "ओ": "cf]", "आ": "cf", "अ": "c", "ई": "O{", "इ": "O", "ऊ": "pm", "उ": "p", "ऋ": "C", "ऐ": "P]", "ए": "P", "ॉ": "f‘", "ू": "\"", "ु": "'", "ं": "+", "ा": "f", "ृ": "[", "्": "\\", "े": "]", "ै": "}", "ँ": "F", "ी": "L", "ः": "M", "ो": "f]", "ौ": "f}", "र्‍य": "¥o", "र्‍": "¥",
+    
+    // Explicit Consonant + Ra Combos
+    "ग्र": "u|", "घ्र": "3|", "च्र": "r|", "ज्र": "h|", "झ्र": "´|", "थ्र": "y|", "न्र": "g|", "प्र": "k|", "ब्र": "a|", "भ्र": "e|", "म्र": "d|", "य्र": "o|", "र्र": "/|", "ल्र": "n|", "व्र": "j|", "ष्र": "if|", "स्र": ";|", "ह्र": "x|",
+    
+    // Corrected edge case targets based on Preeti availability
+    "ह्व": "Xj", "ह्न": "Xg", "ह्ण": "X0f", "ऽ": "˜", "ॠ": "C[",
+    
+    // Strict Punctuation overrides
+    "–": "-", "-": "–", "(": "-", ")": "_", "‘": "…", "’": "Ú", "“": "æ", "”": "Æ", "!": "Û", "%": "Ü", "=": "Ö", ";": "Ù", "?": "<", "ॐ": "ç", "/": "÷", "+": "±", ":": "M"
+};
+
+// ==========================================
+// 2. CONVERSION ALGORITHMS
+// ==========================================
+
+// Helper: Safely escape regex characters
+function escapeRegExp(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Generate single-pass, length-sorted regex matchers
+const p2uRegex = new RegExp(Object.keys(preetiToUnicodeMap).sort((a, b) => b.length - a.length).map(escapeRegExp).join('|'), 'g');
+const u2pRegex = new RegExp(Object.keys(unicodeToPreetiMap).sort((a, b) => b.length - a.length).map(escapeRegExp).join('|'), 'g');
+
+function preetiToUnicode(text) {
+    let result = text;
+
+    // 0. Pre-Pass Fixes for Punctuation and Misplaced 'm' modifiers
+    result = result.replace(/k(['"\]\}\[\{\\\F+‘Lf]+)m/g, "km$1");
+    result = result.replace(/e(['"\]\}\[\{\\\F+‘Lf]+)m/g, "em$1");
+
+    // 1. One-Pass Exact Dictionary Match
+    result = result.replace(p2uRegex, match => preetiToUnicodeMap[match]);
+
+    // 1.5 POST-DICTIONARY COLON FIX
+    result = result.replace(/(^|\s)ः/g, "$1:");
+
+    // 2. Fix Positional: Short 'i' (Move 'l' to right and convert to 'ि')
+    let positionOfI = result.indexOf('l');
+    while (positionOfI !== -1) {
+        let charRight = result.charAt(positionOfI + 1);
+        result = result.replace('l' + charRight, charRight + 'ि');
+        positionOfI = result.indexOf('l');
+    }
+
+    // 3. Fix Positional "Wrong EE"
+    result = result.replace(/ि्(.)/g, "्$1ि");
+    result = result.replace(/िं्(.)/g, "्$1िं");
+
+    // 4. Fix Positional: Reph (Move '{' to left and convert to 'र्')
+    result = result.replace(/(.)([ािीुूृेैोौंःँॅ]*){/g, "र्$1$2");
+
+    // 5. Cleanup stray separated vowel modifiers
+    result = result.replace(/ाे/g, "ो");
+    result = result.replace(/ाै/g, "ौ");
+
+    return result;
+}
+
+function unicodeToPreeti(text) {
+    let result = text;
+
+    // 1. Pre-Process End-of-Word Halants:
+    result = result.replace(/(.)्(?=\s|[.,;!?।॥)\]}"']|$)/g, "$1\\");
+
+    // 2. Fix Positional: Short 'i' (Move 'ि' to the left and convert to 'l')
+    result = result.replace(/((?:.[्])*.)ि/g, "l$1");
+
+    // 3. Fix Positional: Reph (Move 'र्' to the right and convert to '{')
+    result = result.replace(/(^|[^्])र्(?!\u200D)((?:.[्])*.)([ािीुूृेैोौंःँॅ]?)/g, "$1$2$3{");
+
+    // 4. One-Pass Exact Dictionary Match
+    result = result.replace(u2pRegex, match => unicodeToPreetiMap[match]);
+
+    // 5. Cleanup edge cases specific to Preeti typographies
+    result = result.replace(/s\(/g, "s"); 
+
+    return result;
+}
+
+// ==========================================
+// 3. EVENT LISTENERS & UI LOGIC
+// ==========================================
+
+function switchMode(toPreetiToUnicode) {
+    isPreetiToUnicode = toPreetiToUnicode;
+    
+    // Determine the correct label based on Easter Egg state
+    const primaryLabel = isKishorEngineActive ? "Kishor" : "Preeti";
+    
+    if (isPreetiToUnicode) {
+        btnP2U.classList.add('active');
+        btnU2P.classList.remove('active');
+        inputBadge.textContent = primaryLabel;
+        outputBadge.textContent = "Unicode";
+        
+        inputText.classList.add('preeti-text');
+        inputText.classList.remove('unicode-text');
+        outputText.classList.remove('preeti-text');
+        outputText.classList.add('unicode-text');
+    } else {
+        btnU2P.classList.add('active');
+        btnP2U.classList.remove('active');
+        inputBadge.textContent = "Unicode";
+        outputBadge.textContent = "Preeti";
+        
+        inputText.classList.remove('preeti-text');
+        inputText.classList.add('unicode-text');
+        outputText.classList.add('preeti-text');
+        outputText.classList.remove('unicode-text');
+    }
+    
+    const temp = inputText.value;
+    inputText.value = outputText.value;
+    outputText.value = temp;
+    errorMsg.classList.add('hidden');
+}
+
+btnP2U.addEventListener('click', () => switchMode(true));
+btnU2P.addEventListener('click', () => switchMode(false));
+
+function triggerConversion() {
+    const text = inputText.value;
+    if (!text.trim()) {
+        errorMsg.classList.remove('hidden');
+        outputText.value = '';
+        return;
+    }
+    errorMsg.classList.add('hidden');
+    
+    if (isKishorEngineActive) {
+        // Route to functions inside kishor.js
+        if (typeof kishorToUnicode === 'function' && typeof unicodeToKishor === 'function') {
+            outputText.value = isPreetiToUnicode ? kishorToUnicode(text) : unicodeToKishor(text);
+        } else {
+            outputText.value = "System Error: Functions kishorToUnicode() or unicodeToKishor() not found in kishor.js";
+        }
+    } else {
+        // Fixed: The missing closing bracket `}` is now right here where it belongs!
+        outputText.value = isPreetiToUnicode ? preetiToUnicode(text) : unicodeToPreeti(text);
+    }
+}
+
+clearBtn.addEventListener('click', () => {
+    inputText.value = '';
+    outputText.value = '';
+    errorMsg.classList.add('hidden');
+    inputText.focus(); 
+});
+
+inputText.addEventListener('input', triggerConversion);
+
+const downloadTxtBtn = document.getElementById('download-txt-btn');
+const downloadDocBtn = document.getElementById('download-doc-btn');
+
+fileUpload.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    fileNameDisplay.textContent = file.name;
+
+    if (file.name.endsWith('.doc')) {
+        inputText.value = "System Note: Legacy .doc binary files cannot be read in the browser. Please resave your file as .docx or .txt, or paste the text directly.";
+        return;
+    }
+
+    if (file.name.endsWith('.docx')) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            const arrayBuffer = event.target.result;
+            mammoth.extractRawText({arrayBuffer: arrayBuffer})
+                .then(function(result) {
+                    inputText.value = result.value;
+                    errorMsg.classList.add('hidden');
+                    triggerConversion();
+                })
+                .catch(function(err) {
+                    inputText.value = "Error parsing .docx file: " + err.message;
+                });
+        };
+        reader.readAsArrayBuffer(file);
+        e.target.value = ''; 
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        inputText.value = event.target.result;
+        errorMsg.classList.add('hidden');
+        triggerConversion();
+    };
+    reader.readAsText(file);
+    e.target.value = ''; 
+});
+
+copyBtn.addEventListener('click', () => {
+    if (!outputText.value) return;
+    navigator.clipboard.writeText(outputText.value).then(() => {
+        showToast("Copied to clipboard!");
+    });
+});
+
+downloadTxtBtn.addEventListener('click', () => {
+    if (!outputText.value) return;
+    const blob = new Blob([outputText.value], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = isPreetiToUnicode ? 'unicode_output.txt' : 'preeti_output.txt';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    showToast("Text file downloaded!");
+});
+
+downloadDocBtn.addEventListener('click', () => {
+    if (!outputText.value) return;
+    
+    const textContent = outputText.value.replace(/\n/g, '<br>');
+    const wordHTML = `
+        <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+        <head>
+            <meta charset='utf-8'>
+            <title>Exported Document</title>
+        </head>
+        <body>
+            ${textContent}
+        </body>
+        </html>
+    `;
+    
+    const blob = new Blob(['\ufeff', wordHTML], { type: 'application/msword' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = isPreetiToUnicode ? 'unicode_output.doc' : 'preeti_output.doc';
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+    showToast("Word document downloaded!");
+});
+
+function showToast(message) {
+    toast.textContent = message;
+    toast.classList.remove('hidden');
+    setTimeout(() => toast.classList.add('hidden'), 3000);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    switchMode(isPreetiToUnicode); 
+});
