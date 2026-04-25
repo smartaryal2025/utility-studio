@@ -1,12 +1,414 @@
-/*!
- * Copyright (c) 2026 Kishor Aryal. All rights reserved.
- * Application: Utility Studio
- * Website: https://kishoraryal.com.np
- * * PROPRIETARY AND CONFIDENTIAL
- * This source code and associated documentation are proprietary to Kishor Aryal.
- * Unauthorized copying, reproduction, distribution, modification, or use of this 
- * file, via any medium, is strictly prohibited without express written permission.
- * * Violators will be prosecuted to the maximum extent possible under the law.
- */
+// ---------------------------------------------
+// UNIVERSAL COPY FUNCTION 
+// ---------------------------------------------
+function copyText(text, btnElement) {
+    if (!text) return;
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => showCopiedEffect(btnElement)).catch(() => executeFallbackCopy(text, btnElement));
+    } else {
+        executeFallbackCopy(text, btnElement);
+    }
+}
 
-(function(_0x1a2b,_0x3c4d){eval(decodeURIComponent(escape(atob(_0x1a2b))));})("ZnVuY3Rpb24gY29weVRleHQoZSx0KXtlJiYobmF2aWdhdG9yLmNsaXBib2FyZCYmd2luZG93LmlzU2VjdXJlQ29udGV4dD9uYXZpZ2F0b3IuY2xpcGJvYXJkLndyaXRlVGV4dChlKS50aGVuKCgpPT5zaG93Q29waWVkRWZmZWN0KHQpKS5jYXRjaCgoKT0+ZXhlY3V0ZUZhbGxiYWNrQ29weShlLHQpKTpleGVjdXRlRmFsbGJhY2tDb3B5KGUsdCkpfWZ1bmN0aW9uIGV4ZWN1dGVGYWxsYmFja0NvcHkoZSx0KXtsZXQgbj1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJ0ZXh0YXJlYSIpO24udmFsdWU9ZSxuLnN0eWxlLnBvc2l0aW9uPSJmaXhlZCIsbi5zdHlsZS5sZWZ0PSItOTk5OTk5cHgiLGRvY3VtZW50LmJvZHkuYXBwZW5kQ2hpbGQobiksbi5mb2N1cygpLG4uc2VsZWN0KCk7dHJ5e2RvY3VtZW50LmV4ZWNDb21tYW5kKCJjb3B5Iiksc2hvd0NvcGllZEVmZmVjdCh0KX1jYXRjaChlKXthbGVydCgiUGxlYXNlIGNvcHkgbWFudWFsbHkuIil9bi5yZW1vdmUoKX1mdW5jdGlvbiBzaG93Q29waWVkRWZmZWN0KGUpe2lmKCFlKXJldHVybjtsZXQgdD1lLmlubmVyVGV4dCxuPWUuc3R5bGUuYmFja2dyb3VuZCxhPWUuc3R5bGUuY29sb3I7ZS5pbm5lclRleHQ9IuKck+KckyBDb3BpZWQiLGUuc3R5bGUuYmFja2dyb3VuZD0iIzRhZGU4MCIsZS5zdHlsZS5jb2xvcj0iIzBmMTcyYSIsc2V0VGltZW91dCgoKT0+e2UuaW5uZXJUZXh0PXQsZS5zdHlsZS5iYWNrZ3JvdW5kPW4sZS5zdHlsZS5jb2xvcj1hfSwyZTMpfWxldCBxckNhbnZhcyxhcHBIaXN0b3J5PUpTT04ucGFyc2UobG9jYWxTdG9yYWdlLmdldEl0ZW0oInFyVG9vbEhpc3RvcnkiKSl8fFtdO2Z1bmN0aW9uIHJlbmRlckhpc3RvcnkoKXtsZXQgZT1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiaGlzdG9yeUNvbnRhaW5lciIpOzAhPT1hcHBIaXN0b3J5Lmxlbmd0aD9lLmlubmVySFRNTD1hcHBIaXN0b3J5Lm1hcCgoZSx0KT0+e2xldCBuPWUuZGF0YS5yZXBsYWNlKC9bJjw+JyJdL2csZT0+KHsiJiI6IiYiLCI8IjoiPCIsIj4iOiI+IiwiJyI6IiYjMzk7IiwnIic6IiZxdW90OyJ9W2VdfHxlKSk7cmV0dXJuYFxuICAgICAgICA8ZGl2IGNsYXNzPSJoaXN0b3J5LWl0ZW0iPlxuICAgICAgICAgICAgPGRpdiBzdHlsZT0iZmxleC1ncm93OiAxOyBvdmVyZmxvdzogaGlkZGVuOyI+XG4gICAgICAgICAgICAgICAgPGRpdiBjbGFzcz0iaGlzdG9yeS1tZXRhIj48c3Ryb25nIHN0eWxlPSJjb2xvcjogIzM4YmRmODsiPiR7ZS5hY3Rpb259PC9zdHJvbmc+IOKAoiAke2UudGltZX08L2Rpdj5cbiAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzPSJoaXN0b3J5LWRhdGEiIHRpdGxlPSIke259Ij4ke259PC9kaXY+XG4gICAgICAgICAgICA8L2Rpdj5cbiAgICAgICAgICAgIDxkaXYgY2xhc3M9Imhpc3RvcnktYWN0aW9ucyI+XG4gICAgICAgICAgICAgICAgPGJ1dHRvbiBvbmNsaWNrPSJjb3B5SGlzdG9yeUl0ZW0oJHt0fSwgdGhpcykiPkNvcHk8L2J1dHRvbj5cbiAgICAgICAgICAgICAgICA8YnV0dG9uIGNsYXNzPSJidG4tZGFuZ2VyIiBvbmNsaWNrPSJkZWxldGVIaXN0b3J5SXRlbSgke3R9KSI+WDwvYnV0dG9uPlxuICAgICAgICAgICAgPC9kaXY+XG4gICAgICAgIDwvZGl2PmB9KS5qb2luKCIiKTplLmlubmVySFRNTD0nPHNwYW4gc3R5bGU9ImNvbG9yOiAjNjQ3NDhiOyI+Tm8gaGlzdG9yeSByZWNvcmRlZCB5ZXQuPC9zcGFuPid9ZnVuY3Rpb24gc2F2ZVRvSGlzdG9yeShlLHQpe3QmJiIiIT09dC50cmltKCkmJihhcHBIaXN0b3J5Lmxlbmd0aD4wJiZhcHBIaXN0b3J5WzBdLmRhdGE9PT10JiZhcHBIaXN0b3J5WzBdLmFjdGlvbj09PWV8fChhcHBIaXN0b3J5LnVuc2hpZnQoe2FjdGlvbjplLGRhdGE6dCx0aW1lOihuZXcgRGF0ZSkudG9Mb2NhbGVTdHJpbmcoKX0pLGFwcEhpc3RvcnkubGVuZ3RoPjUwJiZhcHBIaXN0b3J5LnBvcCgpLGxvY2FsU3RvcmFnZS5zZXRJdGVtKCJxclRvb2xIaXN0b3J5IixKU09OLnN0cmluZ2lmeShhcHBIaXN0b3J5KSkscmVuZGVySGlzdG9yeSgpKSl9ZnVuY3Rpb24gY2xlYXJIaXN0b3J5KCl7Y29uZmlybSgiQXJlIHlvdSBzdXJlIHlvdSB3YW50IHRvIGRlbGV0ZSBhbGwgaGlzdG9yeT8iKSYmKGFwcEhpc3Rvcnk9W10sbG9jYWxTdG9yYWdlLnJlbW92ZUl0ZW0oInFyVG9vbEhpc3RvcnkiKSxyZW5kZXJIaXN0b3J5KCkpfWZ1bmN0aW9uIGRlbGV0ZUhpc3RvcnlJdGVtKGUpe2FwcEhpc3Rvcnkuc3BsaWNlKGUsMSksbG9jYWxTdG9yYWdlLnNldEl0ZW0oInFyVG9vbEhpc3RvcnkiLEpTT04uc3RyaW5naWZ5KGFwcEhpc3RvcnkpKSxyZW5kZXJIaXN0b3J5KCl9ZnVuY3Rpb24gY29weUhpc3RvcnlJdGVtKGUsdCl7Y29weVRleHQoYXBwSGlzdG9yeVtlXS5kYXRhLHQpfXdpbmRvdy5hZGRFdmVudExpc3RlbmVyKCJsb2FkIixyZW5kZXJIaXN0b3J5KTtsZXQgaHRtbDVRcmNvZGVTY2FubmVyLGxhc3RHZW5lcmF0ZWRRUkRhdGE9IiIsbGFzdEdlbmVyYXRlZEJhcmNvZGVEYXRhPSIiO2Z1bmN0aW9uIHN3aXRjaE1vZGUoKXsicXIiPT09ZG9jdW1lbnQucXVlcnlTZWxlY3RvcignaW5wdXRbbmFtZT0iZ2VuTW9kZSJdOmNoZWNrZWQnKS52YWx1ZT8oZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFyV3JhcHBlciIpLnN0eWxlLmRpc3BsYXk9ImJsb2NrIixkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYmFyY29kZVdyYXBwZXIiKS5zdHlsZS5kaXNwbGF5PSJub25lIik6KGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxcldyYXBwZXIiKS5zdHlsZS5kaXNwbGF5PSJub25lIixkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYmFyY29kZVdyYXBwZXIiKS5zdHlsZS5kaXNwbGF5PSJibG9jayIpfWZ1bmN0aW9uIHVwZGF0ZVFSRmllbGRzKCl7bGV0IGU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFyVHlwZSIpLnZhbHVlLHQ9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFyRmllbGRzIik7InRleHQiPT1lJiYodC5pbm5lckhUTUw9Jzx0ZXh0YXJlYSBpZD0icXJUZXh0IiByb3dzPSIzIiBwbGFjZWhvbGRlcj0iRW50ZXIgdGV4dCBvciBVUkwiPjwvdGV4dGFyZWE+JyksIndpZmkiPT1lJiYodC5pbm5lckhUTUw9JzxkaXYgY2xhc3M9ImZvcm0tZ3JpZCI+PGlucHV0IGlkPSJzc2lkIiBwbGFjZWhvbGRlcj0iTmV0d29yayBTU0lEIChOYW1lKSI+PGlucHV0IGlkPSJwYXNzIiBwbGFjZWhvbGRlcj0iUGFzc3dvcmQiPjxzZWxlY3QgaWQ9ImVuYyIgY2xhc3M9ImZ1bGwtd2lkdGgiPjxvcHRpb24gdmFsdWU9IldQQSI+V1BBL1dQQTI8L29wdGlvbj48b3B0aW9uIHZhbHVlPSJXRVAiPldFUDwvb3B0aW9uPjxvcHRpb24gdmFsdWU9Im5vcGFzcyI+Tm9uZTwvb3B0aW9uPjwvc2VsZWN0PjwvZGl2PicpLCJlbWFpbCI9PWUmJih0LmlubmVySFRNTD0nPGlucHV0IGlkPSJlbWFpbCIgcGxhY2Vob2xkZXI9IkVtYWlsIEFkZHJlc3MiPjxpbnB1dCBpZD0ic3ViamVjdCIgcGxhY2Vob2xkZXI9IlN1YmplY3QiPjx0ZXh0YXJlYSBpZD0ibWVzc2FnZSIgcm93cz0iMyIgcGxhY2Vob2xkZXI9Ik1lc3NhZ2UiPjwvdGV4dGFyZWE+JyksInBob25lIj09ZSYmKHQuaW5uZXJIVE1MPSc8aW5wdXQgaWQ9InBob25lIiBwbGFjZWhvbGRlcj0iUGhvbmUgTnVtYmVyIj4nKSwic21zIj09ZSYmKHQuaW5uZXJIVE1MPSc8aW5wdXQgaWQ9InNtc251bSIgcGxhY2Vob2xkZXI9IlBob25lIE51bWJlciI+PHRleHRhcmVhIGlkPSJzbXNtc2ciIHJvd3M9IjMiIHBsYWNlaG9sZGVyPSJNZXNzYWdlIj48L3RleHRhcmVhPicpLCJnZW8iPT1lJiYodC5pbm5lckhUTUw9JzxkaXYgY2xhc3M9ImZvcm0tZ3JpZCI+PGlucHV0IGlkPSJsYXQiIHBsYWNlaG9sZGVyPSJMYXRpdHVkZSI+PGlucHV0IGlkPSJsb24iIHBsYWNlaG9sZGVyPSJMb25naXR1ZGUiPjwvZGl2PicpLCJ3aGF0c2FwcCI9PWUmJih0LmlubmVySFRNTD0nPGlucHV0IGlkPSJ3YXAiIHBsYWNlaG9sZGVyPSJQaG9uZSBOdW1iZXIgKHdpdGggY291bnRyeSBjb2RlKSI+PHRleHRhcmVhIGlkPSJ3YW0iIHJvd3M9IjMiIHBsYWNlaG9sZGVyPSJNZXNzYWdlIj48L3RleHRhcmVhPicpLCJjYWxlbmRhciI9PWUmJih0LmlubmVySFRNTD0nPGRpdiBjbGFzcz0iZm9ybS1ncmlkIj48aW5wdXQgaWQ9ImV2ZW50IiBwbGFjZWhvbGRlcj0iRXZlbnQgTmFtZSIgY2xhc3M9ImZ1bGwtd2lkdGgiPjxpbnB1dCBpZD0ibG9jYXRpb24iIHBsYWNlaG9sZGVyPSJMb2NhdGlvbiIgY2xhc3M9ImZ1bGwtd2lkdGgiPjxpbnB1dCBpZD0ic3RhcnQiIHBsYWNlaG9sZGVyPSJTdGFydCAoWVlZWU1NRERUSEhNTVNTKSI+PGlucHV0IGlkPSJlbmQiIHBsYWNlaG9sZGVyPSJFbmQgKFlZWVlNTUREVEhITU1TUykiPjwvZGl2PicpLCJ3YWxsZXQiPT1lJiYodC5pbm5lckhUTUw9JzxzZWxlY3QgaWQ9ImNvaW4iPjxvcHRpb24gdmFsdWU9ImJpdGNvaW4iPkJpdGNvaW48L29wdGlvbj48b3B0aW9uIHZhbHVlPSJldGhlcmV1bSI+RXRoZXJldW08L29wdGlvbj48b3B0aW9uIHZhbHVlPSJsaXRlY29pbiI+TGl0ZWNvaW48L29wdGlvbj48L3NlbGVjdD48aW5wdXQgaWQ9ImFkZHIiIHBsYWNlaG9sZGVyPSJXYWxsZXQgQWRkcmVzcyI+PGlucHV0IGlkPSJhbXQiIHBsYWNlaG9sZGVyPSJBbW91bnQiPicpLCJwYXltZW50Ij09ZSYmKHQuaW5uZXJIVE1MPSc8c2VsZWN0IGlkPSJwYXl0eXBlIiBvbmNoYW5nZT0idXBkYXRlUGF5bWVudEZpZWxkcygpIj48b3B0aW9uIHZhbHVlPSJlc2V3YSI+ZS1TZXdhPC9vcHRpb24+PG9wdGlvbiB2YWx1ZT0ia2hhbHRpIj5LaGFsdGk8L29wdGlvbj48b3B0aW9uIHZhbHVlPSJiYW5rIj5CYW5rIFRyYW5zZmVyPC9vcHRpb24+PC9zZWxlY3Q+PGRpdiBpZD0iZHluYW1pY1BheUZpZWxkcyI+PC9kaXY+JyxzZXRUaW1lb3V0KHVwZGF0ZVBheW1lbnRGaWVsZHMsNTApKSwidmNhcmQiPT1lJiYodC5pbm5lckhUTUw9JzxkaXYgY2xhc3M9ImZvcm0tZ3JpZCI+PGlucHV0IGlkPSJmbiIgcGxhY2Vob2xkZXI9IkZpcnN0IE5hbWUiPjxpbnB1dCBpZD0ibG4iIHBsYWNlaG9sZGVyPSJMYXN0IE5hbWUiPjxpbnB1dCBpZD0ib3JnIiBwbGFjZWhvbGRlcj0iT3JnYW5pemF0aW9uIiBjbGFzcz0iZnVsbC13aWR0aCI+PGlucHV0IGlkPSJ0aXRsZSIgcGxhY2Vob2xkZXI9IlRpdGxlIiBjbGFzcz0iZnVsbC13aWR0aCI+PGlucHV0IGlkPSJ2cGhvbmUiIHBsYWNlaG9sZGVyPSJQaG9uZSI+PGlucHV0IGlkPSJ2bW9iaWxlIiBwbGFjZWhvbGRlcj0iTW9iaWxlIj48aW5wdXQgaWQ9InZtYWlsIiBwbGFjZWhvbGRlcj0iRW1haWwiIGNsYXNzPSJmdWxsLXdpZHRoIj48aW5wdXQgaWQ9IndlYiIgcGxhY2Vob2xkZXI9IldlYnNpdGUiIGNsYXNzPSJmdWxsLXdpZHRoIj48aW5wdXQgaWQ9ImFkZHIiIHBsYWNlaG9sZGVyPSJBZGRyZXNzIiBjbGFzcz0iZnVsbC13aWR0aCI+PGlucHV0IGlkPSJjaXR5IiBwbGFjZWhvbGRlcj0iQ2l0eSI+PGlucHV0IGlkPSJjb3VudHJ5IiBwbGFjZWhvbGRlcj0iQ291bnRyeSI+PC9kaXY+Jyksc2V0VGltZW91dChnZW5lcmF0ZVFSLDEwMCl9ZnVuY3Rpb24gdXBkYXRlUGF5bWVudEZpZWxkcygpe2xldCBlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJwYXl0eXBlIikudmFsdWUsdD1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZHluYW1pY1BheUZpZWxkcyIpOyJlc2V3YSI9PT1lP3QuaW5uZXJIVE1MPSc8aW5wdXQgaWQ9ImVzZXdhSWQiIHBsYWNlaG9sZGVyPSJlLVNld2EgSUQiPjxpbnB1dCBpZD0iZXNld2FOYW1lIiBwbGFjZWhvbGRlcj0iQWNjb3VudCBOYW1lIj4nOiJraGFsdGkiPT09ZT90LmlubmVySFRNTD0nPGlucHV0IGlkPSJraGFsdGlJZCIgcGxhY2Vob2xkZXI9IktoYWx0aSBJRCAoTW9iaWxlIE51bWJlcikiPjxpbnB1dCBpZD0ia2hhbHRpTmFtZSIgcGxhY2Vob2xkZXI9IkFjY291bnQgTmFtZSI+JzoiYmFuayI9PT1lJiYodC5pbm5lckhUTUw9JzxkaXYgY2xhc3M9ImZvcm0tZ3JpZCI+XG4gICAgICAgICAgICA8c2VsZWN0IGlkPSJiYW5rTmFtZVNlbGVjdCIgY2xhc3M9ImZ1bGwtd2lkdGgiPlxuICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IkFEQkxOUEtBfDAzMDEiPkFncmljdWx0dXJlIERldmVsb3BtZW50IEJhbmsgTHRkLjwvb3B0aW9uPlxuICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IkNUWk5OUEtBfDIwMDEiPkNpdGl6ZW5zIEJhbmsgSW50ZXJuYXRpb25hbCBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iRVZCTE5QS0F8MTAwMSI+RXZlcmVzdCBCYW5rIEx0ZC48L29wdGlvbj5cbiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSJHTEJCTlBLQXwxOTAxIj5HbG9iYWwgSU1FIEJhbmsgTHRkLjwvb3B0aW9uPlxuICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IkhJTUFOUEtBfDA3MDEiPkhpbWFsYXlhbiBCYW5rIEx0ZC48L29wdGlvbj5cbiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSJLTUJMTlBLQXwxNjAxIj5LdW1hcmkgQmFuayBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iTFhCTE5QS0F8MTcwMSI+TGF4bWkgU3VucmlzZSBCYW5rIEx0ZC48L29wdGlvbj5cbiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSJNQkxOTlBLQXwxNTAxIj5NYWNoaGFwdWNoY2hocmUgQmFuayBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iTkFSQk5QS0F8MDQwMSI+TmFiaWwgQmFuayBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iTkVCTE5QS0F8MDEwMSI+TmVwYWwgQmFuayBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iTklCTE5QS1R8MDUwMSI+TmVwYWwgSW52ZXN0bWVudCBNZWdhIEJhbmsgTHRkLjwvb3B0aW9uPlxuICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9Ik5TQklOUEtBfDA4MDEiPk5lcGFsIFNCSSBCYW5rIEx0ZC48L29wdGlvbj5cbiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSJCT0FMTlBLQXwyMzAxIj5OSUMgQXNpYSBCYW5rIEx0ZC48L29wdGlvbj5cbiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSJOTUJCTlBLQXwyNTAxIj5OTUIgQmFuayBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iUFJWVU5QS0F8MjYwMSI+UHJhYmh1IEJhbmsgTHRkLjwvb3B0aW9uPlxuICAgICAgICAgICAgICAgIDxvcHRpb24gdmFsdWU9IlBDQkxOUEtBfDIxMDEiPlByaW1lIENvbW1lcmNpYWwgQmFuayBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iUkJCQU5QS0F8MDIwMSI+UmFzdHJpeWEgQmFuaWp5YSBCYW5rIEx0ZC48L29wdGlvbj5cbiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSJTTk1BTlBLQXw0NTAxIj5TYW5pbWEgQmFuayBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICAgICAgPG9wdGlvbiB2YWx1ZT0iU0lERE5QS0F8MTgwMSI+U2lkZGhhcnRoYSBCYW5rIEx0ZC48L29wdGlvbj5cbiAgICAgICAgICAgICAgICA8b3B0aW9uIHZhbHVlPSJTQ0JMTlBLQXwwNjAxIj5TdGFuZGFyZCBDaGFydGVyZWQgQmFuayBOZXBhbCBMdGQuPC9vcHRpb24+XG4gICAgICAgICAgICA8L3NlbGVjdD5cbiAgICAgICAgICAgIDxpbnB1dCBpZD0iYmFua0FjY05vIiBwbGFjZWhvbGRlcj0iQWNjb3VudCBOdW1iZXIiPlxuICAgICAgICAgICAgPGlucHV0IGlkPSJiYW5rQWNjTmFtZSIgcGxhY2Vob2xkZXI9IkFjY291bnQgTmFtZSI+XG4gICAgICAgICAgICA8aW5wdXQgaWQ9ImJhbmtBY2NUeXBlIiBwbGFjZWhvbGRlcj0iQWNjb3VudCBUeXBlIiBjbGFzcz0iZnVsbC13aWR0aCI+XG4gICAgICAgIDwvZGl2PicpLGdlbmVyYXRlUVIoKX1mdW5jdGlvbiBpc1FSSW5wdXRFbXB0eSgpe2xldCBlPWRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoIiNxckZpZWxkcyBpbnB1dCwgI3FyRmllbGRzIHRleHRhcmVhIik7aWYoMD09PWUubGVuZ3RoKXJldHVybiEwO2ZvcihsZXQgdD0wO3Q8ZS5sZW5ndGg7dCsrKWlmKCIiIT09ZVt0XS52YWx1ZS50cmltKCkpcmV0dXJuITE7cmV0dXJuITB9ZnVuY3Rpb24gZ2VuZXJhdGVRUigpe2xldCBlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxclR5cGUiKS52YWx1ZSx0PSIiO2lmKGxhc3RHZW5lcmF0ZWRRUkRhdGE9IiIsaXNRUklucHV0RW1wdHkoKSlyZXR1cm4gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFyY29kZSIpLmlubmVySFRNTD0iIix2b2lkKHFyQ2FudmFzPW51bGwpO3RyeXtpZigidGV4dCI9PWUmJih0PWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxclRleHQiKT8udmFsdWV8fCIiKSwid2lmaSI9PWUmJih0PWBXSUZJOlQ6JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZW5jIik/LnZhbHVlfHwiIn07Uzoke2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzc2lkIik/LnZhbHVlfHwiIn07UDoke2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJwYXNzIik/LnZhbHVlfHwiIn07O2ApLCJlbWFpbCI9PWUmJih0PWBtYWlsdG86JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZW1haWwiKT8udmFsdWV8fCIifT9zdWJqZWN0PSR7ZW5jb2RlVVJJQ29tcG9uZW50KGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzdWJqZWN0Iik/LnZhbHVlfHwiIil9JmJvZHk9JHtlbmNvZGVVUklDb21wb25lbnQoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIm1lc3NhZ2UiKT8udmFsdWV8fCIiKX1gKSwicGhvbmUiPT1lJiYodD1gdGVsOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInBob25lIik/LnZhbHVlfHwiIn1gKSwic21zIj09ZSYmKHQ9YHNtczoke2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzbXNudW0iKT8udmFsdWV8fCIifToke2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzbXNtc2ciKT8udmFsdWV8fCIifWApLCJnZW8iPT1lJiYodD1gZ2VvOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImxhdCIpPy52YWx1ZXx8IiJ9LCR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImxvbiIpPy52YWx1ZXx8IiJ9YCksIndoYXRzYXBwIj09ZSYmKHQ9YGh0dHBzOi8vd2EubWUvJHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgid2FwIik/LnZhbHVlfHwiIn0/dGV4dD0ke2VuY29kZVVSSUNvbXBvbmVudChkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgid2FtIik/LnZhbHVlfHwiIil9YCksIndhbGxldCI9PWUmJih0PWAke2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJjb2luIik/LnZhbHVlfHwiIn06JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYWRkciIpPy52YWx1ZXx8IiJ9P2Ftb3VudD0ke2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJhbXQiKT8udmFsdWV8fCIifWApLCJwYXltZW50Ij09ZSl7bGV0IGU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInBheXR5cGUiKS52YWx1ZTtpZigiZXNld2EiPT09ZSl0PUpTT04uc3RyaW5naWZ5KHtlU2V3YV9pZDpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZXNld2FJZCIpPy52YWx1ZXx8IiIsbmFtZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZXNld2FOYW1lIik/LnZhbHVlfHwiIn0pO2Vsc2UgaWYoImtoYWx0aSI9PT1lKXQ9SlNPTi5zdHJpbmdpZnkoe2toYWx0aV9pZDpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgia2hhbHRpSWQiKT8udmFsdWV8fCIiLG5hbWU6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImtoYWx0aU5hbWUiKT8udmFsdWV8fCIifSk7ZWxzZSBpZigiYmFuayI9PT1lKXtsZXQgZT1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYmFua05hbWVTZWxlY3QiKT8udmFsdWV8fCJ8IixbbixhXT1lLnNwbGl0KCJ8Iik7dD1KU09OLnN0cmluZ2lmeSh7YWNjb3VudE51bWJlcjpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYmFua0FjY05vIik/LnZhbHVlfHwiIixhY2NvdW50TmFtZTpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYmFua0FjY05hbWUiKT8udmFsdWV8fCIiLGJhbmtDb2RlOm4sYWNjb3VudFR5cGU6ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImJhbmtBY2NUeXBlIik/LnZhbHVlfHwiIixiYW5rQ29kZUNJUFM6YX0pfX1pZigiY2FsZW5kYXIiPT1lJiYodD1gQkVHSU46VkVWRU5UXG5TVU1NQVJZOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImV2ZW50Iik/LnZhbHVlfHwiIn1cbkxPQ0FUSU9OOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImxvY2F0aW9uIik/LnZhbHVlfHwiIn1cbkRUU1RBUlQ6JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3RhcnQiKT8udmFsdWV8fCIifVxuRFRFTkQ6JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZW5kIik/LnZhbHVlfHwiIn1cbkVORDpWRVZFTlRgKSwidmNhcmQiPT1lJiYodD1gQkVHSU46VkNBUkRcblZFUlNJT046My4wXG5OOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImxuIik/LnZhbHVlfHwiIn07JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZm4iKT8udmFsdWV8fCIifVxuT1JHOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIm9yZyIpPy52YWx1ZXx8IiJ9XG5USVRMRToke2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ0aXRsZSIpPy52YWx1ZXx8IiJ9XG5URUw6JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidnBob25lIik/LnZhbHVlfHwiIn1cblRFTDtDRUxMOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZtb2JpbGUiKT8udmFsdWV8fCIifVxuRU1BSUw6JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidm1haWwiKT8udmFsdWV8fCIifVxuVVJMOiR7ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIndlYiIpPy52YWx1ZXx8IiJ9XG5BRFI6Ozske2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJhZGRyIik/LnZhbHVlfHwiIn07JHtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY2l0eSIpPy52YWx1ZXx8IiJ9Ozske2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJjb3VudHJ5Iik/LnZhbHVlfHwiIn1cbkVORDpWQ0FSRGApLCF0fHwiIj09PXR8fCIiPT09dC50cmltKCkpcmV0dXJuO2xhc3RHZW5lcmF0ZWRRUkRhdGE9dCxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicXJjb2RlIikuaW5uZXJIVE1MPSIiLFFSQ29kZS50b0NhbnZhcyh0LHt3aWR0aDoyNDB9LGZ1bmN0aW9uKGUsdCl7ZXx8KHFyQ2FudmFzPXQsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFyY29kZSIpLmFwcGVuZENoaWxkKHQpKX0pfWNhdGNoKGUpe319ZnVuY3Rpb24gY2xlYXJHZW5lcmF0b3JGaWVsZHMoKXtkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCIjcXJGaWVsZHMgaW5wdXQsICNxckZpZWxkcyB0ZXh0YXJlYSIpLmZvckVhY2goZT0+ZS52YWx1ZT0iIiksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImJhcmNvZGVUZXh0IikudmFsdWU9IiIsZ2VuZXJhdGVRUigpLGdlbmVyYXRlQmFyY29kZSgpfWZ1bmN0aW9uIGRvd25sb2FkUVJQTkcoKXtpZighcXJDYW52YXMpcmV0dXJuIGFsZXJ0KCJHZW5lcmF0ZSBhIFFSIGZpcnN0ISIpO3NhdmVUb0hpc3RvcnkoIkdlbmVyYXRlZCBRUiIsbGFzdEdlbmVyYXRlZFFSRGF0YSkscXJDYW52YXMudG9CbG9iKGU9PnNhdmVBcyhlLCJxcl9jb2RlLnBuZyIpLCJpbWFnZS9wbmciKX1mdW5jdGlvbiBkb3dubG9hZFFSSlBHKCl7aWYoIXFyQ2FudmFzKXJldHVybiBhbGVydCgiR2VuZXJhdGUgYSBRUiBmaXJzdCEiKTtzYXZlVG9IaXN0b3J5KCJHZW5lcmF0ZWQgUVIiLGxhc3RHZW5lcmF0ZWRRUkRhdGEpO2xldCBlPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImNhbnZhcyIpO2Uud2lkdGg9cXJDYW52YXMud2lkdGgsZS5oZWlnaHQ9cXJDYW52YXMuaGVpZ2h0O2xldCB0PWUuZ2V0Q29udGV4dCgiMmQiKTt0LmZpbGxTdHlsZT0iI0ZGRkZGRiIsdC5maWxsUmVjdCgwLDAsZS53aWR0aCxlLmhlaWdodCksdC5kcmF3SW1hZ2UocXJDYW52YXMsMCwwKSxlLnRvQmxvYihlPT5zYXZlQXMoZSwicXJfY29kZS5qcGciKSwiaW1hZ2UvanBlZyIsMSl9ZnVuY3Rpb24gZG93bmxvYWRRUlNWRygpe2lmKCFxckNhbnZhcylyZXR1cm4gYWxlcnQoIkdlbmVyYXRlIGEgUVIgZmlyc3QhIik7c2F2ZVRvSGlzdG9yeSgiR2VuZXJhdGVkIFFSIixsYXN0R2VuZXJhdGVkUVJEYXRhKSxRUkNvZGUudG9TdHJpbmcoIkV4cG9ydGVkIFNWRyIse3R5cGU6InN2ZyJ9LGZ1bmN0aW9uKGUsdCl7ZXx8c2F2ZUFzKG5ldyBCbG9iKFt0XSx7dHlwZToiaW1hZ2Uvc3ZnK3htbCJ9KSwicXJfY29kZS5zdmciKX0pfWZ1bmN0aW9uIGdlbmVyYXRlQmFyY29kZSgpe2xldCBlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJiYXJjb2RlVGV4dCIpLnZhbHVlLHQ9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImJhcmNvZGVUeXBlIikudmFsdWUsbj1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYmFyY29kZSIpLGE9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImJhcmNvZGVDYW52YXMiKTtpZihsYXN0R2VuZXJhdGVkQmFyY29kZURhdGE9IiIsIWUpcmV0dXJuIG4uaW5uZXJIVE1MPSIiLG4uc3R5bGUuZGlzcGxheT0ibm9uZSIsdm9pZChhLndpZHRoPTApO3RyeXtsZXQgbz17Zm9ybWF0OiJJU0JOIj09PXQ/IkVBTjEzIjp0LGxpbmVDb2xvcjoiIzAwMCIsd2lkdGg6MixoZWlnaHQ6NTAsZGlzcGxheVZhbHVlOiEwLGJhY2tncm91bmQ6IiNmZmZmZmYifTtKc0JhcmNvZGUobixlLG8pLG4uc3R5bGUuZGlzcGxheT0iYmxvY2siLEpzQmFyY29kZShhLGUsbyksbGFzdEdlbmVyYXRlZEJhcmNvZGVEYXRhPWV9Y2F0Y2goZSl7fX1mdW5jdGlvbiBkb3dubG9hZEJhcmNvZGVQTkcoKXtsZXQgZT1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiYmFyY29kZUNhbnZhcyIpO2lmKCFlfHwwPT09ZS53aWR0aClyZXR1cm4gYWxlcnQoIkdlbmVyYXRlIGEgYmFyY29kZSBmaXJzdCEiKTtzYXZlVG9IaXN0b3J5KCJHZW5lcmF0ZWQgQmFyY29kZSIsbGFzdEdlbmVyYXRlZEJhcmNvZGVEYXRhKSxlLnRvQmxvYihlPT5zYXZlQXMoZSwiYmFyY29kZS5wbmciKSwiaW1hZ2UvcG5nIil9ZnVuY3Rpb24gZG93bmxvYWRCYXJjb2RlSlBHKCl7bGV0IGU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImJhcmNvZGVDYW52YXMiKTtpZighZXx8MD09PWUud2lkdGgpcmV0dXJuIGFsZXJ0KCJHZW5lcmF0ZSBhIGJhcmNvZGUgZmlyc3QhIik7c2F2ZVRvSGlzdG9yeSgiR2VuZXJhdGVkIEJhcmNvZGUiLGxhc3RHZW5lcmF0ZWRCYXJjb2RlRGF0YSksZS50b0Jsb2IoZT0+c2F2ZUFzKGUsImJhcmNvZGUuanBnIiksImltYWdlL2pwZWciLDEpfWZ1bmN0aW9uIGRvd25sb2FkQmFyY29kZVNWRygpe2xldCBlPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJiYXJjb2RlIik7aWYoIWUuaW5uZXJIVE1MKXJldHVybiBhbGVydCgiR2VuZXJhdGUgYSBiYXJjb2RlIGZpcnN0ISIpO3NhdmVUb0hpc3RvcnkoIkdlbmVyYXRlZCBCYXJjb2RlIixsYXN0R2VuZXJhdGVkQmFyY29kZURhdGEpLHNhdmVBcyhuZXcgQmxvYihbKG5ldyBYTUxTZXJpYWxpemVyKS5zZXJpYWxpemVUb1N0cmluZyhlKV0se3R5cGU6ImltYWdlL3N2Zyt4bWwifSksImJhcmNvZGUuc3ZnIil9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFyRmllbGRzIikuYWRkRXZlbnRMaXN0ZW5lcigiaW5wdXQiLGdlbmVyYXRlUVIpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxckZpZWxkcyIpLmFkZEV2ZW50TGlzdGVuZXIoImNoYW5nZSIsZ2VuZXJhdGVRUiksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImJhcmNvZGVUZXh0IikuYWRkRXZlbnRMaXN0ZW5lcigiaW5wdXQiLGdlbmVyYXRlQmFyY29kZSksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImJhcmNvZGVUeXBlIikuYWRkRXZlbnRMaXN0ZW5lcigiY2hhbmdlIixnZW5lcmF0ZUJhcmNvZGUpLHVwZGF0ZVFSRmllbGRzKCk7bGV0IGNyb3BwZXIscmF3U2NhbkRhdGE9IiIsY3VycmVudFN1Z2dlc3RlZEFjdGlvbj1udWxsO2Z1bmN0aW9uIGRldGVjdEFjdGlvblR5cGUoZSl7aWYoIWUpcmV0dXJuIG51bGw7bGV0IHQ9ZS50cmltKCksbj10LnRvTG93ZXJDYXNlKCk7aWYoL15odHRwcz86XC9cLy9pLnRlc3QodCkpcmV0dXJue3R5cGU6IlVSTCIsdGV4dDoiV2Vic2l0ZSBMaW5rIEZvdW5kIixidG46Ik9wZW4gTGluayIscGF5bG9hZDp0fTtpZih0LnN0YXJ0c1dpdGgoIldJRkk6Iikpe2xldCBlPXQuc3Vic3RyaW5nKDUpLnNwbGl0KCI7IikucmVkdWNlKChlLHQpPT57bGV0W24sLi4uYV09dC5zcGxpdCgiOiIpO3JldHVybiBuJiYoZVtuLnRyaW0oKS50b1VwcGVyQ2FzZSgpXT1hLmpvaW4oIjoiKS50cmltKCkpLGV9LHt9KTtpZihlLlMpcmV0dXJue3R5cGU6IldJRkkiLHRleHQ6YFdpRmkgTmV0d29yazogJHtlLlN9YCxidG46IkNvcHkgUGFzc3dvcmQiLHBheWxvYWQ6ZS5QfHwiIn19cmV0dXJuIG4uc3RhcnRzV2l0aCgibWFpbHRvOiIpP3t0eXBlOiJFTUFJTCIsdGV4dDoiRW1haWwgQWRkcmVzcyBGb3VuZCIsYnRuOiJTZW5kIEVtYWlsIixwYXlsb2FkOnR9Om4uc3RhcnRzV2l0aCgidGVsOiIpP3t0eXBlOiJQSE9ORSIsdGV4dDoiUGhvbmUgTnVtYmVyIEZvdW5kIixidG46IkNhbGwgTnVtYmVyIixwYXlsb2FkOnR9OnQuc3RhcnRzV2l0aCgiQkVHSU46VkNBUkQiKT97dHlwZToiQ09OVEFDVCIsdGV4dDoiQ29udGFjdCBDYXJkIEZvdW5kIixidG46IlNhdmUgdG8gQ29udGFjdHMiLHBheWxvYWQ6dH06dC5zdGFydHNXaXRoKCJCRUdJTjpWRVZFTlQiKT97dHlwZToiQ0FMRU5EQVIiLHRleHQ6IkNhbGVuZGFyIEV2ZW50IEZvdW5kIixidG46IkFkZCB0byBDYWxlbmRhciIscGF5bG9hZDp0fTpuLnN0YXJ0c1dpdGgoImdlbzoiKT97dHlwZToiR0VPIix0ZXh0OiJMb2NhdGlvbiBDb29yZGluYXRlcyIsYnRuOiJPcGVuIGluIE1hcHMiLHBheWxvYWQ6Imh0dHBzOi8vbWFwcy5nb29nbGUuY29tLz9xPSIrdC5zdWJzdHJpbmcoNCl9Om51bGx9ZnVuY3Rpb24gc2hvd1NjYW5SZXN1bHQoZSl7cmF3U2NhbkRhdGE9ZTtsZXQgdD1lO3NhdmVUb0hpc3RvcnkoIlNjYW5uZWQgRGF0YSIsZSk7dHJ5eyhlLnRyaW0oKS5zdGFydHNXaXRoKCJ7Iil8fGUudHJpbSgpLnN0YXJ0c1dpdGgoIlsiKSkmJih0PWA8cHJlIHN0eWxlPSJtYXJnaW46MDsgd2hpdGUtc3BhY2U6IHByZS13cmFwOyB3b3JkLXdyYXA6IGJyZWFrLXdvcmQ7Ij4ke0pTT04uc3RyaW5naWZ5KEpTT04ucGFyc2UoZSksbnVsbCwyKX08L3ByZT5gKX1jYXRjaChuKXt0PS9eaHR0cHM/OlwvXC8vaS50ZXN0KGUudHJpbSgpKT9gPGEgaHJlZj0iJHtlLnRyaW0oKX0iIHRhcmdldD0iX2JsYW5rIiBzdHlsZT0iY29sb3I6ICMzOGJkZjg7IHRleHQtZGVjb3JhdGlvbjogbm9uZTsiPiR7ZX08L2E+YDpgPGRpdiBzdHlsZT0id2hpdGUtc3BhY2U6IHByZS13cmFwOyB3b3JkLXdyYXA6IGJyZWFrLXdvcmQ7Ij4ke2V9PC9kaXY+YH1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic2NhblJlc3VsdCIpLmlubmVySFRNTD10LGN1cnJlbnRTdWdnZXN0ZWRBY3Rpb249ZGV0ZWN0QWN0aW9uVHlwZShlKTtjb25zdCBuPWRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzY2FuQWN0aW9uQ29udGFpbmVyIiksYT1kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3VnZ2VzdGVkQWN0aW9uTWVzc2FnZSIpLG89ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInBlcmZvcm1BY3Rpb25CdG4iKTtjdXJyZW50U3VnZ2VzdGVkQWN0aW9uPyhhLmlubmVyVGV4dD1jdXJyZW50U3VnZ2VzdGVkQWN0aW9uLnRleHQsby5pbm5lclRleHQ9Y3VycmVudFN1Z2dlc3RlZEFjdGlvbi5idG4sbi5zdHlsZS5kaXNwbGF5PSJmbGV4IixvLm9uY2xpY2s9KCk9PnBlcmZvcm1EZXRlY3RlZEFjdGlvbigpKToobi5zdHlsZS5kaXNwbGF5PSJub25lIixvLm9uY2xpY2s9bnVsbCl9ZnVuY3Rpb24gcGVyZm9ybURldGVjdGVkQWN0aW9uKCl7aWYoIWN1cnJlbnRTdWdnZXN0ZWRBY3Rpb24pcmV0dXJuO2xldCBlPWN1cnJlbnRTdWdnZXN0ZWRBY3Rpb247aWYoIlVSTCI9PT1lLnR5cGV8fCJHRU8iPT09ZS50eXBlKXdpbmRvdy5vcGVuKGUucGF5bG9hZCwiX2JsYW5rIik7ZWxzZSBpZigiRU1BSUwiPT09ZS50eXBlfHwiUEhPTkUiPT09ZS50eXBlKXdpbmRvdy5sb2NhdGlvbi5ocmVmPWUucGF5bG9hZDtlbHNlIGlmKCJXSUZJIj09PWUudHlwZSllLnBheWxvYWQ/Y29weVRleHQoZS5wYXlsb2FkLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJwZXJmb3JtQWN0aW9uQnRuIikpOmFsZXJ0KCJObyBwYXNzd29yZCBpcyByZXF1aXJlZCBmb3IgdGhpcyBuZXR3b3JrLiIpO2Vsc2UgaWYoIkNPTlRBQ1QiPT09ZS50eXBlKXtsZXQgdD1uZXcgQmxvYihbZS5wYXlsb2FkXSx7dHlwZToidGV4dC92Y2FyZCJ9KTtzYXZlQXModCwiY29udGFjdC52Y2YiKX1lbHNlIGlmKCJDQUxFTkRBUiI9PT1lLnR5cGUpe2xldCB0PW5ldyBCbG9iKFtlLnBheWxvYWRdLHt0eXBlOiJ0ZXh0L2NhbGVuZGFyIn0pO3NhdmVBcyh0LCJldmVudC5pY3MiKX19ZnVuY3Rpb24gY2xlYXJTY2FuUmVzdWx0KCl7cmF3U2NhbkRhdGE9IiIsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInNjYW5SZXN1bHQiKS5pbm5lckhUTUw9JzxzcGFuIHN0eWxlPSJjb2xvcjogIzY0NzQ4YjsiPk5vIGRhdGEgc2Nhbm5lZCB5ZXQuPC9zcGFuPicsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInNjYW5BY3Rpb25Db250YWluZXIiKS5zdHlsZS5kaXNwbGF5PSJub25lIixjdXJyZW50U3VnZ2VzdGVkQWN0aW9uPW51bGwsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImZpbGVTY2FuIikudmFsdWU9IiIsZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInVybFNjYW5JbnB1dCIpLnZhbHVlPSIiLHN0b3BTY2FubmVyKCksZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInJlYWRlciIpLmlubmVySFRNTD0iIn1mdW5jdGlvbiBzdGFydFNjYW5uZXIoKXtzdG9wU2Nhbm5lcigpLGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJyZWFkZXIiKS5pbm5lckhUTUw9IiIsaHRtbDVRcmNvZGVTY2FubmVyfHwoaHRtbDVRcmNvZGVTY2FubmVyPW5ldyBIdG1sNVFyY29kZSgicmVhZGVyIikpO2xldCBlPXtmcHM6MTAscXJib3g6e3dpZHRoOjI1MCxoZWlnaHQ6MjUwfX0sdD1lPT57c2hvd1NjYW5SZXN1bHQoZSksc3RvcFNjYW5uZXIoKX07SHRtbDVRcmNvZGUuZ2V0Q2FtZXJhcygpLnRoZW4obj0+e2lmKG4mJm4ubGVuZ3RoPjApe2xldCBhPW5bMF0uaWQ7Zm9yKGxldCBlPTA7ZTxuLmxlbmd0aDtlKyspaWYobltlXS5sYWJlbC50b0xvd2VyQ2FzZSgpLmluY2x1ZGVzKCJiYWNrIil8fG5bZV0ubGFiZWwudG9Mb3dlckNhc2UoKS5pbmNsdWRlcygiZW52aXJvbm1lbnQiKSl7YT1uW2VdLmlkO2JyZWFrfWh0bWw1UXJjb2RlU2Nhbm5lci5zdGFydChhLGUsdCkuY2F0Y2goKCk9PntodG1sNVFyY29kZVNjYW5uZXIuc3RhcnQoe2ZhY2luZ01vZGU6ImVudmlyb25tZW50In0sZSx0KS5jYXRjaCgoKT0+aHRtbDVRcmNvZGVTY2FubmVyLnN0YXJ0KHtmYWNpbmdNb2RlOiJ1c2VyIn0sZSx0KSl9KX1lbHNlIGFsZXJ0KCJObyBjYW1lcmEgZm91bmQuIil9KS5jYXRjaChuPT57aHRtbDVRcmNvZGVTY2FubmVyLnN0YXJ0KHtmYWNpbmdNb2RlOiJlbnZpcm9ubWVudCJ9LGUsdCkuY2F0Y2goKCk9PntodG1sNVFyY29kZVNjYW5uZXIuc3RhcnQoe2ZhY2luZ01vZGU6InVzZXIifSxlLHQpLmNhdGNoKCgpPT5hbGVydCgiQ2FtZXJhIGJsb2NrZWQgb3IgdW5hdmFpbGFibGUuIikpfSl9KX1mdW5jdGlvbiBzdG9wU2Nhbm5lcigpe2h0bWw1UXJjb2RlU2Nhbm5lciYmaHRtbDVRcmNvZGVTY2FubmVyLmlzU2Nhbm5pbmcmJmh0bWw1UXJjb2RlU2Nhbm5lci5zdG9wKCkuY2F0Y2goZT0+Y29uc29sZS5lcnJvcihlKSl9ZnVuY3Rpb24gb3BlbkNyb3BwZXIoZSl7c3RvcFNjYW5uZXIoKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicmVhZGVyIikuaW5uZXJIVE1MPSc8ZGl2IHN0eWxlPSJjb2xvcjogIzM4YmRmODsgdGV4dC1hbGlnbjogY2VudGVyOyBwYWRkaW5nOiAyMHB4OyI+UHJlcGFyaW5nIGltYWdlLi4uPC9kaXY+JztsZXQgdD1uZXcgRmlsZVJlYWRlcjt0Lm9ubG9hZD1mdW5jdGlvbihlKXtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY3JvcEltYWdlIikuc3JjPWUudGFyZ2V0LnJlc3VsdCxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY3JvcE1vZGFsIikuc3R5bGUuZGlzcGxheT0iZmxleCIsY3JvcHBlciYmY3JvcHBlci5kZXN0cm95KCksY3JvcHBlcj1uZXcgQ3JvcHBlcihkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY3JvcEltYWdlIikse3ZpZXdNb2RlOjEsYXV0b0Nyb3BBcmVhOi44LGJhY2tncm91bmQ6ITF9KX0sdC5yZWFkQXNEYXRhVVJMKGUpfWZ1bmN0aW9uIGNsb3NlQ3JvcHBlcigpe2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJjcm9wTW9kYWwiKS5zdHlsZS5kaXNwbGF5PSJub25lIixjcm9wcGVyJiZjcm9wcGVyLmRlc3Ryb3koKSxkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZmlsZVNjYW4iKS52YWx1ZT0iIixkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicmVhZGVyIikuaW5uZXJIVE1MPSIifWZ1bmN0aW9uIHNjYW5Dcm9wcGVkSW1hZ2UoKXtjcm9wcGVyJiYoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInNjYW5SZXN1bHQiKS5pbm5lckhUTUw9JzxzcGFuIHN0eWxlPSJjb2xvcjogIzM4YmRmODsiPlNjYW5uaW5nIGNyb3BwZWQgYXJlYS4uLjwvc3Bhbj4nLGNyb3BwZXIuZ2V0Q3JvcHBlZENhbnZhcygpLnRvQmxvYihlPT57bGV0IHQ9bmV3IEZpbGUoW2VdLCJjcm9wcGVkLmpwZyIse3R5cGU6ImltYWdlL2pwZWcifSk7Y2xvc2VDcm9wcGVyKCk7bmV3IEh0bWw1UXJjb2RlKCJyZWFkZXIiKS5zY2FuRmlsZSh0LCExKS50aGVuKGU9PnNob3dTY2FuUmVzdWx0KGUpKS5jYXRjaChlPT57ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInNjYW5SZXN1bHQiKS5pbm5lckhUTUw9JzxzcGFuIHN0eWxlPSJjb2xvcjogI2VmNDQ0NDsiPk5vIFFSIG9yIEJhcmNvZGUgZGV0ZWN0ZWQgaW4gdGhlIGNyb3BwZWQgYXJlYS4gVHJ5IGFnYWluLjwvc3Bhbj4nfSl9LCJpbWFnZS9qcGVnIikpfWFzeW5jIGZ1bmN0aW9uIHNjYW5Gcm9tVXJsKCl7bGV0IGU9ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInVybFNjYW5JbnB1dCIpLnZhbHVlLnRyaW0oKTtpZighZSlyZXR1cm4gYWxlcnQoIlBsZWFzZSBlbnRlciBhIHZhbGlkIGltYWdlIFVSTCIpO2RvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzY2FuUmVzdWx0IikuaW5uZXJIVE1MPSc8c3BhbiBzdHlsZT0iY29sb3I6ICMzOGJkZjg7Ij5GZXRjaGluZyBpbWFnZSBmcm9tIFVSTC4uLjwvc3Bhbj4nO3RyeXtsZXQgdD1hd2FpdCBmZXRjaChlKTtpZighdC5vayl0aHJvdyBuZXcgRXJyb3IoIk5ldHdvcmsgaXNzdWUiKTtsZXQgbj1hd2FpdCB0LmJsb2IoKTtvcGVuQ3JvcHBlcihuZXcgRmlsZShbbl0sInVybF9pbWFnZS5qcGciLHt0eXBlOm4udHlwZX0pKX1jYXRjaChlKXtkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic2NhblJlc3VsdCIpLmlubmVySFRNTD0nPHNwYW4gc3R5bGU9ImNvbG9yOiAjZWY0NDQ0OyI+Q291bGQgbm90IGxvYWQgaW1hZ2UuIFRyeSBzYXZpbmcgdGhlIGltYWdlIGFuZCB1cGxvYWRpbmcgaXQgaW5zdGVhZC48L3NwYW4+J319ZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImZpbGVTY2FuIikuYWRkRXZlbnRMaXN0ZW5lcigiY2hhbmdlIixlPT57ZS50YXJnZXQuZmlsZXMubGVuZ3RoPjAmJm9wZW5Dcm9wcGVyKGUudGFyZ2V0LmZpbGVzWzBdKX0pLGRvY3VtZW50LmFkZEV2ZW50TGlzdGVuZXIoInBhc3RlIixmdW5jdGlvbihlKXtsZXQgdD1kb2N1bWVudC5hY3RpdmVFbGVtZW50LnRhZ05hbWUudG9Mb3dlckNhc2UoKTtpZigiaW5wdXQiPT09dHx8InRleHRhcmVhIj09PXQpcmV0dXJuO2xldCBuPShlLmNsaXBib2FyZERhdGF8fGUub3JpZ2luYWxFdmVudC5jbGlwYm9hcmREYXRhKS5pdGVtcztmb3IobGV0IGU9MDtlPG4ubGVuZ3RoO2UrKylpZigtMSE9PW5bZV0udHlwZS5pbmRleE9mKCJpbWFnZSIpKXtvcGVuQ3JvcHBlcihuW2VdLmdldEFzRmlsZSgpKTticmVha319KTs=");
+function executeFallbackCopy(text, btnElement) {
+    let textArea = document.createElement("textarea");
+    textArea.value = text;
+    textArea.style.position = "fixed";
+    textArea.style.left = "-999999px";
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try { document.execCommand('copy'); showCopiedEffect(btnElement); } catch (err) { alert("Please copy manually."); }
+    textArea.remove();
+}
+
+function showCopiedEffect(btn) {
+    if (!btn) return;
+    let originalText = btn.innerText;
+    let originalBg = btn.style.background;
+    let originalColor = btn.style.color;
+    btn.innerText = "✓✓ Copied";
+    btn.style.background = "#4ade80"; 
+    btn.style.color = "#0f172a";
+    setTimeout(() => { btn.innerText = originalText; btn.style.background = originalBg; btn.style.color = originalColor; }, 2000);
+}
+
+// ---------------------------------------------
+// HISTORY LOGIC
+// ---------------------------------------------
+let appHistory = JSON.parse(localStorage.getItem('qrToolHistory')) || [];
+
+function renderHistory() {
+    let container = document.getElementById("historyContainer");
+    if (appHistory.length === 0) { container.innerHTML = '<span style="color: #64748b;">No history recorded yet.</span>'; return; }
+    container.innerHTML = appHistory.map((item, index) => {
+        let safeData = item.data.replace(/[&<>'"]/g, tag => ({ '&': '&', '<': '<', '>': '>', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+        return `
+        <div class="history-item">
+            <div style="flex-grow: 1; overflow: hidden;">
+                <div class="history-meta"><strong style="color: #38bdf8;">${item.action}</strong> • ${item.time}</div>
+                <div class="history-data" title="${safeData}">${safeData}</div>
+            </div>
+            <div class="history-actions">
+                <button onclick="copyHistoryItem(${index}, this)">Copy</button>
+                <button class="btn-danger" onclick="deleteHistoryItem(${index})">X</button>
+            </div>
+        </div>`;
+    }).join('');
+}
+
+function saveToHistory(action, data) {
+    if (!data || data.trim() === "") return;
+    if (appHistory.length > 0 && appHistory[0].data === data && appHistory[0].action === action) return; 
+    appHistory.unshift({ action: action, data: data, time: new Date().toLocaleString() });
+    if (appHistory.length > 50) appHistory.pop();
+    localStorage.setItem('qrToolHistory', JSON.stringify(appHistory));
+    renderHistory();
+}
+
+function clearHistory() {
+    if(confirm("Are you sure you want to delete all history?")) { appHistory = []; localStorage.removeItem('qrToolHistory'); renderHistory(); }
+}
+function deleteHistoryItem(index) { appHistory.splice(index, 1); localStorage.setItem('qrToolHistory', JSON.stringify(appHistory)); renderHistory(); }
+function copyHistoryItem(index, btn) { copyText(appHistory[index].data, btn); }
+window.addEventListener('load', renderHistory);
+
+// ---------------------------------------------
+// GENERATOR LOGIC
+// ---------------------------------------------
+let qrCanvas;
+let lastGeneratedQRData = "";
+let lastGeneratedBarcodeData = "";
+
+function switchMode() {
+    let mode = document.querySelector('input[name="genMode"]:checked').value;
+    if (mode === 'qr') { document.getElementById('qrWrapper').style.display = 'block'; document.getElementById('barcodeWrapper').style.display = 'none'; } 
+    else { document.getElementById('qrWrapper').style.display = 'none'; document.getElementById('barcodeWrapper').style.display = 'block'; }
+}
+
+function updateQRFields(){
+    let t = document.getElementById("qrType").value;
+    let f = document.getElementById("qrFields");
+    
+    if(t == "text"){ f.innerHTML = `<textarea id="qrText" rows="3" placeholder="Enter text or URL"></textarea>`; }
+    if(t == "wifi"){
+        f.innerHTML = `<div class="form-grid"><input id="ssid" placeholder="Network SSID (Name)"><input id="pass" placeholder="Password"><select id="enc" class="full-width"><option value="WPA">WPA/WPA2</option><option value="WEP">WEP</option><option value="nopass">None</option></select></div>`;
+    }
+    if(t == "email"){ f.innerHTML = `<input id="email" placeholder="Email Address"><input id="subject" placeholder="Subject"><textarea id="message" rows="3" placeholder="Message"></textarea>`; }
+    if(t == "phone"){ f.innerHTML = `<input id="phone" placeholder="Phone Number">`; }
+    if(t == "sms"){ f.innerHTML = `<input id="smsnum" placeholder="Phone Number"><textarea id="smsmsg" rows="3" placeholder="Message"></textarea>`; }
+    if(t == "geo"){ f.innerHTML = `<div class="form-grid"><input id="lat" placeholder="Latitude"><input id="lon" placeholder="Longitude"></div>`; }
+    if(t == "whatsapp"){ f.innerHTML = `<input id="wap" placeholder="Phone Number (with country code)"><textarea id="wam" rows="3" placeholder="Message"></textarea>`; }
+    if(t == "calendar"){ f.innerHTML = `<div class="form-grid"><input id="event" placeholder="Event Name" class="full-width"><input id="location" placeholder="Location" class="full-width"><input id="start" placeholder="Start (YYYYMMDDTHHMMSS)"><input id="end" placeholder="End (YYYYMMDDTHHMMSS)"></div>`; }
+    if(t == "wallet"){ f.innerHTML = `<select id="coin"><option value="bitcoin">Bitcoin</option><option value="ethereum">Ethereum</option><option value="litecoin">Litecoin</option></select><input id="addr" placeholder="Wallet Address"><input id="amt" placeholder="Amount">`; }
+    if(t == "payment"){
+        f.innerHTML = `<select id="paytype" onchange="updatePaymentFields()"><option value="esewa">e-Sewa</option><option value="khalti">Khalti</option><option value="bank">Bank Transfer</option></select><div id="dynamicPayFields"></div>`;
+        setTimeout(updatePaymentFields, 50);
+    }
+    if(t == "vcard"){
+        f.innerHTML = `<div class="form-grid"><input id="fn" placeholder="First Name"><input id="ln" placeholder="Last Name"><input id="org" placeholder="Organization" class="full-width"><input id="title" placeholder="Title" class="full-width"><input id="vphone" placeholder="Phone"><input id="vmobile" placeholder="Mobile"><input id="vmail" placeholder="Email" class="full-width"><input id="web" placeholder="Website" class="full-width"><input id="addr" placeholder="Address" class="full-width"><input id="city" placeholder="City"><input id="country" placeholder="Country"></div>`;
+    }
+    setTimeout(generateQR, 100); 
+}
+
+function updatePaymentFields() {
+    let pType = document.getElementById("paytype").value;
+    let container = document.getElementById("dynamicPayFields");
+    if (pType === "esewa") { container.innerHTML = `<input id="esewaId" placeholder="e-Sewa ID"><input id="esewaName" placeholder="Account Name">`; } 
+    else if (pType === "khalti") { container.innerHTML = `<input id="khaltiId" placeholder="Khalti ID (Mobile Number)"><input id="khaltiName" placeholder="Account Name">`; } 
+    else if (pType === "bank") {
+        container.innerHTML = `<div class="form-grid">
+            <select id="bankNameSelect" class="full-width">
+                <option value="ADBLNPKA|0301">Agriculture Development Bank Ltd.</option>
+                <option value="CTZNNPKA|2001">Citizens Bank International Ltd.</option>
+                <option value="EVBLNPKA|1001">Everest Bank Ltd.</option>
+                <option value="GLBBNPKA|1901">Global IME Bank Ltd.</option>
+                <option value="HIMANPKA|0701">Himalayan Bank Ltd.</option>
+                <option value="KMBLNPKA|1601">Kumari Bank Ltd.</option>
+                <option value="LXBLNPKA|1701">Laxmi Sunrise Bank Ltd.</option>
+                <option value="MBLNNPKA|1501">Machhapuchchhre Bank Ltd.</option>
+                <option value="NARBNPKA|0401">Nabil Bank Ltd.</option>
+                <option value="NEBLNPKA|0101">Nepal Bank Ltd.</option>
+                <option value="NIBLNPKT|0501">Nepal Investment Mega Bank Ltd.</option>
+                <option value="NSBINPKA|0801">Nepal SBI Bank Ltd.</option>
+                <option value="BOALNPKA|2301">NIC Asia Bank Ltd.</option>
+                <option value="NMBBNPKA|2501">NMB Bank Ltd.</option>
+                <option value="PRVUNPKA|2601">Prabhu Bank Ltd.</option>
+                <option value="PCBLNPKA|2101">Prime Commercial Bank Ltd.</option>
+                <option value="RBBANPKA|0201">Rastriya Banijya Bank Ltd.</option>
+                <option value="SNMANPKA|4501">Sanima Bank Ltd.</option>
+                <option value="SIDDNPKA|1801">Siddhartha Bank Ltd.</option>
+                <option value="SCBLNPKA|0601">Standard Chartered Bank Nepal Ltd.</option>
+            </select>
+            <input id="bankAccNo" placeholder="Account Number">
+            <input id="bankAccName" placeholder="Account Name">
+            <input id="bankAccType" placeholder="Account Type" class="full-width">
+        </div>`;
+    }
+    generateQR();
+}
+
+function isQRInputEmpty() {
+    let inputs = document.querySelectorAll('#qrFields input, #qrFields textarea');
+    if(inputs.length === 0) return true;
+    for(let i=0; i<inputs.length; i++) { if(inputs[i].value.trim() !== "") return false; }
+    return true;
+}
+
+function generateQR(){
+    let type = document.getElementById("qrType").value;
+    let data = "";
+    lastGeneratedQRData = ""; 
+    
+    if(isQRInputEmpty()) { document.getElementById("qrcode").innerHTML = ""; qrCanvas = null; return; }
+
+    try {
+        if(type == "text") data = document.getElementById("qrText")?.value || "";
+        if(type == "wifi") data = `WIFI:T:${document.getElementById("enc")?.value || ""};S:${document.getElementById("ssid")?.value || ""};P:${document.getElementById("pass")?.value || ""};;`;
+        if(type == "email") data = `mailto:${document.getElementById("email")?.value || ""}?subject=${encodeURIComponent(document.getElementById("subject")?.value || "")}&body=${encodeURIComponent(document.getElementById("message")?.value || "")}`;
+        if(type == "phone") data = `tel:${document.getElementById("phone")?.value || ""}`;
+        if(type == "sms") data = `sms:${document.getElementById("smsnum")?.value || ""}:${document.getElementById("smsmsg")?.value || ""}`;
+        if(type == "geo") data = `geo:${document.getElementById("lat")?.value || ""},${document.getElementById("lon")?.value || ""}`;
+        if(type == "whatsapp") data = `https://wa.me/${document.getElementById("wap")?.value || ""}?text=${encodeURIComponent(document.getElementById("wam")?.value || "")}`;
+        if(type == "wallet") data = `${document.getElementById("coin")?.value || ""}:${document.getElementById("addr")?.value || ""}?amount=${document.getElementById("amt")?.value || ""}`;
+        if(type == "payment"){
+            let pType = document.getElementById("paytype").value;
+            if (pType === "esewa") data = JSON.stringify({ eSewa_id: document.getElementById("esewaId")?.value || "", name: document.getElementById("esewaName")?.value || "" });
+            else if (pType === "khalti") data = JSON.stringify({ khalti_id: document.getElementById("khaltiId")?.value || "", name: document.getElementById("khaltiName")?.value || "" });
+            else if (pType === "bank") {
+                let bankSelection = document.getElementById("bankNameSelect")?.value || "|";
+                let [extractedSwift, extractedCips] = bankSelection.split("|");
+                data = JSON.stringify({ accountNumber: document.getElementById("bankAccNo")?.value || "", accountName: document.getElementById("bankAccName")?.value || "", bankCode: extractedSwift, accountType: document.getElementById("bankAccType")?.value || "", bankCodeCIPS: extractedCips });
+            }
+        }
+        if(type == "calendar") data = `BEGIN:VEVENT\nSUMMARY:${document.getElementById("event")?.value || ""}\nLOCATION:${document.getElementById("location")?.value || ""}\nDTSTART:${document.getElementById("start")?.value || ""}\nDTEND:${document.getElementById("end")?.value || ""}\nEND:VEVENT`;
+        if(type == "vcard") data = `BEGIN:VCARD\nVERSION:3.0\nN:${document.getElementById("ln")?.value || ""};${document.getElementById("fn")?.value || ""}\nORG:${document.getElementById("org")?.value || ""}\nTITLE:${document.getElementById("title")?.value || ""}\nTEL:${document.getElementById("vphone")?.value || ""}\nTEL;CELL:${document.getElementById("vmobile")?.value || ""}\nEMAIL:${document.getElementById("vmail")?.value || ""}\nURL:${document.getElementById("web")?.value || ""}\nADR:;;${document.getElementById("addr")?.value || ""};${document.getElementById("city")?.value || ""};;${document.getElementById("country")?.value || ""}\nEND:VCARD`;
+        
+        if (!data || data === "" || data.trim() === "") return; 
+        lastGeneratedQRData = data; 
+        document.getElementById("qrcode").innerHTML = "";
+        QRCode.toCanvas(data, {width: 240}, function(err, canvas){
+            if(err) return;
+            qrCanvas = canvas;
+            document.getElementById("qrcode").appendChild(canvas);
+        });
+    } catch(e) { }
+}
+
+function clearGeneratorFields() {
+    document.querySelectorAll('#qrFields input, #qrFields textarea').forEach(input => input.value = "");
+    document.getElementById("barcodeText").value = "";
+    generateQR();
+    generateBarcode();
+}
+
+function downloadQRPNG(){ if(!qrCanvas) return alert("Generate a QR first!"); saveToHistory("Generated QR", lastGeneratedQRData); qrCanvas.toBlob(blob => saveAs(blob, "qr_code.png"), "image/png"); }
+function downloadQRJPG(){
+    if(!qrCanvas) return alert("Generate a QR first!"); saveToHistory("Generated QR", lastGeneratedQRData);
+    let tempCanvas = document.createElement("canvas"); tempCanvas.width = qrCanvas.width; tempCanvas.height = qrCanvas.height;
+    let ctx = tempCanvas.getContext("2d"); ctx.fillStyle = "#FFFFFF"; ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height); ctx.drawImage(qrCanvas, 0, 0);
+    tempCanvas.toBlob(blob => saveAs(blob, "qr_code.jpg"), "image/jpeg", 1.0);
+}
+function downloadQRSVG(){ if(!qrCanvas) return alert("Generate a QR first!"); saveToHistory("Generated QR", lastGeneratedQRData); QRCode.toString("Exported SVG", {type: 'svg'}, function (err, svgString) { if(err) return; saveAs(new Blob([svgString], {type: "image/svg+xml"}), "qr_code.svg"); }); }
+
+function generateBarcode(){
+    let text = document.getElementById("barcodeText").value; let type = document.getElementById("barcodeType").value;
+    let svgElement = document.getElementById("barcode"); let hiddenCanvas = document.getElementById("barcodeCanvas");
+    lastGeneratedBarcodeData = "";
+    if(!text) { svgElement.innerHTML = ""; svgElement.style.display = "none"; hiddenCanvas.width = 0; return; }
+    try {
+        let options = { format: (type === "ISBN") ? "EAN13" : type, lineColor: "#000", width: 2, height: 50, displayValue: true, background: "#ffffff" };
+        JsBarcode(svgElement, text, options); svgElement.style.display = "block"; JsBarcode(hiddenCanvas, text, options);
+        lastGeneratedBarcodeData = text; 
+    } catch (error) { }
+}
+
+function downloadBarcodePNG(){ let canvas = document.getElementById("barcodeCanvas"); if(!canvas || canvas.width === 0) return alert("Generate a barcode first!"); saveToHistory("Generated Barcode", lastGeneratedBarcodeData); canvas.toBlob(blob => saveAs(blob, "barcode.png"), "image/png"); }
+function downloadBarcodeJPG(){ let canvas = document.getElementById("barcodeCanvas"); if(!canvas || canvas.width === 0) return alert("Generate a barcode first!"); saveToHistory("Generated Barcode", lastGeneratedBarcodeData); canvas.toBlob(blob => saveAs(blob, "barcode.jpg"), "image/jpeg", 1.0); }
+function downloadBarcodeSVG(){ let svg = document.getElementById("barcode"); if (!svg.innerHTML) return alert("Generate a barcode first!"); saveToHistory("Generated Barcode", lastGeneratedBarcodeData); saveAs(new Blob([new XMLSerializer().serializeToString(svg)], {type: "image/svg+xml"}), "barcode.svg"); }
+
+document.getElementById("qrFields").addEventListener("input", generateQR);
+document.getElementById("qrFields").addEventListener("change", generateQR);
+document.getElementById("barcodeText").addEventListener("input", generateBarcode);
+document.getElementById("barcodeType").addEventListener("change", generateBarcode);
+updateQRFields();
+
+// ---------------------------------------------
+// SCANNER LOGIC, CROPPER & NATIVE ACTIONS
+// ---------------------------------------------
+let html5QrcodeScanner;
+let rawScanData = ""; 
+let cropper;
+let currentSuggestedAction = null; 
+
+function detectActionType(decodedText) {
+    if (!decodedText) return null;
+    let trimmedText = decodedText.trim();
+    let lowerText = trimmedText.toLowerCase();
+
+    if (/^https?:\/\//i.test(trimmedText)) return { type: 'URL', text: 'Website Link Found', btn: 'Open Link', payload: trimmedText };
+    if (trimmedText.startsWith('WIFI:')) {
+        let params = trimmedText.substring(5).split(';').reduce((acc, param) => { let [key, ...valueArr] = param.split(':'); if (key) acc[key.trim().toUpperCase()] = valueArr.join(':').trim(); return acc; }, {});
+        if (params.S) return { type: 'WIFI', text: `WiFi Network: ${params.S}`, btn: 'Copy Password', payload: params.P || '' };
+    }
+    if (lowerText.startsWith('mailto:')) return { type: 'EMAIL', text: 'Email Address Found', btn: 'Send Email', payload: trimmedText };
+    if (lowerText.startsWith('tel:')) return { type: 'PHONE', text: 'Phone Number Found', btn: 'Call Number', payload: trimmedText };
+    if (trimmedText.startsWith('BEGIN:VCARD')) return { type: 'CONTACT', text: 'Contact Card Found', btn: 'Save to Contacts', payload: trimmedText };
+    if (trimmedText.startsWith('BEGIN:VEVENT')) return { type: 'CALENDAR', text: 'Calendar Event Found', btn: 'Add to Calendar', payload: trimmedText };
+    
+    if (lowerText.startsWith('geo:')) return { type: 'GEO', text: 'Location Coordinates', btn: 'Open in Maps', payload: 'https://maps.google.com/?q=' + trimmedText.substring(4) };
+    
+    return null; 
+}
+
+function showScanResult(decodedText) {
+    rawScanData = decodedText;
+    let displayHtml = decodedText;
+    saveToHistory("Scanned Data", decodedText);
+
+    try {
+        if (decodedText.trim().startsWith('{') || decodedText.trim().startsWith('[')) displayHtml = `<pre style="margin:0; white-space: pre-wrap; word-wrap: break-word;">${JSON.stringify(JSON.parse(decodedText), null, 2)}</pre>`;
+    } catch (e) {
+        if (/^https?:\/\//i.test(decodedText.trim())) displayHtml = `<a href="${decodedText.trim()}" target="_blank" style="color: #38bdf8; text-decoration: none;">${decodedText}</a>`;
+        else displayHtml = `<div style="white-space: pre-wrap; word-wrap: break-word;">${decodedText}</div>`;
+    }
+    document.getElementById("scanResult").innerHTML = displayHtml;
+
+    currentSuggestedAction = detectActionType(decodedText);
+    const actionContainer = document.getElementById('scanActionContainer');
+    const actionPrompt = document.getElementById('suggestedActionMessage');
+    const performActionBtn = document.getElementById('performActionBtn');
+
+    if (currentSuggestedAction) {
+        actionPrompt.innerText = currentSuggestedAction.text;
+        performActionBtn.innerText = currentSuggestedAction.btn;
+        actionContainer.style.display = 'flex';
+        performActionBtn.onclick = () => performDetectedAction();
+    } else {
+        actionContainer.style.display = 'none';
+        performActionBtn.onclick = null;
+    }
+}
+
+function performDetectedAction() {
+    if (!currentSuggestedAction) return;
+    let act = currentSuggestedAction;
+
+    if (act.type === 'URL' || act.type === 'GEO') window.open(act.payload, '_blank');
+    else if (act.type === 'EMAIL' || act.type === 'PHONE') window.location.href = act.payload;
+    else if (act.type === 'WIFI') {
+        if(act.payload) { copyText(act.payload, document.getElementById('performActionBtn')); } 
+        else { alert("No password is required for this network."); }
+    }
+    else if (act.type === 'CONTACT') {
+        let blob = new Blob([act.payload], {type: "text/vcard"});
+        saveAs(blob, "contact.vcf");
+    }
+    else if (act.type === 'CALENDAR') {
+        let blob = new Blob([act.payload], {type: "text/calendar"});
+        saveAs(blob, "event.ics");
+    }
+}
+
+function clearScanResult() {
+    rawScanData = "";
+    document.getElementById("scanResult").innerHTML = '<span style="color: #64748b;">No data scanned yet.</span>';
+    document.getElementById("scanActionContainer").style.display = 'none';
+    currentSuggestedAction = null; 
+    document.getElementById("fileScan").value = ""; 
+    document.getElementById("urlScanInput").value = ""; 
+    stopScanner();
+    document.getElementById("reader").innerHTML = "";
+}
+
+function startScanner() {
+    stopScanner(); 
+    document.getElementById("reader").innerHTML = "";
+    if(!html5QrcodeScanner) html5QrcodeScanner = new Html5Qrcode("reader");
+    
+    let config = { fps: 10, qrbox: { width: 250, height: 250 } };
+    let onSuccess = (decodedText) => { showScanResult(decodedText); stopScanner(); };
+
+    Html5Qrcode.getCameras().then(devices => {
+        if (devices && devices.length > 0) {
+            let selectedCam = devices[0].id; 
+            for (let i = 0; i < devices.length; i++) {
+                if (devices[i].label.toLowerCase().includes("back") || devices[i].label.toLowerCase().includes("environment")) {
+                    selectedCam = devices[i].id; break;
+                }
+            }
+            html5QrcodeScanner.start(selectedCam, config, onSuccess).catch(() => {
+                html5QrcodeScanner.start({ facingMode: "environment" }, config, onSuccess).catch(() => html5QrcodeScanner.start({ facingMode: "user" }, config, onSuccess));
+            });
+        } else { alert("No camera found."); }
+    }).catch(err => {
+        html5QrcodeScanner.start({ facingMode: "environment" }, config, onSuccess).catch(() => {
+            html5QrcodeScanner.start({ facingMode: "user" }, config, onSuccess).catch(() => alert("Camera blocked or unavailable."));
+        });
+    });
+}
+
+function stopScanner(){ if(html5QrcodeScanner && html5QrcodeScanner.isScanning) { html5QrcodeScanner.stop().catch(err => console.error(err)); } }
+
+function openCropper(imageFile) {
+    stopScanner();
+    document.getElementById("reader").innerHTML = '<div style="color: #38bdf8; text-align: center; padding: 20px;">Preparing image...</div>';
+    
+    let reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById('cropImage').src = e.target.result;
+        document.getElementById('cropModal').style.display = 'flex';
+        
+        if(cropper) cropper.destroy();
+        cropper = new Cropper(document.getElementById('cropImage'), { viewMode: 1, autoCropArea: 0.8, background: false });
+    }
+    reader.readAsDataURL(imageFile);
+}
+
+function closeCropper() {
+    document.getElementById('cropModal').style.display = 'none';
+    if(cropper) cropper.destroy();
+    document.getElementById('fileScan').value = ""; 
+    document.getElementById("reader").innerHTML = ""; 
+}
+
+function scanCroppedImage() {
+    if(!cropper) return;
+    document.getElementById("scanResult").innerHTML = '<span style="color: #38bdf8;">Scanning cropped area...</span>';
+    
+    cropper.getCroppedCanvas().toBlob((blob) => {
+        let croppedFile = new File([blob], "cropped.jpg", { type: "image/jpeg" });
+        closeCropper();
+        
+        const tempHtml5QrCode = new Html5Qrcode("reader"); 
+        tempHtml5QrCode.scanFile(croppedFile, false)
+            .then(decodedText => showScanResult(decodedText))
+            .catch(err => {
+                document.getElementById("scanResult").innerHTML = '<span style="color: #ef4444;">No QR or Barcode detected in the cropped area. Try again.</span>';
+            });
+    }, "image/jpeg");
+}
+
+async function scanFromUrl() {
+    let url = document.getElementById("urlScanInput").value.trim();
+    if(!url) return alert("Please enter a valid image URL");
+    document.getElementById("scanResult").innerHTML = '<span style="color: #38bdf8;">Fetching image from URL...</span>';
+    try {
+        let response = await fetch(url);
+        if (!response.ok) throw new Error("Network issue");
+        let blob = await response.blob();
+        openCropper(new File([blob], "url_image.jpg", { type: blob.type })); 
+    } catch (error) {
+        document.getElementById("scanResult").innerHTML = `<span style="color: #ef4444;">Could not load image. Try saving the image and uploading it instead.</span>`;
+    }
+}
+
+document.getElementById('fileScan').addEventListener('change', e => { if (e.target.files.length > 0) openCropper(e.target.files[0]); });
+document.addEventListener('paste', function(e) {
+    let activeTag = document.activeElement.tagName.toLowerCase();
+    if (activeTag === 'input' || activeTag === 'textarea') return;
+    let items = (e.clipboardData || e.originalEvent.clipboardData).items;
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) { openCropper(items[i].getAsFile()); break; }
+    }
+});
