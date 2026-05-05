@@ -125,7 +125,10 @@
                     </div>
                     
                     <div style="flex-grow: 1; display: flex; flex-direction: column;">
+                        <!-- Output box readonly code
                         <textarea id="output-text" spellcheck="false" readonly placeholder="Converted text will appear here..." style="flex-grow: 1;"></textarea>
+                        -->
+                        <textarea id="output-text" spellcheck="false" placeholder="Converted text will appear here..." style="flex-grow: 1;"></textarea>
                     </div>
                     
                     <div style="border-top: 1px solid var(--border-color); padding-top: 15px; margin-top: 10px; display: flex; justify-content: flex-end; gap: 10px; flex-shrink: 0;">
@@ -186,6 +189,7 @@
             if(unicodeText) copyWithDoubleTick(this, unicodeText);
         });
     </script>
+    <script src="libs/kishor.js"></script>
     <script src="libs/script.js"></script>
 </body>
 </html>
