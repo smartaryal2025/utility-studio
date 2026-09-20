@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v5.8';
+const CACHE_NAME = 'utility-studio-v5.9';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
