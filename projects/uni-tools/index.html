@@ -91,11 +91,16 @@
                     <div class="control-panel" style="flex-direction: column; align-items: stretch;">
                         <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%;">
                             <span class="control-label">File Input</span>
-                            
                             <button class="btn-secondary" onclick="document.getElementById('file-upload').click()" style="width: auto !important; min-width: 220px; margin-top: 5px; align-self: center;">📁 Choose File</button>
                             <input type="file" id="file-upload" accept=".txt,.doc,.docx" style="display: none;">
-                            
                             <div id="file-name-display" style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: center; width: 100%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="control-panel" style="flex-direction: column; align-items: stretch;">
+                        <div class="control-group" style="flex-direction: column; align-items: flex-start; width: 100%;">
+                            <span class="control-label">Resources</span>
+                            <button onclick="window.location.href='keyboard.html'" class="btn-secondary" style="width: auto !important; min-width: 220px; margin-top: 5px; align-self: center;">⌨️ View Keyboard Layout</button>
                         </div>
                     </div>
                 </section>
