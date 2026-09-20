@@ -1,0 +1,233 @@
+/* =========================================================
+   KEYBOARD THEME VARIABLES (Premium Light vs Dark)
+   ========================================================= */
+:root {
+    /* LIGHT MODE (Default Premium Styling) */
+    --key-bg: #ffffff;
+    --key-text: #111827;
+    --key-shadow: #94a3b8;
+    --special-bg: #cbd5e1;
+    --special-text: #334155;
+    --kb-board-bg: #e2e8f0;
+    --desc-key-bg: #f1f5f9;
+    --desc-key-text: #475569;
+}
+
+/* DARK MODE (Automatically applied when Theme Toggle is active) */
+[data-theme="dark"], .dark-theme, .dark-mode, body.dark {
+    --key-bg: var(--surface-light);
+    --key-text: var(--text-primary);
+    --key-shadow: var(--border-color);
+    --special-bg: var(--bg-gradient); 
+    --special-text: var(--text-primary); 
+    --kb-board-bg: var(--surface-dark);
+    --desc-key-bg: #334155; 
+    --desc-key-text: #f8fafc; 
+}
+
+/* =========================================================
+   KEYBOARD BASE STYLES & WIDTH ALIGNMENT
+   ========================================================= */
+.export-toolbar, 
+.legend, 
+.keyboard-wrapper, 
+.description-container, 
+.type-area-container {
+    width: 100%;
+    max-width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+.export-toolbar { display: flex; justify-content: flex-end; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+
+/* All buttons now use this exact style */
+.btn { background: var(--surface-light); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 16px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer; transition: all 0.2s ease; }
+.btn:hover { background: var(--surface-dark); border-color: var(--accent-primary); }
+
+.mobile-warning { display: none; text-align: center; color: #ef4444; font-size: 13px; font-weight: bold; margin-bottom: 10px; background: rgba(239, 68, 68, 0.1); padding: 8px; border-radius: 6px; width: 100%; max-width: 1050px; }
+
+#capture-area { background-color: transparent; padding: 10px 0; width: 100%; display: flex; flex-direction: column; align-items: center; box-sizing: border-box; }
+
+.subtitle { color: var(--text-secondary); font-size: 13px; margin-bottom: 12px; text-align: center; }
+
+/* =========================================================
+   LEGEND & DYNAMIC CSS TEXT REPLACEMENT
+   ========================================================= */
+.legend {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-bottom: 15px; font-weight: bold; padding: 8px 20px;
+    border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.2); border: 1px solid var(--border-color);
+    background: var(--surface-dark); color: var(--text-primary);
+}
+.legend-item { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+.dot { width: 14px; height: 14px; min-width: 14px; border-radius: 3px; display: inline-block; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+.legend-base-text::after { content: "Base: कालो"; }
+[data-theme="dark"] .legend-base-text::after, .dark-theme .legend-base-text::after, body.dark .legend-base-text::after { content: "Base: सेतो"; }
+
+.dot-base { background-color: var(--text-primary) !important; } 
+.dot-shift { background-color: var(--accent-primary) !important; } 
+.dot-altgr { background-color: #10b981 !important; }
+.dot-saltgr { background-color: #ef4444 !important; }
+
+/* =========================================================
+   PREMIUM KEYBOARD UI 
+   ========================================================= */
+.keyboard-wrapper { overflow: hidden; display: block; } 
+
+.keyboard {
+    background: var(--kb-board-bg); 
+    padding: 12px; border-radius: 12px;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.06), 0 6px 15px rgba(0,0,0,0.1);
+    display: flex; flex-direction: column; gap: 6px;
+    width: 100%; max-width: 1050px;
+    border: 2px solid var(--border-color, #cbd5e1);
+    box-sizing: border-box;
+}
+
+.row { display: flex; gap: 6px; width: 100%; box-sizing: border-box; }
+
+.key {
+    flex: 1; height: 60px; min-width: 0;
+    background: var(--key-bg); 
+    color: var(--key-text); 
+    border-radius: 5px;
+    box-shadow: 0 3px 0 var(--key-shadow), 0 3px 5px rgba(0,0,0,0.08); 
+    position: relative; font-size: 15px; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    user-select: none; cursor: pointer;
+    transition: transform 0.1s, background-color 0.2s, box-shadow 0.1s;
+    box-sizing: border-box;
+}
+
+.special-key { 
+    background: var(--special-bg); 
+    color: var(--special-text); 
+    font-weight: 600; 
+    box-shadow: 0 3px 0 var(--key-shadow); 
+    font-size: 11px; 
+}
+
+.key:active, .hardware-active {
+    background-color: var(--surface-dark, #f1f5f9) !important;
+    transform: translateY(2px) !important;
+    box-shadow: 0 1px 0 var(--border-color, #94a3b8), 0 1px 2px rgba(0,0,0,0.1) !important;
+}
+.active-mod { background-color: var(--accent-primary) !important; color: #0f172a !important; box-shadow: inset 0 3px 5px rgba(0,0,0,0.2) !important; }
+
+.key span { transition: opacity 0.2s ease, font-size 0.2s ease, color 0.2s ease; }
+.eng { color: var(--text-secondary, #94a3b8); font-size: 11px; font-weight: normal; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; opacity: 0.6; }
+.base { position: absolute; bottom: 4px; left: 6px; font-size: 15px; color: var(--text-primary, #111827); pointer-events: none; }
+.shift { position: absolute; top: 4px; left: 6px; font-size: 15px; color: var(--accent-primary); pointer-events: none; } 
+.altgr { position: absolute; bottom: 4px; right: 6px; font-size: 14px; color: #10b981; pointer-events: none; }
+.saltgr { position: absolute; top: 4px; right: 6px; font-size: 14px; color: #ef4444; pointer-events: none; }
+
+/* Dynamic Labels */
+.keyboard.state-dynamic.state-base .base { font-size: 19px; font-weight: 900; color: var(--text-primary, #111827); z-index: 2; opacity: 1; }
+.keyboard.state-dynamic.state-base .shift, .keyboard.state-dynamic.state-base .altgr, .keyboard.state-dynamic.state-base .saltgr { opacity: 0.35; }
+.keyboard.state-dynamic.state-shift .shift { font-size: 19px; font-weight: 900; color: var(--accent-primary); z-index: 2; opacity: 1; }
+.keyboard.state-dynamic.state-shift .base, .keyboard.state-dynamic.state-shift .altgr, .keyboard.state-dynamic.state-shift .saltgr { opacity: 0.35; }
+.keyboard.state-dynamic.state-altgr .altgr { font-size: 18px; font-weight: 900; color: #10b981; z-index: 2; opacity: 1; }
+.keyboard.state-dynamic.state-altgr .base, .keyboard.state-dynamic.state-altgr .shift, .keyboard.state-dynamic.state-altgr .saltgr { opacity: 0.35; }
+.keyboard.state-dynamic.state-saltgr .saltgr { font-size: 18px; font-weight: 900; color: #ef4444; z-index: 2; opacity: 1; }
+.keyboard.state-dynamic.state-saltgr .base, .keyboard.state-dynamic.state-saltgr .shift, .keyboard.state-dynamic.state-saltgr .altgr { opacity: 0.35; }
+
+.backspace { flex: 1.8; } .tab { flex: 1.4; } .caps { flex: 1.65; } .enter { flex: 2.15; } .shift-l { flex: 2.15; } .shift-r { flex: 2.65; } .ctrl, .win, .alt, .menu { flex: 1.2; } .space { flex: 7.4; }
+
+/* =========================================================
+   INFORMATION SECTION
+   ========================================================= */
+.description-container {
+    margin-top: 15px; padding: 10px 15px; border-radius: 8px;
+    background: var(--surface-dark); border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); page-break-inside: avoid;
+}
+.desc-title { color: var(--text-primary); font-size: 15px; margin-bottom: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 4px; text-align: center; font-weight: bold; }
+.desc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px 12px; }
+.desc-item { display: flex; align-items: center; font-size: 12px; color: var(--text-secondary); }
+.desc-symbol { font-size: 18px; font-weight: bold; width: 30px; text-align: center; margin-right: 6px; line-height: 1; white-space: nowrap; color: var(--text-primary); }
+
+.desc-keys { 
+    font-size: 10px; background: var(--desc-key-bg); border: 1px solid var(--border-color, #cbd5e1); 
+    padding: 2px 4px; border-radius: 4px; margin-right: 6px; color: var(--desc-key-text); font-weight: 600;
+    min-width: 65px; text-align: center; 
+}
+.desc-text { color: var(--text-primary); line-height: 1.1; }
+
+/* =========================================================
+   TEXT AREA & MENU
+   ========================================================= */
+.type-area-container { margin-top: 20px; }
+
+.type-area {
+    width: 100%; padding: 15px; font-size: 20px; font-family: 'Mukta', 'Noto Sans Devanagari', 'Segoe UI', sans-serif;
+    border-radius: 8px; resize: vertical; line-height: 1.5; outline: none; box-sizing: border-box;
+    background: #ffffff !important; 
+    color: #1f2937 !important; 
+    border: 2px solid #cbd5e1 !important; 
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05) !important;
+}
+.type-area:focus { border-color: var(--accent-primary) !important; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2) !important;}
+
+.custom-menu { position: fixed; display: none; z-index: 9999; min-width: 150px; background: var(--surface-dark); border: 1px solid var(--border-color); border-radius: 6px; box-shadow: 0 5px 18px rgba(0,0,0,0.5); padding: 5px 0; }
+.custom-menu button { display: block; width: 100%; border: none; background: transparent; padding: 8px 14px; text-align: left; cursor: pointer; font-size: 13px; color: var(--text-primary); }
+.custom-menu button:hover { background: var(--surface-light); color: var(--accent-primary); }
+
+/* =========================================================
+   FULLSCREEN & MOBILE RESPONSIVENESS
+   ========================================================= */
+:fullscreen, :-webkit-full-screen { background-color: var(--bg-gradient) !important; overflow-y: auto; display: flex; flex-direction: column; padding: 20px; align-items: center; }
+:fullscreen .type-area-container, :-webkit-full-screen .type-area-container { flex-grow: 1; display: flex; flex-direction: column; margin-bottom: 20px; }
+:fullscreen .type-area, :-webkit-full-screen .type-area { flex-grow: 1; }
+
+@media (max-width: 768px) {
+    body { padding: 10px; } .export-toolbar { justify-content: center; } .keyboard { padding: 8px; gap: 4px; min-width: 100%; }
+    .row { gap: 4px; } .key { height: 48px; border-radius: 4px; }
+    .base { bottom: 2px; left: 4px; font-size: 13px; } .shift { top: 2px; left: 4px; font-size: 13px; } .altgr { bottom: 2px; right: 4px; font-size: 11px; } .saltgr { top: 2px; right: 4px; font-size: 11px; }
+    .eng { font-size: 9px; } .special-key { font-size: 9px; }
+    .keyboard.state-dynamic.state-base .base { font-size: 17px; } .keyboard.state-dynamic.state-shift .shift { font-size: 17px; } .keyboard.state-dynamic.state-altgr .altgr { font-size: 15px; } .keyboard.state-dynamic.state-saltgr .saltgr { font-size: 15px; }
+    .desc-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) { .desc-grid { grid-template-columns: 1fr; } }
+@media (max-width: 768px) and (orientation: portrait) { .mobile-warning { display: block !important; } }
+
+/* =========================================================
+   A4 LANDSCAPE PRINT & PDF OPTIMIZATION
+   ========================================================= */
+@media print {
+    @page { size: A4 landscape; margin: 8mm; }
+    
+    body, .app-container { background: #ffffff !important; padding: 0 !important; margin: 0 !important; }
+    .us-global-menu, button[title="Toggle Light/Dark Mode"], nav, .export-toolbar, .type-area-container, .custom-menu, .mobile-warning { display: none !important; }
+    
+    #capture-area { padding: 0 !important; background-color: #ffffff !important; width: 100% !important; max-width: 100% !important; display: block !important; box-sizing: border-box !important; }
+    .app-header { color: #111827 !important; font-size: 22px !important; margin: 0 0 6px 0 !important; padding: 0 !important; text-align: center; }
+    .subtitle { color: #4b5563 !important; font-size: 12px !important; margin-bottom: 12px !important; text-align: center; }
+    
+    .legend { margin: 0 auto 12px auto !important; padding: 6px 15px !important; gap: 12px !important; border: 1px solid #cbd5e1 !important; box-shadow: none !important; background: #ffffff !important; color: #111827 !important; width: 100% !important; box-sizing: border-box !important; }
+    .legend-item { font-size: 13px !important; }
+    .legend-base-text::after { content: "Base: कालो" !important; } 
+    .dot-base { background-color: #111827 !important; } 
+    
+    .keyboard-wrapper { display: block !important; width: 100% !important; margin: 0 auto !important; padding: 0 !important; overflow: hidden !important; box-sizing: border-box !important;}
+    
+    .keyboard { margin: 0 auto !important; padding: 10px !important; gap: 6px !important; box-shadow: none !important; border: 1px solid #94a3b8 !important; background: #e2e8f0 !important; width: 100% !important; min-width: 0 !important; max-width: 100% !important; box-sizing: border-box !important; }
+    
+    .row { gap: 6px !important; width: 100% !important; box-sizing: border-box !important; margin: 0 auto !important; }
+    .key { height: 56px !important; min-width: 0 !important; box-shadow: 0 1px 0 #94a3b8 !important; border: 1px solid #cbd5e1 !important; background: #ffffff !important; color: #111827 !important; }
+    .special-key { background: #cbd5e1 !important; color: #333333 !important; box-shadow: 0 1px 0 #94a3b8 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    
+    .keyboard .base { font-size: 16px !important; color: #111827 !important; font-weight: bold !important; opacity: 1 !important;}
+    .keyboard .shift { font-size: 16px !important; color: var(--accent-primary) !important; font-weight: bold !important; opacity: 1 !important;}
+    .keyboard .altgr { font-size: 15px !important; color: #059669 !important; font-weight: bold !important; opacity: 1 !important;}
+    .keyboard .saltgr { font-size: 15px !important; color: #dc2626 !important; font-weight: bold !important; opacity: 1 !important;}
+    .keyboard .eng { font-size: 11px !important; font-weight: normal !important; opacity: 0.8 !important;}
+    
+    .description-container { margin: 12px auto 0 auto !important; padding: 10px 15px !important; border: 1px solid #cbd5e1 !important; background: #ffffff !important; width: 100% !important; box-shadow: none !important; box-sizing: border-box !important; }
+    .desc-title { font-size: 15px !important; color: #111827 !important; margin-bottom: 8px !important; padding-bottom: 4px !important; border-bottom: 1px solid #cbd5e1 !important;}
+    .desc-grid { gap: 6px 10px !important; }
+    .desc-item { font-size: 12px !important; color: #334155 !important; }
+    .desc-symbol { font-size: 18px !important; color: #111827 !important; width: 20px !important; }
+    .desc-keys { font-size: 10px !important; background: #f1f5f9 !important; border: 1px solid #cbd5e1 !important; color: #111827 !important; min-width: 55px !important; padding: 2px 4px !important; }
+}
