@@ -1,5 +1,5 @@
 // Change this version number every time you update a file!
-const CACHE_NAME = 'utility-studio-v5.7';
+const CACHE_NAME = 'utility-studio-v5.8';
 
 // The complete list of everything needed to run offline
 const CORE_ASSETS = [
@@ -68,10 +68,14 @@ const CORE_ASSETS = [
 
     // Unicode Tools
     '/projects/uni-tools/index.html',
+    '/projects/uni-tools/keyboard.html',
     '/projects/uni-tools/libs/mammoth.browser.min.js',
     '/projects/uni-tools/libs/script.js',
+    '/projects/uni-tools/libs/kishor.js',
+    '/projects/uni-tools/libs/keyboard.js',
     '/projects/uni-tools/libs/uni-style.css',
-
+    '/projects/uni-tools/libs/keyboard-style.css',
+    
     // Video Tools
     '/projects/video-tools/index.html',
     '/projects/video-tools/libs/814.ffmpeg.js',
