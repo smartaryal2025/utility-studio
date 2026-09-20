@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kishor Unicode Keyboard Layout | Utility Studio</title>
+    <meta name="description" content="Interactive and printable Kishor Unicode Keyboard Layout for traditional Nepali typing.">
+    <meta name="keywords" content="nepali keyboard layout, kishor unicode layout, preeti typing map, traditional nepali keyboard">
+    <meta name="author" content="Kishor Aryal">
+    
+    <link rel="canonical" href="https://kishoraryal.com.np/projects/uni-tools/keyboard.html">
+
+    <meta property="og:title" content="Kishor Unicode Keyboard Layout | Utility Studio">
+    <meta property="og:description" content="Interactive Nepali Unicode Keyboard Layout mapping.">
+    <meta property="og:image" content="https://kishoraryal.com.np/assets/logo.png">
+    <meta property="og:url" content="https://kishoraryal.com.np/projects/uni-tools/keyboard.html">
+    <meta property="og:type" content="website">
+
+    <link rel="icon" type="image/png" sizes="192x192" href="../../assets/logo-192.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="../../assets/logo-192.png">
+    <link rel="manifest" href="../../manifest.json">
+
+    <!-- Global Styles & Theme Logic -->
+    <link rel="stylesheet" href="../../assets/master.css">
+    <script src="../../assets/theme.js"></script>
+
+    <!-- Specific Keyboard Styles -->
+    <link rel="stylesheet" href="libs/keyboard-style.css">
+</head>
+<body>
+    <!-- Global Menu -->
+    <div class="us-global-menu top-left">
+        <a href="../../index.html" class="us-home-btn" title="Dashboard">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        </a>
+        <div class="us-dropdown">
+            <button class="us-dropbtn">Tools ▾</button>
+            <div class="us-dropdown-content">
+                <a href="../date-converter/index.html">📅 Date Converter</a>
+                <a href="../uni-tools/index.html">🔤 Unicode Tools</a>
+                <a href="../qr-tools/index.html">🔳 QR & Barcode</a>
+                <a href="../pdf-tools/index.html">📄 PDF Toolkit</a>
+                <a href="../image-tools/index.html">🖼️ Image Studio</a>
+                <a href="../video-tools/index.html">🎬 Media Studio</a>
+                <a href="../unit-converter/index.html">⚖️ Unit Converter</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Theme Toggle -->
+    <button onclick="toggleTheme()" title="Toggle Light/Dark Mode" style="position: fixed; top: 20px; right: 20px; z-index: 999999; width: 45px; height: 45px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--surface-dark); color: var(--accent-primary); cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.4); transition: all 0.2s ease;">
+    <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path id="theme-icon-path" stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+    </button>
+
+    <div class="app-container" style="display: flex; flex-direction: column; align-items: center;">
+        <nav aria-label="breadcrumb" style="text-align: center; margin-bottom: 10px;">
+            <a href="../../index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Home</a> 
+            <span style="color: var(--text-secondary); font-size: 13px; margin: 0 5px;">/</span> 
+            <a href="index.html" style="color: var(--accent-primary); text-decoration: none; font-size: 13px;">Unicode Tools</a> 
+            <span style="color: var(--text-secondary); font-size: 13px; margin: 0 5px;">/</span> 
+            <span style="color: var(--text-secondary); font-size: 13px;" aria-current="page">Keyboard Layout</span>
+        </nav>
+        
+        <div class="mobile-warning">
+            ⚠️ For the best experience, please rotate your device to landscape mode.
+        </div>
+
+        <div class="export-toolbar">
+            <button class="btn" id="btnToggleLabels">Normal Labels Mode</button>
+            <button class="btn" id="btnFullscreen">Full Screen</button>
+            <button class="btn" onclick="window.print()">Print / Save PDF</button>
+        </div>
+
+        <div id="capture-area">
+            <h1 class="app-header" style="margin-bottom: 5px;">Kishor Unicode All</h1>
+            <div class="subtitle">Computing Nepal Pvt. Ltd. | (c) 2026 Kishor Aryal</div>
+
+            <div class="legend">
+                <!-- FIX: Replaced hardcoded text with dynamic class for CSS injection -->
+                <div class="legend-item"><div class="dot dot-base"></div><span class="legend-base-text"></span></div>
+                <div class="legend-item"><div class="dot dot-shift"></div><span>Shift: नीलो</span></div>
+                <div class="legend-item"><div class="dot dot-altgr"></div><span>AltGr (Ctrl+Alt): हरियो</span></div>
+                <div class="legend-item"><div class="dot dot-saltgr"></div><span>Shift+AltGr: रातो</span></div>
+            </div>
+
+            <div class="keyboard-wrapper">
+                <div class="keyboard state-dynamic state-base" id="keyboard">
+                    <!-- ROW 1 -->
+                    <div class="row">
+                        <div class="key" data-code="Backquote" data-base="ञ" data-shift="ञ्" data-altgr="‍" data-saltgr="‌">
+                            <span class="eng">`</span><span class="shift">ञ्</span><span class="base">ञ</span><span class="saltgr" style="right:4px;">ZWNJ</span><span class="altgr" style="right:4px;">ZWJ</span>
+                        </div>
+                        <div class="key" data-code="Digit1" data-base="ज्ञ" data-shift="१">
+                            <span class="eng">1</span><span class="shift">१</span><span class="base">ज्ञ</span>
+                        </div>
+                        <div class="key" data-code="Digit2" data-base="द्द" data-shift="२" data-saltgr="@">
+                            <span class="eng">2</span><span class="shift">२</span><span class="base">द्द</span><span class="saltgr">@</span>
+                        </div>
+                        <div class="key" data-code="Digit3" data-base="घ" data-shift="३" data-saltgr="#">
+                            <span class="eng">3</span><span class="shift">३</span><span class="base">घ</span><span class="saltgr">#</span>
+                        </div>
+                        <div class="key" data-code="Digit4" data-base="द्ध" data-shift="४" data-altgr="~" data-saltgr="$">
+                            <span class="eng">4</span><span class="shift">४</span><span class="base">द्ध</span><span class="saltgr">$</span><span class="altgr">~</span>
+                        </div>
+                        <div class="key" data-code="Digit5" data-base="छ" data-shift="५" data-saltgr="%">
+                            <span class="eng">5</span><span class="shift">५</span><span class="base">छ</span><span class="saltgr">%</span>
+                        </div>
+                        <div class="key" data-code="Digit6" data-base="ट" data-shift="६" data-altgr="&lt;">
+                            <span class="eng">6</span><span class="shift">६</span><span class="base">ट</span><span class="altgr">&lt;</span>
+                        </div>
+                        <div class="key" data-code="Digit7" data-base="ठ" data-shift="७" data-altgr="&gt;" data-saltgr="&amp;">
+                            <span class="eng">7</span><span class="shift">७</span><span class="base">ठ</span><span class="saltgr">&amp;</span><span class="altgr">&gt;</span>
+                        </div>
+                        <div class="key" data-code="Digit8" data-base="ड" data-shift="८" data-altgr="×" data-saltgr="*">
+                            <span class="eng">8</span><span class="shift">८</span><span class="base">ड</span><span class="saltgr">*</span><span class="altgr">×</span>
+                        </div>
+                        <div class="key" data-code="Digit9" data-base="ढ" data-shift="९" data-altgr="[" data-saltgr="]">
+                            <span class="eng">9</span><span class="shift">९</span><span class="base">ढ</span><span class="saltgr">]</span><span class="altgr">[</span>
+                        </div>
+                        <div class="key" data-code="Digit0" data-base="ण" data-shift="०" data-altgr="{" data-saltgr="}">
+                            <span class="eng">0</span><span class="shift">०</span><span class="base">ण</span><span class="saltgr">}</span><span class="altgr">{</span>
+                        </div>
+                        <div class="key" data-code="Minus" data-base="(" data-shift=")" data-saltgr="अं">
+                            <span class="eng">-</span><span class="shift">)</span><span class="base">(</span><span class="saltgr">अं</span>
+                        </div>
+                        <div class="key" data-code="Equal" data-base="." data-shift="ं" data-altgr="=" data-saltgr="+">
+                            <span class="eng">=</span><span class="shift">ं</span><span class="base">.</span><span class="saltgr">+</span><span class="altgr">=</span>
+                        </div>
+                        <div class="key special-key backspace" data-code="Backspace" data-action="backspace">Backspace</div>
+                    </div>
+
+                    <!-- ROW 2 -->
+                    <div class="row">
+                        <div class="key special-key tab" data-code="Tab" data-action="tab">Tab</div>
+                        <div class="key" data-code="KeyQ" data-base="त्र" data-shift="ो" data-altgr="त्त" data-saltgr="ौ">
+                            <span class="eng">Q</span><span class="shift">ो</span><span class="base">त्र</span><span class="saltgr">ौ</span><span class="altgr">त्त</span>
+                        </div>
+                        <div class="key" data-code="KeyW" data-base="ध" data-shift="ध्" data-altgr="ऌ" data-saltgr="ॡ">
+                            <span class="eng">W</span><span class="shift">ध्</span><span class="base">ध</span><span class="saltgr">ॡ</span><span class="altgr">ऌ</span>
+                        </div>
+                        <div class="key" data-code="KeyE" data-base="भ" data-shift="भ्" data-saltgr="ऐ">
+                            <span class="eng">E</span><span class="shift">भ्</span><span class="base">भ</span><span class="saltgr">ऐ</span>
+                        </div>
+                        <div class="key" data-code="KeyR" data-base="च" data-shift="च्" data-saltgr="ॄ">
+                            <span class="eng">R</span><span class="shift">च्</span><span class="base">च</span><span class="saltgr">ॄ</span>
+                        </div>
+                        <div class="key" data-code="KeyT" data-base="त" data-shift="त्" data-saltgr="-">
+                            <span class="eng">T</span><span class="shift">त्</span><span class="base">त</span><span class="saltgr">-</span>
+                        </div>
+                        <div class="key" data-code="KeyY" data-base="थ" data-shift="थ्" data-saltgr="_">
+                            <span class="eng">Y</span><span class="shift">थ्</span><span class="base">थ</span><span class="saltgr">_</span>
+                        </div>
+                        <div class="key" data-code="KeyU" data-base="ग" data-shift="ग्" data-saltgr="॒">
+                            <span class="eng">U</span><span class="shift">ग्</span><span class="base">ग</span><span class="saltgr" style="right:14px;">॒</span>
+                        </div>
+                        <div class="key" data-code="KeyI" data-base="ष" data-shift="क्ष" data-saltgr="ई">
+                            <span class="eng">I</span><span class="shift">क्ष</span><span class="base">ष</span><span class="saltgr">ई</span>
+                        </div>
+                        <div class="key" data-code="KeyO" data-base="य" data-shift="इ" data-saltgr="॰">
+                            <span class="eng">O</span><span class="shift">इ</span><span class="base">य</span><span class="saltgr">॰</span>
+                        </div>
+                        <div class="key" data-code="KeyP" data-base="उ" data-shift="ए" data-saltgr="ऊ">
+                            <span class="eng">P</span><span class="shift">ए</span><span class="base">उ</span><span class="saltgr">ऊ</span>
+                        </div>
+                        <div class="key" data-code="BracketLeft" data-base="ृ" data-shift="र्" data-altgr="ॢ" data-saltgr="ॣ">
+                            <span class="eng">[</span><span class="shift">र्</span><span class="base">ृ</span><span class="saltgr">ॣ</span><span class="altgr">ॢ</span>
+                        </div>
+                        <div class="key" data-code="BracketRight" data-base="े" data-shift="ै" data-altgr="ओ" data-saltgr="औ">
+                            <span class="eng">]</span><span class="shift">ै</span><span class="base">े</span><span class="saltgr">औ</span><span class="altgr">ओ</span>
+                        </div>
+                        <div class="key" data-code="Backslash" data-base="्" data-shift="्र" data-altgr="\" data-saltgr="|">
+                            <span class="eng">\</span><span class="shift">्र</span><span class="base">्</span><span class="saltgr">|</span><span class="altgr">\</span>
+                        </div>
+                    </div>
+
+                    <!-- ROW 3 -->
+                    <div class="row">
+                        <div class="key special-key caps" data-mod="caps" data-code="CapsLock">Caps Lock</div>
+                        <div class="key" data-code="KeyA" data-base="ब" data-shift="ब्" data-altgr="आ" data-saltgr="ऽ">
+                            <span class="eng">A</span><span class="shift">ब्</span><span class="base">ब</span><span class="saltgr">ऽ</span><span class="altgr">आ</span>
+                        </div>
+                        <div class="key" data-code="KeyS" data-base="क" data-shift="क्">
+                            <span class="eng">S</span><span class="shift">क्</span><span class="base">क</span>
+                        </div>
+                        <div class="key" data-code="KeyD" data-base="म" data-shift="म्" data-saltgr="ᳩ">
+                            <span class="eng">D</span><span class="shift">म्</span><span class="base">म</span><span class="saltgr">ᳩ</span>
+                        </div>
+                        <div class="key" data-code="KeyF" data-base="ा" data-shift="ँ" data-saltgr="ᳯ">
+                            <span class="eng">F</span><span class="shift">ँ</span><span class="base">ा</span><span class="saltgr" style="right:14px;">ᳯ</span>
+                        </div>
+                        <div class="key" data-code="KeyG" data-base="न" data-shift="न्" data-saltgr="ॺ">
+                            <span class="eng">G</span><span class="shift">न्</span><span class="base">न</span><span class="saltgr">ॺ</span>
+                        </div>
+                        <div class="key" data-code="KeyH" data-base="ज" data-shift="ज्" data-saltgr="झ">
+                            <span class="eng">H</span><span class="shift">ज्</span><span class="base">ज</span><span class="saltgr">झ</span>
+                        </div>
+                        <div class="key" data-code="KeyJ" data-base="व" data-shift="व्" data-altgr="॓" data-saltgr="॔">
+                            <span class="eng">J</span><span class="shift">व्</span><span class="base">व</span>
+                            <span class="saltgr" style="right:4px;">॔</span>
+                            <span class="altgr" style="right:4px;">॓</span>
+                        </div>
+                        <div class="key" data-code="KeyK" data-base="प" data-shift="प्" data-saltgr="़">
+                            <span class="eng">K</span><span class="shift">प्</span><span class="base">प</span><span class="saltgr" style="right:12px;">़</span>
+                        </div>
+                        <div class="key" data-code="KeyL" data-base="ि" data-shift="ी" data-saltgr="॑">
+                            <span class="eng">L</span><span class="shift">ी</span><span class="base">ि</span><span class="saltgr" style="right:12px;">॑</span>
+                        </div>
+                        <div class="key" data-code="Semicolon" data-base="स" data-shift="स्" data-altgr=";" data-saltgr=":">
+                            <span class="eng">;</span><span class="shift">स्</span><span class="base">स</span><span class="saltgr">:</span><span class="altgr">;</span>
+                        </div>
+                        <div class="key" data-code="Quote" data-base="ु" data-shift="ू" data-altgr="'" data-saltgr='"'>
+                            <span class="eng">'</span><span class="shift">ू</span><span class="base">ु</span><span class="saltgr">"</span><span class="altgr">'</span>
+                        </div>
+                        <div class="key special-key enter" data-code="Enter" data-action="enter">Enter</div>
+                    </div>
+
+                    <!-- ROW 4 -->
+                    <div class="row">
+                        <div class="key special-key shift-l" data-mod="shift" data-code="ShiftLeft">Shift</div>
+                        <div class="key" data-code="KeyZ" data-base="श" data-shift="श्" data-saltgr="ॐ">
+                            <span class="eng">Z</span><span class="shift">श्</span><span class="base">श</span><span class="saltgr">ॐ</span>
+                        </div>
+                        <div class="key" data-code="KeyX" data-base="ह" data-shift="ह्" data-altgr="÷" data-saltgr="^">
+                            <span class="eng">X</span><span class="shift">ह्</span><span class="base">ह</span><span class="saltgr">^</span><span class="altgr">÷</span>
+                        </div>
+                        <div class="key" data-code="KeyC" data-base="अ" data-shift="ऋ" data-saltgr="ॠ">
+                            <span class="eng">C</span><span class="shift">ऋ</span><span class="base">अ</span><span class="saltgr">ॠ</span>
+                        </div>
+                        <div class="key" data-code="KeyV" data-base="ख" data-shift="ख्">
+                            <span class="eng">V</span><span class="shift">ख्</span><span class="base">ख</span>
+                        </div>
+                        <div class="key" data-code="KeyB" data-base="द" data-shift="द्य" data-altgr="ᳪ" data-saltgr="ᳮ">
+                            <span class="eng">B</span><span class="shift">द्य</span><span class="base">द</span><span class="saltgr">ᳮ</span><span class="altgr">ᳪ</span>
+                        </div>
+                        <div class="key" data-code="KeyN" data-base="ल" data-shift="ल्" data-saltgr="ङ">
+                            <span class="eng">N</span><span class="shift">ल्</span><span class="base">ल</span><span class="saltgr">ङ</span>
+                        </div>
+                        <div class="key" data-code="KeyM" data-base="फ" data-shift="ः" data-saltgr="अः">
+                            <span class="eng">M</span><span class="shift">ः</span><span class="base">फ</span><span class="saltgr">अः</span>
+                        </div>
+                        <div class="key" data-code="Comma" data-base="," data-shift="?" data-altgr="`" data-saltgr="!">
+                            <span class="eng">,</span><span class="shift">?</span><span class="base">,</span><span class="saltgr">!</span><span class="altgr">`</span>
+                        </div>
+                        <div class="key" data-code="Period" data-base="।" data-shift="श्र" data-saltgr="॥">
+                            <span class="eng">.</span><span class="shift">श्र</span><span class="base">।</span><span class="saltgr">॥</span>
+                        </div>
+                        <div class="key" data-code="Slash" data-base="र" data-shift="रु" data-altgr="/">
+                            <span class="eng">/</span><span class="shift">रु</span><span class="base">र</span><span class="altgr">/</span>
+                        </div>
+                        <div class="key special-key shift-r" data-mod="shift" data-code="ShiftRight">Shift</div>
+                    </div>
+
+                    <!-- ROW 5 -->
+                    <div class="row">
+                        <div class="key special-key ctrl" data-mod="ctrl" data-code="ControlLeft">Ctrl</div>
+                        <div class="key special-key win" data-code="MetaLeft">Win</div>
+                        <div class="key special-key alt" data-mod="alt" data-code="AltLeft">Alt</div>
+                        <div class="key space" data-code="Space" data-base=" " data-shift=" " data-altgr=" " data-saltgr=" "></div>
+                        <div class="key special-key alt" data-mod="altgr" data-code="AltRight">AltGr</div>
+                        <div class="key special-key menu" data-mod="menu" data-code="ContextMenu">Menu</div>
+                        <div class="key special-key ctrl" data-mod="ctrl" data-code="ControlRight">Ctrl</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Descriptions -->
+            <div class="description-container">
+                <div class="desc-title">उस्तै देखिने चिह्नहरूको जानकारी</div>
+                <div class="desc-grid">
+                    <div class="desc-item"><span class="desc-symbol">-</span><span class="desc-keys">SAltGr + T</span><span class="desc-text">Dash (Hyphen)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">.</span><span class="desc-keys">Base + =</span><span class="desc-text">Full Stop (Dot)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">ः</span><span class="desc-keys">Shift + M</span><span class="desc-text">विसर्ग (नेपाली)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">॑</span><span class="desc-keys">SAltGr + L</span><span class="desc-text">उदत्त (माथि लाग्ने)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">_</span><span class="desc-keys">SAltGr + Y</span><span class="desc-text">Underscore</span></div>
+                    <div class="desc-item"><span class="desc-symbol">।</span><span class="desc-keys">Base + .</span><span class="desc-text">पूर्णविराम (नेपाली)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">:</span><span class="desc-keys">SAltGr + ;</span><span class="desc-text">Colon</span></div>
+                    <div class="desc-item">
+                        <span class="desc-symbol">॓ ॔</span>
+                        <span class="desc-keys">(S)AltGr + J</span><span class="desc-text">स्वरित (माथी लाग्ने)</span>
+                    </div>
+                    <div class="desc-item"><span class="desc-symbol">|</span><span class="desc-keys">SAltGr + \</span><span class="desc-text">Pipe (ठाडो रेखा)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">॰</span><span class="desc-keys">SAltGr + O</span><span class="desc-text">लाघव चिह्न</span></div>
+                    <div class="desc-item"><span class="desc-symbol">्</span><span class="desc-keys">Base + \</span><span class="desc-text">हलन्त (आधा अक्षर)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">`</span><span class="desc-keys">AltGr + ,</span><span class="desc-text">Backtick</span></div>
+                    <div class="desc-item"><span class="desc-symbol">॒</span><span class="desc-keys">SAltGr + U</span><span class="desc-text">अनुदत्त (तल लाग्ने)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">़</span><span class="desc-keys">SAltGr + K</span><span class="desc-text">नुक्त (तल लाग्ने)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">ं</span><span class="desc-keys">Shift + =</span><span class="desc-text">अनुस्वार (शिरविन्दु)</span></div>
+                    <div class="desc-item"><span class="desc-symbol">' "</span><span class="desc-keys">(S)AltGr + '</span><span class="desc-text">Quotes (उद्धरण)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Typing Area -->
+        <div class="type-area-container">
+            <textarea id="typeBox" class="type-area" rows="3" placeholder="Click the keys above or use your physical keyboard to type directly in Nepali Unicode..."></textarea>
+        </div>
+
+        <!-- Custom Menu -->
+        <div id="customMenu" class="custom-menu">
+            <button data-menu-action="cut">Cut</button>
+            <button data-menu-action="copy">Copy</button>
+            <button data-menu-action="paste">Paste</button>
+            <button data-menu-action="selectAll">Select All</button>
+        </div>
+    </div>
+    <script src="libs/keyboard.js"></script>
+</body>
+</html>
